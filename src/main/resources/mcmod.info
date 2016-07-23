@@ -1,0 +1,15 @@
+[
+{
+  "modid": "smedry",
+  "name": "Similactics",
+  "description": "Lenses for your face.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["WireSegal", "Eladkay"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": []
+}
+]
