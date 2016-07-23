@@ -49,6 +49,11 @@ repositories {
         url "http://dvs1.progwml6.com/files/maven"
     }
 }
+repositories {
+    maven {
+        url 'http://tehnut.info/maven/'
+    }
+}
 
 configurations {
 
@@ -58,7 +63,7 @@ configurations {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${config.jei_version}"
-
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${config.guideapi_version}"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     required "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
