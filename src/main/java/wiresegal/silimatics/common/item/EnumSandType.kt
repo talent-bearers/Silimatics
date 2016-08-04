@@ -25,9 +25,13 @@ enum class EnumSandType(val color: Int, val chance: Double?) {
             if (this.length == 0) return this
             return this.slice(0..0).toLowerCase() + this.slice(1..this.length - 1)
         }
-        
-        val sandTypeNames: List<String> by lazy {
-            EnumSandType.values().map { it.toString() }
+
+        val sandTypeNames: Array<String> by lazy {
+            EnumSandType.values().map { it.toString() }.toTypedArray()
         }
+
+        fun getSandTypeNamesFor(prefix: String): Array<String> = EnumSandType.values().map {
+            prefix + it.toString().capitalizeFirst()
+        }.toTypedArray()
     }
 }
