@@ -19,9 +19,4 @@ public class LensVoidstorm implements ILens {
     public boolean shouldMarkAsOculator(ItemStack stack) {
         return true;
     }
-
-    @Override
-    public void addTooltip(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        tooltip.add("Voidstorm Lens");
-    }
 }

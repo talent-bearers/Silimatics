@@ -22,7 +22,7 @@ tile.smedry:glassPain.name=Shardstepper's Glass
 tile.smedry:glassSun.name=Eyeburner's Glass [WIP]
 tile.smedry:glassView.name=Communicator's Glass [WIP]
 
-item.smedry:lensDull.name=Spectacle Lens
+item.smedry:lensDull.name=Glass Lens
 item.smedry:lensRashid.name=Translator's Lens
 item.smedry:lensBright.name=Oculator's Lens
 item.smedry:lensHeat.name=Firebringer's Lens
@@ -34,4 +34,17 @@ item.smedry:lensPain.name=Torturer's Lens
 item.smedry:lensSun.name=Shocker's Lens
 item.smedry:lensView.name=Courier's Lens
 
-item.smedry:lensFrames.name=Len Frames
+
+item.smedry:lensDull.plural.name=Glass Lenses
+item.smedry:lensRashid.plural.name=Translator's Lenses
+item.smedry:lensBright.plural.name=Oculator's Lenses
+item.smedry:lensHeat.plural.name=Firebringer's Lenses
+item.smedry:lensStorm.plural.name=Windstormer's Lenses
+item.smedry:lensVoid.plural.name=Voidstormer's Lenses
+item.smedry:lensTrail.plural.name=Tracker's Lenses
+item.smedry:lensBlood.plural.name=Warrior's Lenses
+item.smedry:lensPain.plural.name=Torturer's Lenses
+item.smedry:lensSun.plural.name=Shocker's Lenses
+item.smedry:lensView.plural.name=Courier's Lenses
+
+item.smedry:lensFrames.name=Lens Frames

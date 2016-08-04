@@ -16,10 +16,9 @@ public interface ILens {
     }
 
     default void addTooltip(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        if(ItemLens.getLensFromStack(getLensStack(stack)) != null)
-            tooltip.add(ItemLens.getLensFromStack(getLensStack(stack)).getClass().getCanonicalName());
-        tooltip.add(getLensStack(stack).getMetadata() + "");
+        //NO-OP
     }
+
     default ItemStack getLensStack(ItemStack stack) {
         NBTTagCompound compound = ItemNBTHelper.getCompound(stack, "lens", true);
         if(compound != null)
