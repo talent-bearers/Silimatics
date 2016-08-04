@@ -1,6 +1,9 @@
 package wiresegal.silimatics.api.lens;
 
+import com.google.common.collect.Multimap;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -11,6 +14,7 @@ import java.util.List;
 
 public interface ILens {
     void onUsingTick(World world, EntityPlayer player, ItemStack stack);
+
     default boolean shouldMarkAsOculator(ItemStack stack) {
         return true;
     }
@@ -19,10 +23,7 @@ public interface ILens {
         //NO-OP
     }
 
-    default ItemStack getLensStack(ItemStack stack) {
-        NBTTagCompound compound = ItemNBTHelper.getCompound(stack, "lens", true);
-        if(compound != null)
-            return ItemStack.loadItemStackFromNBT(compound);
-        return null;
+    default void addAttributes(EntityEquipmentSlot slot, ItemStack stack, Multimap<String, AttributeModifier> modifiers) {
+        //NO-OP
     }
 }

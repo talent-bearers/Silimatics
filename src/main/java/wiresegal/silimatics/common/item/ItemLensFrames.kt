@@ -1,9 +1,11 @@
 package wiresegal.silimatics.common.item
 
+import com.google.common.collect.Multimap
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
+import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.Item
@@ -34,11 +36,16 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
 
         fun ItemStack.getLensStack(): ItemStack? {
             val compound = ItemNBTHelper.getCompound(this, TAG_LENS, true) ?: return null
-            return ItemStack.loadItemStackFromNBT(compound)
+            val stack = ItemStack.loadItemStackFromNBT(compound)
+            if (stack.item !is ILens) {
+                this.setLensStack(null)
+                return ItemStack(ModItems.lens)
+            }
+            return stack
         }
 
-        fun ItemStack.setLensStack(lens: ItemStack): ItemStack {
-            ItemNBTHelper.setCompound(this, TAG_LENS, lens.writeToNBT(NBTTagCompound()))
+        fun ItemStack.setLensStack(lens: ItemStack?): ItemStack {
+            ItemNBTHelper.setCompound(this, TAG_LENS, (lens ?: ItemStack(ModItems.lens)).writeToNBT(NBTTagCompound()))
             return this
         }
     }
@@ -74,11 +81,19 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
         }
         return "${LibMisc.MODID}:textures/models/lensFrames${if (type == "overlay") "Overlay" else second}.png"
     }
+
     override fun onArmorTick(world: World, player: EntityPlayer, itemStack: ItemStack) {
         val lens = itemStack.getLensStack() ?: return
 
         if (lens.item is ILens)
             (lens.item as ILens).onUsingTick(world, player, itemStack)
+    }
+
+    override fun getAttributeModifiers(slot: EntityEquipmentSlot, stack: ItemStack): Multimap<String, AttributeModifier> {
+        val multimap = super.getAttributeModifiers(slot, stack)
+        val lensStack = stack.getLensStack() ?: return multimap
+        (lensStack.item as ILens).addAttributes(slot, stack, multimap)
+        return multimap
     }
 
     @SideOnly(Side.CLIENT)
