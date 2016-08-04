@@ -10,20 +10,23 @@ import net.minecraft.world.World;
 import wiresegal.silimatics.common.core.ItemNBTHelper;
 import wiresegal.silimatics.common.item.ItemLens;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface ILens {
-    void onUsingTick(World world, EntityPlayer player, ItemStack stack);
-
-    default boolean shouldMarkAsOculator(ItemStack stack) {
-        return true;
-    }
-
-    default void addTooltip(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    default void onUsingTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack stack) {
         //NO-OP
     }
 
-    default void addAttributes(EntityEquipmentSlot slot, ItemStack stack, Multimap<String, AttributeModifier> modifiers) {
+    default boolean shouldMarkAsOculator(@Nonnull ItemStack stack) {
+        return true;
+    }
+
+    default void addTooltip(@Nonnull ItemStack stack, @Nonnull EntityPlayer playerIn, @Nonnull List<String> tooltip, boolean advanced) {
+        //NO-OP
+    }
+
+    default void addAttributes(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack, @Nonnull Multimap<String, AttributeModifier> modifiers) {
         //NO-OP
     }
 }

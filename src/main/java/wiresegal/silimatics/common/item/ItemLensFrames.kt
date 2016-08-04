@@ -61,9 +61,9 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
         return "$name ${TextFormatting.WHITE}(${TextFormatting.GREEN}$lensName${TextFormatting.WHITE})"
     }
 
-    override fun addInformation(stack: ItemStack?, playerIn: EntityPlayer?, tooltip: MutableList<String>?, advanced: Boolean) {
-        if (stack?.getLensStack() != null && stack?.getLensStack()?.item is ItemLens)
-            ItemLens.getLensFromStack(stack).addTooltip(stack, playerIn, tooltip, advanced)
+    override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        if (stack.getLensStack() != null && stack.getLensStack()?.item is ItemLens)
+            (stack.getLensStack()?.item as ILens).addTooltip(stack, playerIn, tooltip, advanced)
     }
 
     override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: MutableList<ItemStack>) {
@@ -84,15 +84,15 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
 
     override fun onArmorTick(world: World, player: EntityPlayer, itemStack: ItemStack) {
         val lens = itemStack.getLensStack() ?: return
-
-        if (lens.item is ILens)
-            (lens.item as ILens).onUsingTick(world, player, itemStack)
+        (lens.item as ILens).onUsingTick(world, player, lens)
+        itemStack.setLensStack(lens)
     }
 
     override fun getAttributeModifiers(slot: EntityEquipmentSlot, stack: ItemStack): Multimap<String, AttributeModifier> {
         val multimap = super.getAttributeModifiers(slot, stack)
         val lensStack = stack.getLensStack() ?: return multimap
-        (lensStack.item as ILens).addAttributes(slot, stack, multimap)
+        val item = (lensStack.item as ILens)
+        item.addAttributes(slot, lensStack, multimap)
         return multimap
     }
 

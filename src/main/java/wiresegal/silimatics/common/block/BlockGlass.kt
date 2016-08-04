@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.block
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemBlock
 import net.minecraft.potion.PotionEffect
@@ -91,6 +93,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
     }
 
     class TileSmedryGlass : TileMod(), ITickable {
+
         override fun update() {
             if (worldObj.isBlockPowered(pos)) return
             val state = worldObj.getBlockState(pos)
@@ -117,16 +120,21 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
         fun pushEntities(x: Double, y: Double, z: Double, range: Double, velocity: Double, entities: List<Entity>) {
             for (entity in entities) {
+                if (entity is EntityPlayer && entity.capabilities.isFlying) continue
                 val xDif = entity.posX - x
-                val yDif = entity.posY - (y + 1)
+                val yDif = entity.posY - y
                 val zDif = entity.posZ - z
+                val motionMul = if (entity is EntityPlayer && entity.isSneaking) 0.125 else 1.0
                 val vec = Vec3d(xDif, yDif, zDif).normalize()
                 val dist = xDif * xDif + yDif * yDif + zDif * zDif
-                if (dist <= range * range) {
-                    entity.motionX += velocity * vec.xCoord
-                    entity.motionY += velocity * vec.yCoord
-                    entity.motionZ += velocity * vec.zCoord
-                    entity.fallDistance = 0f
+                if (dist <= range * range &&
+                        entity.motionX + motionMul * velocity * vec.xCoord < motionMul &&
+                        entity.motionY + motionMul * velocity * vec.yCoord < motionMul &&
+                        entity.motionZ + motionMul * velocity * vec.zCoord < motionMul) {
+                    entity.motionX += motionMul * velocity * vec.xCoord
+                    entity.motionY += motionMul * velocity * vec.yCoord * 1.5
+                    entity.motionZ += motionMul * velocity * vec.zCoord
+                    if (motionMul > 0) entity.fallDistance = 0f
                 }
             }
         }
