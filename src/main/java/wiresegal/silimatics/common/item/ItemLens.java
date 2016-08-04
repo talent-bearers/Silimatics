@@ -17,10 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 import wiresegal.silimatics.api.lens.ILens;
-import wiresegal.silimatics.common.item.EnumSandType;
-import wiresegal.silimatics.common.item.ItemLensFrames;
-import wiresegal.silimatics.common.lens.LensDull;
-import wiresegal.silimatics.common.lens.LensWindstormer;
+import wiresegal.silimatics.common.lens.*;
 import wiresegal.silimatics.common.lib.LibMisc;
 import wiresegal.zenmodelloader.client.core.TooltipHelper;
 import wiresegal.zenmodelloader.common.core.IItemColorProvider;
@@ -34,20 +31,27 @@ public class ItemLens extends ItemMod implements ILens, IItemColorProvider {
 
     public static ILens[] lenses = new ILens[] {
             new LensDull(),
-            new LensDull(), //todo
-            new LensDull(), //todo
-            new LensDull(), //todo
-            new LensWindstormer(), //todo
-            new LensDull(), //todo
-            new LensDull(), //todo
-            new LensDull(), //todo
-            new LensDull(), //todo
-            new LensDull() //todo
+            new LensRashid(),
+            new LensBright(),
+            new LensHeat(),
+            new LensWindstormer(),
+            new LensVoidstorm(),
+            new LensTrails(),
+            new LensBlood(),
+            new LensPain(),
+            new LensSun(),
+            new LensView()
     };
 
     public ItemLens(String name) {
         super(name, EnumSandType.Companion.getSandTypeNamesFor(name));
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+    }
+
+    public static ILens getLensFromStack(ItemStack stack) {
+        if(stack != null)
+            return lenses[stack.getMetadata() % lenses.length];
+        return null;
     }
 
     @SideOnly(Side.CLIENT)

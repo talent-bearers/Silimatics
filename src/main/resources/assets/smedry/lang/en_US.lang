@@ -23,7 +23,7 @@ tile.smedry:glassSun.name=Eyeburner's Glass [WIP]
 tile.smedry:glassView.name=Communicator's Glass [WIP]
 
 item.smedry:lensDull.name=Spectacle Lens
-item.smedry:lensRashid.name=Lens of Rashid
+item.smedry:lensRashid.name=Translator's Lens
 item.smedry:lensBright.name=Oculator's Lens
 item.smedry:lensHeat.name=Firebringer's Lens
 item.smedry:lensStorm.name=Windstormer's Lens
@@ -33,3 +33,5 @@ item.smedry:lensBlood.name=Warrior's Lens
 item.smedry:lensPain.name=Torturer's Lens
 item.smedry:lensSun.name=Shocker's Lens
 item.smedry:lensView.name=Courier's Lens
+
+item.smedry:lensFrames.name=Len Frames

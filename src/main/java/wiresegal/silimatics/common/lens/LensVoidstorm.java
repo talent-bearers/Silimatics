@@ -7,12 +7,12 @@ import wiresegal.silimatics.api.lens.ILens;
 
 import java.util.List;
 
-public class LensWindstormer implements ILens {
+public class LensVoidstorm implements ILens {
     @Override
     public void onUsingTick(World world, EntityPlayer player, ItemStack stack) {
-        player.motionX += -player.getLookVec().xCoord / 20;
-        player.motionY += -player.getLookVec().yCoord / 20;
-        player.motionZ += -player.getLookVec().zCoord / 20;
+        player.motionX += player.getLookVec().xCoord / 20;
+        player.motionY += player.getLookVec().yCoord / 20;
+        player.motionZ += player.getLookVec().zCoord / 20;
     }
 
     @Override
@@ -22,6 +22,6 @@ public class LensWindstormer implements ILens {
 
     @Override
     public void addTooltip(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        tooltip.add("Windstormer Lens");
+        tooltip.add("Voidstorm Lens");
     }
 }
