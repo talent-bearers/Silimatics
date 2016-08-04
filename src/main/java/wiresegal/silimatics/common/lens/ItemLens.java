@@ -8,20 +8,40 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import wiresegal.silimatics.api.lens.ILens;
-import wiresegal.silimatics.common.core.ModItems;
+import wiresegal.silimatics.common.item.EnumSandType;
 import wiresegal.silimatics.common.item.ItemLensFrames;
 import wiresegal.silimatics.common.lib.LibMisc;
+import wiresegal.zenmodelloader.client.core.TooltipHelper;
 import wiresegal.zenmodelloader.common.items.base.ItemMod;
 
-public abstract class ItemLensBase extends ItemMod implements ILens {
+import java.util.List;
+
+public class ItemLens extends ItemMod implements ILens {
 
     public static final String OCULATOR = LibMisc.MODID + ":oculator";
 
-    public ItemLensBase(String name) {
-        super(name);
+    public static ILens[] lenses = new ILens[] {
+            new LensWindstormer()
+    };
+
+    public ItemLens(String name) {
+        super(name, EnumSandType.Companion.getSandTypeNames());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+        TooltipHelper.INSTANCE.tooltipIfShift(tooltip, () -> {
+            lenses[stack.getMetadata()].addTooltip(stack, playerIn, tooltip, advanced);
+        });
+        super.addInformation(stack, playerIn, tooltip, advanced);
     }
 
     @Override
@@ -30,6 +50,11 @@ public abstract class ItemLensBase extends ItemMod implements ILens {
         playerIn.setGlowing(true);
         worldIn.playSound(playerIn, playerIn.getPosition(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1f, 1f);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+    }
+
+    @Override
+    public void onUsingTick(World world, EntityPlayer player, ItemStack stack) {
+        lenses[stack.getMetadata()].onUsingTick(world, player, stack);
     }
 
 

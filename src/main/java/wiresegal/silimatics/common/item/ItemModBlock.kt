@@ -28,7 +28,7 @@ open class ItemModBlock(block: Block) : ItemBlock(block), IVariantHolder, IItemC
     init {
         this.modId = Loader.instance().activeModContainer().modId
         this.modBlock = block as IModBlock
-        if (this.variants.size > 1) {
+        if (this.modBlock.variants != null && this.modBlock.variants.size > 1) {
             this.setHasSubtypes(true)
         }
         ModelHandler.addToCache(this)

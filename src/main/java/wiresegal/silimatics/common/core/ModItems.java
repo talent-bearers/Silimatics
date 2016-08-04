@@ -1,11 +1,15 @@
 package wiresegal.silimatics.common.core;
 
-import wiresegal.silimatics.common.lens.LensOculator;
+import net.minecraft.item.ItemArmor;
+import wiresegal.silimatics.common.item.ItemLensFrames;
+import wiresegal.silimatics.common.lens.ItemLens;
 import wiresegal.silimatics.common.lib.LibNames;
 
 public class ModItems {
-    public static LensOculator lensOculator;
+    public static ItemLens lens;
+    public static ItemLensFrames frame;
     public static void init() {
-        lensOculator = new LensOculator(LibNames.LENS_OCULATOR);
+        lens = new ItemLens(LibNames.LENS);
+        frame = new ItemLensFrames(LibNames.LENS_FRAMES, ItemArmor.ArmorMaterial.LEATHER);
     }
 }
