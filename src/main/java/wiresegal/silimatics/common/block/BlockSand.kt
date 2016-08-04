@@ -1,6 +1,7 @@
 package wiresegal.silimatics.common.block
 
 import net.minecraft.block.Block
+import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
@@ -16,8 +17,8 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.item.EnumSandType
+import wiresegal.silimatics.common.item.ItemModBlock
 import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.util.*
 
@@ -29,6 +30,11 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
 
     companion object {
         val SAND_TYPE = PropertyEnum.create("sand", EnumSandType::class.java)
+    }
+
+    init {
+        setHardness(0.5F)
+        soundType = SoundType.SAND
     }
 
     override fun createBlockState(): BlockStateContainer {
@@ -46,7 +52,15 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
     }
 
     override fun createItemForm(): ItemBlock? {
-        return ItemModBlock(this)
+        return ItemModBlock(this).setHasSubtypes(true) as ItemBlock
+    }
+
+    override fun getMetaFromState(state: IBlockState): Int {
+        return state.getValue(SAND_TYPE).ordinal
+    }
+
+    override fun getStateFromMeta(meta: Int): IBlockState {
+        return defaultState.withProperty(SAND_TYPE, EnumSandType.values()[meta % EnumSandType.values().size])
     }
 
     override fun onBlockAdded(worldIn: World, pos: BlockPos, state: IBlockState) {
@@ -55,6 +69,10 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block) {
         worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn))
+    }
+
+    override fun damageDropped(state: IBlockState): Int {
+        return getMetaFromState(state)
     }
 
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
@@ -66,14 +84,9 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
     private fun checkFallable(worldIn: World, pos: BlockPos) {
         if ((worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down()))) && pos.y >= 0) {
 
-            worldIn.setBlockToAir(pos)
-            var blockpos = pos.down()
-            while ((worldIn.isAirBlock(blockpos) || canFallThrough(worldIn.getBlockState(blockpos))) && blockpos.y > 0) {
-                blockpos = blockpos.down()
-            }
-
-            if (blockpos.y > 0) {
-                worldIn.setBlockState(blockpos.up(), this.defaultState)
+            if (!worldIn.isRemote) {
+                val entityfallingblock = EntityFallingBlock(worldIn, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, worldIn.getBlockState(pos))
+                worldIn.spawnEntityInWorld(entityfallingblock)
             }
         }
     }
