@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "sand=dull": { "model": "minecraft:sand" },
+    "sand=rashid": { "model": "minecraft:sand" },
+    "sand=bright": { "model": "smedry:baseSand" },
+    "sand=heat": { "model": "smedry:baseSand" },
+    "sand=storm": { "model": "smedry:baseSand" },
+    "sand=void": { "model": "smedry:baseSand" },
+    "sand=trail": { "model": "smedry:baseSand" },
+    "sand=blood": { "model": "smedry:baseSand" },
+    "sand=pain": { "model": "smedry:baseSand" },
+    "sand=sun": { "model": "smedry:baseSand" },
+    "sand=view": { "model": "smedry:baseSand" }
+  }
+}

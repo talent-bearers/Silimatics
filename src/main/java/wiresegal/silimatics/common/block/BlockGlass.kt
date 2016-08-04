@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.block
 
-import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
@@ -11,14 +10,12 @@ import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
-import net.minecraft.entity.item.EntityFallingBlock
-import net.minecraft.init.Blocks
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemBlock
 import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.DamageSource
-import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.ITickable
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
@@ -28,11 +25,9 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.silimatics.common.item.ItemModBlock
-import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
+import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
-import java.util.*
 
 /**
  * @author WireSegal
@@ -55,16 +50,12 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
     @SideOnly(Side.CLIENT)
     override fun getBlockColor(): IBlockColor {
-        return IBlockColor { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(SAND_TYPE).color }
+        return IBlockColor { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(SAND_TYPE).glassColor }
     }
 
     @SideOnly(Side.CLIENT)
     override fun getItemColor(): IItemColor {
-        return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
-    }
-
-    override fun createItemForm(): ItemBlock? {
-        return ItemModBlock(this).setHasSubtypes(true) as ItemBlock
+        return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].glassColor }
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
@@ -85,6 +76,18 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
     override fun damageDropped(state: IBlockState): Int {
         return getMetaFromState(state)
+    }
+
+    override fun getBlockLayer(): BlockRenderLayer {
+        return BlockRenderLayer.TRANSLUCENT
+    }
+
+    override fun isFullCube(state: IBlockState): Boolean {
+        return false
+    }
+
+    override fun isOpaqueCube(state: IBlockState?): Boolean {
+        return false
     }
 
     class TileSmedryGlass : TileMod(), ITickable {

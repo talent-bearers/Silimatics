@@ -1,0 +1,35 @@
+tile.smedry:sandDull.name=Dullsand
+tile.smedry:sandRashid.name=Sands of Rashid
+tile.smedry:sandBright.name=Brightsand
+tile.smedry:sandHeat.name=Heatsand
+tile.smedry:sandStorm.name=Stormsand
+tile.smedry:sandVoid.name=Voidsand
+tile.smedry:sandTrail.name=Trailsand
+tile.smedry:sandBlood.name=Bloodsand
+tile.smedry:sandPain.name=Painsand
+tile.smedry:sandSun.name=Sunsand
+tile.smedry:sandView.name=Viewsand
+
+tile.smedry:glassDull.name=Dull Glass
+tile.smedry:glassRashid.name=Glass of Rashid
+tile.smedry:glassBright.name=Empowerer's Glass
+tile.smedry:glassHeat.name=Detonator's Glass [WIP]
+tile.smedry:glassStorm.name=Pressurizer's Glass
+tile.smedry:glassVoid.name=Inhaler's Glass
+tile.smedry:glassTrail.name=Grappler's Glass [WIP]
+tile.smedry:glassBlood.name=Gladiator's Glass
+tile.smedry:glassPain.name=Shardstepper's Glass
+tile.smedry:glassSun.name=Eyeburner's Glass [WIP]
+tile.smedry:glassView.name=Communicator's Glass [WIP]
+
+item.smedry:lensDull.name=Spectacle Lens
+item.smedry:lensRashid.name=Lens of Rashid
+item.smedry:lensBright.name=Oculator's Lens
+item.smedry:lensHeat.name=Firebringer's Lens
+item.smedry:lensStorm.name=Windstormer's Lens
+item.smedry:lensVoid.name=Voidstormer's Lens
+item.smedry:lensTrail.name=Tracker's Lens
+item.smedry:lensBlood.name=Warrior's Lens
+item.smedry:lensPain.name=Torturer's Lens
+item.smedry:lensSun.name=Shocker's Lens
+item.smedry:lensView.name=Courier's Lens

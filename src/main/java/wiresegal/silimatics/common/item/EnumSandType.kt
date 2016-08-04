@@ -6,12 +6,10 @@ import net.minecraft.util.IStringSerializable
  * @author WireSegal
  * Created at 9:11 AM on 8/4/16.
  */
-enum class EnumSandType(val color: Int, val chance: Double?) : IStringSerializable {
-    DULL(0xFFFFFF, 0.75), RASHID(0xFFFFFF, 0.001), BRIGHT(0x70C6E0, 0.15),
-    HEAT(0XE0AC70), STORM(0xA0E070), VOID(0x363D32), TRAIL(0xD3CD58),
-    BLOOD(0xBF8382), PAIN(0x628E66), SUN(0xC1A57A), VIEW(0xC88AD1);
-
-    constructor(color: Int) : this(color, null)
+enum class EnumSandType(val color: Int, val glassColor: Int, val chance: Double? = null) : IStringSerializable {
+     DULL(0xFFFFFF, 0xFFFFFF, 0.75), RASHID(0xFFFFFF, 0xFFFFFF, 0.001), BRIGHT(0x70C6E0, 0xE086D1, 0.15),
+     HEAT(0xE0AC70, 0xE0AC70),        STORM(0xA0E070, 0xA0E070),          VOID(0x363D32, 0x363D32),       TRAIL(0xD3CD58, 0xEA605B),
+    BLOOD(0xBF8382, 0x000000),         PAIN(0x628E66, 0x314433),           SUN(0xC1A57A, 0xF2C146),        VIEW(0xC88AD1, 0x42C9DD);
 
     override fun toString(): String {
         return this.name.toLowerCase().split("_").joinToString("", transform = { it.capitalizeFirst() }).lowercaseFirst()

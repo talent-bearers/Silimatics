@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "sand=dull": { "model": "minecraft:glass" },
+    "sand=rashid": { "model": "smedry:rashidGlass" },
+    "sand=bright": { "model": "smedry:baseGlass" },
+    "sand=heat": { "model": "smedry:baseGlass" },
+    "sand=storm": { "model": "smedry:baseGlass" },
+    "sand=void": { "model": "smedry:baseGlass" },
+    "sand=trail": { "model": "smedry:baseGlass" },
+    "sand=blood": { "model": "smedry:baseGlass" },
+    "sand=pain": { "model": "smedry:baseGlass" },
+    "sand=sun": { "model": "smedry:baseGlass" },
+    "sand=view": { "model": "smedry:baseGlass" }
+  }
+}

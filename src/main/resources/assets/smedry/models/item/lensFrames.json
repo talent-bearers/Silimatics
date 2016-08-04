@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "smedry:items/frames",
+    "layer1": "smedry:items/framesLenses"
+  }
+}

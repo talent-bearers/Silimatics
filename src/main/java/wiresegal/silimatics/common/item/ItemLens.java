@@ -1,5 +1,7 @@
-package wiresegal.silimatics.common.lens;
+package wiresegal.silimatics.common.item;
 
+import com.google.common.collect.Lists;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -13,48 +15,61 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.Nullable;
 import wiresegal.silimatics.api.lens.ILens;
 import wiresegal.silimatics.common.item.EnumSandType;
 import wiresegal.silimatics.common.item.ItemLensFrames;
+import wiresegal.silimatics.common.lens.LensDull;
+import wiresegal.silimatics.common.lens.LensWindstormer;
 import wiresegal.silimatics.common.lib.LibMisc;
 import wiresegal.zenmodelloader.client.core.TooltipHelper;
+import wiresegal.zenmodelloader.common.core.IItemColorProvider;
 import wiresegal.zenmodelloader.common.items.base.ItemMod;
 
 import java.util.List;
 
-public class ItemLens extends ItemMod implements ILens {
+public class ItemLens extends ItemMod implements ILens, IItemColorProvider {
 
     public static final String OCULATOR = LibMisc.MODID + ":oculator";
 
     public static ILens[] lenses = new ILens[] {
-            new LensWindstormer()
+            new LensDull(),
+            new LensDull(), //todo
+            new LensDull(), //todo
+            new LensDull(), //todo
+            new LensWindstormer(), //todo
+            new LensDull(), //todo
+            new LensDull(), //todo
+            new LensDull(), //todo
+            new LensDull(), //todo
+            new LensDull() //todo
     };
 
     public ItemLens(String name) {
-        super(name, EnumSandType.Companion.getSandTypeNames());
+        super(name, EnumSandType.Companion.getSandTypeNamesFor(name));
         MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        TooltipHelper.INSTANCE.tooltipIfShift(tooltip, () -> {
-            lenses[stack.getMetadata()].addTooltip(stack, playerIn, tooltip, advanced);
-        });
-        super.addInformation(stack, playerIn, tooltip, advanced);
+        List<String> tempTip = Lists.newArrayList();
+        lenses[stack.getMetadata() % lenses.length].addTooltip(stack, playerIn, tempTip, advanced);
+        if (tempTip.size() > 0)
+            TooltipHelper.INSTANCE.tooltipIfShift(tooltip, () -> tooltip.addAll(tempTip));
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
         //todo if player is wearing the frame
-        playerIn.setGlowing(true);
+        playerIn.setGlowing(false);
         worldIn.playSound(playerIn, playerIn.getPosition(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1f, 1f);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }
 
     @Override
     public void onUsingTick(World world, EntityPlayer player, ItemStack stack) {
-        lenses[stack.getMetadata()].onUsingTick(world, player, stack);
+        lenses[stack.getMetadata() % lenses.length].onUsingTick(world, player, stack);
     }
 
 
@@ -72,5 +87,10 @@ public class ItemLens extends ItemMod implements ILens {
         }
     }
 
-
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IItemColor getItemColor() {
+        return (stack, tintIndex) -> EnumSandType.values()[stack.getItemDamage() % EnumSandType.values().length].getGlassColor();
+    }
 }

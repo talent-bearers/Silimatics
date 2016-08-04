@@ -13,12 +13,13 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.silimatics.common.item.ItemModBlock
 import wiresegal.zenmodelloader.common.block.base.BlockMod
+import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.util.*
 
@@ -37,6 +38,14 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
         soundType = SoundType.SAND
     }
 
+    override fun isToolEffective(type: String, state: IBlockState): Boolean {
+        return type == "shovel"
+    }
+
+    override fun getHarvestTool(state: IBlockState?): String {
+        return "shovel"
+    }
+
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, SAND_TYPE)
     }
@@ -51,8 +60,8 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
         return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
     }
 
-    override fun createItemForm(): ItemBlock? {
-        return ItemModBlock(this).setHasSubtypes(true) as ItemBlock
+    override fun getLightValue(state: IBlockState, world: IBlockAccess?, pos: BlockPos?): Int {
+        return if (state.getValue(SAND_TYPE) == EnumSandType.BRIGHT) 15 else 0
     }
 
     override fun getMetaFromState(state: IBlockState): Int {

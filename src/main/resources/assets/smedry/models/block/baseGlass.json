@@ -1,0 +1,6 @@
+{
+  "parent": "smedry:block/baseColorableAll",
+  "textures": {
+    "all": "smedry:blocks/glass"
+  }
+}
