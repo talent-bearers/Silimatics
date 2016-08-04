@@ -105,11 +105,12 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     entity.addPotionEffect(PotionEffect(MobEffects.RESISTANCE, 5))
                 }
             } else if (state.getValue(SAND_TYPE) == EnumSandType.STORM || state.getValue(SAND_TYPE) == EnumSandType.VOID) {
+                val range = 4.0
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java,
-                        AxisAlignedBB(pos).expand(7.0, 7.0, 7.0)) {
+                        AxisAlignedBB(pos).expand(range, range, range)) {
                     (it is EntityLivingBase && it.isNonBoss) || (it is IProjectile)
                 }
-                pushEntities(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, 7.0, if (state.getValue(SAND_TYPE) == EnumSandType.STORM) 0.1 else -0.1, entities)
+                pushEntities(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, range, if (state.getValue(SAND_TYPE) == EnumSandType.STORM) 0.05 else -0.05, entities)
             } else if (state.getValue(SAND_TYPE) == EnumSandType.PAIN) {
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(pos).expand(1/16.0, 1/16.0, 1/16.0))
                 for (entity in entities)
@@ -124,13 +125,13 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 val xDif = entity.posX - x
                 val yDif = entity.posY - y
                 val zDif = entity.posZ - z
-                val motionMul = if (entity is EntityPlayer && entity.isSneaking) 0.125 else 1.0
+                val motionMul = if (entity is EntityPlayer && entity.isSneaking) 0.175 else 1.0
                 val vec = Vec3d(xDif, yDif, zDif).normalize()
                 val dist = xDif * xDif + yDif * yDif + zDif * zDif
                 if (dist <= range * range &&
-                        entity.motionX + motionMul * velocity * vec.xCoord < motionMul &&
-                        entity.motionY + motionMul * velocity * vec.yCoord < motionMul &&
-                        entity.motionZ + motionMul * velocity * vec.zCoord < motionMul) {
+                        Math.abs(entity.motionX + motionMul * velocity * vec.xCoord) < motionMul * Math.abs(velocity) * 10 &&
+                        Math.abs(entity.motionY + motionMul * velocity * vec.yCoord) < motionMul * Math.abs(velocity) * 10 &&
+                        Math.abs(entity.motionZ + motionMul * velocity * vec.zCoord) < motionMul * Math.abs(velocity) * 10) {
                     entity.motionX += motionMul * velocity * vec.xCoord
                     entity.motionY += motionMul * velocity * vec.yCoord * 1.5
                     entity.motionZ += motionMul * velocity * vec.zCoord
