@@ -3,6 +3,7 @@ package wiresegal.silimatics.common.lens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,8 +19,7 @@ public class LensOculator extends ItemLensBase {
     }
 
     @Override
-    public void onUsingTick(World world, EntityPlayer player) {
-        super.onUsingTick(world, player);
+    public void onUsingTick(World world, EntityPlayer player, ItemStack stack) {
     }
 
     @SubscribeEvent
