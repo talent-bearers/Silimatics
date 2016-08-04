@@ -135,7 +135,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     entity.motionX += motionMul * velocity * vec.xCoord
                     entity.motionY += motionMul * velocity * vec.yCoord * 1.5
                     entity.motionZ += motionMul * velocity * vec.zCoord
-                    if (motionMul > 0) entity.fallDistance = 0f
+                    if (velocity * vec.yCoord > 0) entity.fallDistance = 0f
                 }
             }
         }
