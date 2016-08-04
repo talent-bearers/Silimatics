@@ -10,9 +10,9 @@ import net.minecraft.world.World;
 import wiresegal.silimatics.api.lens.ILens;
 import wiresegal.zenmodelloader.common.items.base.ItemMod;
 
-public abstract class ItemLenBase extends ItemMod implements ILens {
+public abstract class ItemLensBase extends ItemMod implements ILens {
 
-    public ItemLenBase(String name) {
+    public ItemLensBase(String name) {
         super(name);
     }
 
@@ -23,4 +23,11 @@ public abstract class ItemLenBase extends ItemMod implements ILens {
         worldIn.playSound(playerIn, playerIn.getPosition(), SoundEvents.ITEM_ARMOR_EQUIP_IRON, SoundCategory.PLAYERS, 1f, 1f);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }
+
+    @Override
+    public void onUsingTick(World world, EntityPlayer player) {
+
+    }
+
+
 }

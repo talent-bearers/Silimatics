@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface ILens {
-    boolean cast(World world, EntityPlayer player);
-    String getUnlocalizedName(ItemStack stack);
+    void onUsingTick(World world, EntityPlayer player, ItemStack stack);
+    default boolean shouldMarkAsOculator(ItemStack stack) {
+        return true;
+    }
 }

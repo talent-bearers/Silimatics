@@ -1,12 +1,16 @@
 package wiresegal.silimatics.common.lens;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class LensOculator extends ItemLenBase {
+public class LensOculator extends ItemLensBase {
 
     public LensOculator(String name) {
         super(name);
@@ -14,14 +18,14 @@ public class LensOculator extends ItemLenBase {
     }
 
     @Override
-    public boolean cast(World world, EntityPlayer player) {
-        return false;
+    public void onUsingTick(World world, EntityPlayer player) {
+        super.onUsingTick(world, player);
     }
 
     @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent event) {
-        //if(Minecraft.getMinecraft().theWorld != null)
-            //GlStateManager.enableOutlineMode(0x12345);
-
+    @SideOnly(Side.CLIENT)
+    public void onRenderTick(RenderPlayerEvent event) {
+        if(Minecraft.getMinecraft().theWorld != null)
+            GlStateManager.enableOutlineMode(0x12345);
     }
 }
