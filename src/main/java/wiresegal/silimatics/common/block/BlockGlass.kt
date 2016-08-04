@@ -92,6 +92,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
     class TileSmedryGlass : TileMod(), ITickable {
         override fun update() {
+            if (worldObj.isBlockPowered(pos)) return
             val state = worldObj.getBlockState(pos)
             if (state.getValue(SAND_TYPE) == EnumSandType.BLOOD) {
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(pos.up()))
