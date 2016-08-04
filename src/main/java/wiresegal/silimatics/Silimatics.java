@@ -1,5 +1,6 @@
 package wiresegal.silimatics;
 
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,6 +20,7 @@ public class Silimatics {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        FMLLog.info("Shattering Glass, boy! We're late for The Modding Trials!");
         proxy.preInit(event);
     }
 

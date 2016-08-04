@@ -13,11 +13,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wiresegal.silimatics.api.lens.ILens;
 import wiresegal.silimatics.common.core.ModItems;
 import wiresegal.silimatics.common.item.ItemLensFrames;
+import wiresegal.silimatics.common.lib.LibMisc;
 import wiresegal.zenmodelloader.common.items.base.ItemMod;
 
 public abstract class ItemLensBase extends ItemMod implements ILens {
 
-    public static final String OCULATOR = "oculator";
+    public static final String OCULATOR = LibMisc.MODID + ":oculator";
 
     public ItemLensBase(String name) {
         super(name);
