@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wiresegal.silimatics.api.lens.ILens;
 import wiresegal.silimatics.common.core.ModItems;
+import wiresegal.silimatics.common.item.ItemLensFrames;
 import wiresegal.zenmodelloader.common.items.base.ItemMod;
 
 public abstract class ItemLensBase extends ItemMod implements ILens {
@@ -36,8 +37,12 @@ public abstract class ItemLensBase extends ItemMod implements ILens {
         public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
             if (!(event.getEntity() instanceof EntityPlayer)) return;
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            if (player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != ModItems.lensOculator) //for now
-                player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(OCULATOR, true);
+            ItemStack headStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+            if (headStack != null && headStack.getItem() instanceof ItemLensFrames) {
+                ItemStack lensStack = ItemLensFrames.Companion.getLensStack(headStack);
+                if (lensStack != null && lensStack.getItem() instanceof ILens && ((ILens) lensStack.getItem()).shouldMarkAsOculator(lensStack))
+                    player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(OCULATOR, true);
+            }
         }
     }
 
