@@ -1,4 +1,4 @@
-package wiresegal.silimatics.common.compat.waila
+package wiresegal.silimatics.client.compat.waila
 
 import mcp.mobius.waila.api.IWailaConfigHandler
 import mcp.mobius.waila.api.IWailaDataAccessor

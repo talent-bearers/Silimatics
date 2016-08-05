@@ -16,7 +16,6 @@ import wiresegal.silimatics.common.item.ItemLensFrames.Companion.setLensStack
 object ModRecipes {
     init {
         for (sand in EnumSandType.values()) {
-            GameRegistry.addRecipe(ShapelessOreRecipe(ItemStack(ModItems.sand, 4, sand.ordinal), ItemStack(ModBlocks.sand, 1, sand.ordinal)))
             GameRegistry.addRecipe(ShapedOreRecipe(ItemStack(ModBlocks.sand, 1, sand.ordinal),
                     "SS",
                     "SS",

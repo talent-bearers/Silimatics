@@ -10,7 +10,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.client.render.OculatorRenderLayer
-import wiresegal.silimatics.client.render.TileEntitySpecialRendererLensGrinder
+import wiresegal.silimatics.client.render.RenderLensGrinder
 import wiresegal.silimatics.common.block.BlockGlass
 import wiresegal.silimatics.common.block.BlockLensGrinder
 import wiresegal.silimatics.common.core.CommonProxy
@@ -23,7 +23,7 @@ class ClientProxy : CommonProxy() {
                 StateMap.Builder()
                         .withName(BlockGlass.SAND_TYPE)
                         .withSuffix("GlassPane").build())
-        ClientRegistry.bindTileEntitySpecialRenderer(BlockLensGrinder.TileLensGrinder::class.java, TileEntitySpecialRendererLensGrinder())
+        ClientRegistry.bindTileEntitySpecialRenderer(BlockLensGrinder.TileLensGrinder::class.java, RenderLensGrinder())
     }
 
     override fun init(event: FMLInitializationEvent) {

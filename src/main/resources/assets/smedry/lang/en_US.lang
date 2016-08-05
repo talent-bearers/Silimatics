@@ -91,6 +91,10 @@ smedry.lens.shocker.desc2=anyone looking at you is knocked out by the lens.
 item.smedry:lensView.name=Courier's Lens [WIP]
 item.smedry:lensView.plural.name=Courier's Lenses [WIP]
 
-
 item.smedry:lensFrames.name=Lens Frames
-smedry.sieve=Sieve
+
+tile.smedry:grinder.name=Lens Grinder
+tile.smedry:sifter.name=Sand Sifter
+
+jei.smedry.recipe.sifting=Sand Sifting
+jei.smedry.recipe.grinding=Lens Grinding

@@ -14,6 +14,8 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
@@ -23,16 +25,16 @@ import wiresegal.zenmodelloader.common.block.base.BlockModContainer
  */
 class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
 
+    init {
+        setHardness(0.3F)
+    }
+
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         return (worldIn.getTileEntity(pos) as TileLensGrinder).onBlockActivated(worldIn, pos, playerIn, heldItem)
     }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
         return TileLensGrinder()
-    }
-
-    override fun canRenderInLayer(state: IBlockState?, layer: BlockRenderLayer?): Boolean {
-        return layer == BlockRenderLayer.TRANSLUCENT
     }
 
     override fun isFullCube(state: IBlockState?): Boolean {
@@ -43,8 +45,8 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
         return false
     }
 
-    override fun shouldSideBeRendered(blockState: IBlockState?, blockAccess: IBlockAccess?, pos: BlockPos?, side: EnumFacing?): Boolean {
-        return true
+    override fun getDrops(world: IBlockAccess?, pos: BlockPos?, state: IBlockState?, fortune: Int): MutableList<ItemStack>? {
+        return mutableListOf(ItemStack(this))
     }
 
     class TileLensGrinder : TileMod() {
@@ -61,10 +63,11 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                 }
 
                 if (!worldIn.isRemote) {
-                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y - 0.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory?.metadata ?: 0))
-                    entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
-                    entityitem.motionY = 0.2
-                    entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
+                    val blockBelow = !worldIn.isAirBlock(pos.down())
+                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + if (blockBelow) 1.0 else -0.625, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory?.metadata ?: 0))
+                    entityitem.motionX = 0.0
+                    entityitem.motionY = if (blockBelow) 0.15 else 0.0
+                    entityitem.motionZ = 0.0
                     worldIn.spawnEntityInWorld(entityitem)
                     inventory = null
                     i = 10

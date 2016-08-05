@@ -13,7 +13,7 @@ open class CommonProxy {
         ModItems
         ModBlocks
         NetworkHelper
-        FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.common.compat.waila.WailaCompat.onWailaCall");
+        FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.common.compat.waila.WailaCompat.onWailaCall")
     }
 
     open fun init(event: FMLInitializationEvent) {

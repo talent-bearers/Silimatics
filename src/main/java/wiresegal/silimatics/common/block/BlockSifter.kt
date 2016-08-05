@@ -37,10 +37,8 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD) {
         }
     }
 
-    val lootTable: ResourceLocation? = ResourceLocation(LibMisc.MOD_ID, "loottables/sifter")
-
-    operator fun invoke() : ItemStack {
-        return ItemStack(this)
+    init {
+        setHardness(0.3F)
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand, heldItem: ItemStack?, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {

@@ -13,24 +13,22 @@ import net.minecraft.util.ResourceLocation
 import wiresegal.silimatics.common.item.ItemLens
 import wiresegal.silimatics.common.lib.LibMisc
 
-class OculatorRenderLayer : LayerRenderer<AbstractClientPlayer> {
-    private val render: RenderPlayer
-    constructor(rend: RenderPlayer) {
-        render = rend
-    }
+class OculatorRenderLayer(val render: RenderPlayer) : LayerRenderer<AbstractClientPlayer> {
+
+    val TEXTURE = ResourceLocation("${LibMisc.MODID}", "blocks/empty")
+
     override fun doRenderLayer(entitylivingbaseIn: AbstractClientPlayer, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
         if(!entitylivingbaseIn.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getBoolean(ItemLens.Companion.EventHandler.OCULATOR)) return
-        render.bindTexture(ResourceLocation("${LibMisc.MODID}:blocks/empty"))
+        render.bindTexture(TEXTURE)
         setModelVisibilities(entitylivingbaseIn)
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN)
         val glowing = entitylivingbaseIn.isGlowing
         GlStateManager.color(255F, 255F, 25F)
-        val isGlowing = entitylivingbaseIn.isGlowing
         entitylivingbaseIn.isGlowing = true
         render.mainModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
         GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN)
         GlStateManager.color(1F, 1F, 1F)
-        entitylivingbaseIn.isGlowing = isGlowing
+        entitylivingbaseIn.isGlowing = glowing
     }
 
     override fun shouldCombineTextures(): Boolean {
