@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
@@ -28,6 +29,19 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
         return TileLensGrinder()
     }
+
+    override fun canRenderInLayer(state: IBlockState?, layer: BlockRenderLayer?): Boolean {
+        return layer == BlockRenderLayer.TRANSLUCENT
+    }
+
+    override fun isFullCube(state: IBlockState?): Boolean {
+        return false
+    }
+
+    override fun isOpaqueCube(state: IBlockState?): Boolean {
+        return false
+    }
+
     class TileLensGrinder : TileMod() {
         val inventory = Lists.newArrayList<ItemStack>()
 
