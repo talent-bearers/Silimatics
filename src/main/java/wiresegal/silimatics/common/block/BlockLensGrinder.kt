@@ -24,7 +24,7 @@ import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        return (worldIn.getTileEntity(pos) as TileLensGrinder).onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ)
+        return (worldIn.getTileEntity(pos) as TileLensGrinder).onBlockActivated(worldIn, pos, playerIn, heldItem)
     }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity {
@@ -48,16 +48,20 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
     }
 
     class TileLensGrinder : TileMod() {
+
         var inventory: ItemStack? = null
+
         var i: Int = 10
-        fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-            if(inventory != null) {
-                if(i != 0) {
+
+        fun onBlockActivated(worldIn: World, pos: BlockPos, playerIn: EntityPlayer?, heldItem: ItemStack?): Boolean {
+            if (inventory != null) {
+                if (i != 0) {
                     i--
                     return true
                 }
-                if(!worldIn.isRemote) {
-                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y - 0.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, (inventory as ItemStack).metadata));
+
+                if (!worldIn.isRemote) {
+                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y - 0.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory?.metadata ?: 0))
                     entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
                     entityitem.motionY = 0.2
                     entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
@@ -67,8 +71,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                     markDirty()
                 }
                 return true
-            }
-            else if (heldItem != null && heldItem.item == Item.getItemFromBlock(ModBlocks.glassPane) && !worldIn.isRemote) {
+            } else if (heldItem != null && heldItem.item == Item.getItemFromBlock(ModBlocks.glassPane) && !worldIn.isRemote) {
                 if (playerIn?.capabilities?.isCreativeMode?.not() ?: true) {
                     heldItem.stackSize--
                     if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)

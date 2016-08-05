@@ -23,6 +23,7 @@ object WailaCompat {
 
     }
 }
+
 class PaneStackProvider : IWailaDataProvider {
     override fun getWailaStack(accessor: IWailaDataAccessor, config: IWailaConfigHandler?): ItemStack? {
         return ItemStack(ModBlocks.glassPane, 1, accessor.metadata)
@@ -45,6 +46,7 @@ class PaneStackProvider : IWailaDataProvider {
     }
 
 }
+
 class GlassStackProvider : IWailaDataProvider {
     override fun getWailaStack(accessor: IWailaDataAccessor, config: IWailaConfigHandler?): ItemStack? {
         return ItemStack(ModBlocks.glass, 1, accessor.metadata)

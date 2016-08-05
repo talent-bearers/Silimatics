@@ -8,16 +8,13 @@ import net.minecraft.network.play.server.SPacketParticles
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraft.world.WorldServer
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
-import java.awt.Color
 import java.util.*
 
 class LensTracker : ILens {

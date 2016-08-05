@@ -3,7 +3,6 @@ package wiresegal.silimatics.common.lens
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.projectile.EntitySmallFireball
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.SilimaticMethodHandles

@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.block
 
-import com.google.common.collect.Lists
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
@@ -18,7 +17,6 @@ import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.lib.LibMisc
-import java.util.concurrent.ThreadLocalRandom
 
 /**
  * Created by Elad on 8/4/2016.

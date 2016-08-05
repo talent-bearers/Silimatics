@@ -18,7 +18,6 @@ import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.DamageSource
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
-import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.IBlockAccess

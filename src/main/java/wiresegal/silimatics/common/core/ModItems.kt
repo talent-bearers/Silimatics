@@ -13,10 +13,11 @@ object ModItems {
     var frame: ItemLensFrames
     var sand: ItemSand
     var debugger: ItemDebugger?
+
     init {
         lens = ItemLens(LibNames.LENS)
         frame = ItemLensFrames(LibNames.LENS_FRAMES, ItemArmor.ArmorMaterial.CHAIN)
         sand = ItemSand(LibNames.SAND_ITEM)
-        debugger = if(Silimatics.isDevEnv) ItemDebugger(LibNames.DEBUGGER) else null
+        debugger = if (Silimatics.isDevEnv) ItemDebugger(LibNames.DEBUGGER) else null
     }
 }
