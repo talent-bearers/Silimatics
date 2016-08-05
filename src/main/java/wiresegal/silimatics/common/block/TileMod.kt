@@ -49,7 +49,7 @@ abstract class TileMod : TileEntity() {
 
     override fun markDirty() {
         super.markDirty()
-        if(!worldObj.isRemote)
+        if (!worldObj.isRemote)
             dispatchTileToNearbyPlayers()
     }
 
@@ -59,11 +59,11 @@ abstract class TileMod : TileEntity() {
     }
 
     open fun dispatchTileToNearbyPlayers() {
-        if(worldObj is WorldServer) {
+        if (worldObj is WorldServer) {
             val ws: WorldServer = worldObj as WorldServer
             val packet: SPacketUpdateTileEntity = updatePacket
 
-            for(player in ws.playerEntities) {
+            for (player in ws.playerEntities) {
                 val playerMP = player as EntityPlayerMP
                 if (playerMP.getDistanceSq(getPos()) < 64 * 64
                         && ws.playerChunkMap.isPlayerWatchingChunk(playerMP, pos.x shr 4, pos.z shr 4)) {

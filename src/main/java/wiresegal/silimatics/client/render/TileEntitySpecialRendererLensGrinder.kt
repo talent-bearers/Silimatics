@@ -10,7 +10,7 @@ import java.util.*
 class TileEntitySpecialRendererLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGrinder>() {
     override fun renderTileEntityAt(tel: BlockLensGrinder.TileLensGrinder?, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int) {
         if (tel is BlockLensGrinder.TileLensGrinder) {
-            if(tel.inventory == null) return
+            if (tel.inventory == null) return
             GL11.glPushMatrix();
             val item: EntityItem = EntityItem(Minecraft.getMinecraft().theWorld, x, y, z, tel.inventory);
             item.hoverStart = 0f;

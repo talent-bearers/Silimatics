@@ -32,7 +32,7 @@ class ClientProxy : CommonProxy() {
                     z + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
                     1f,
                     1f,
-                    153/255f)
+                    153 / 255f)
 
             Minecraft.getMinecraft().effectRenderer.addEffect(dust)
         }
@@ -56,9 +56,10 @@ class ClientProxy : CommonProxy() {
     //particles under this line are literally vanilla particles but i can't be bothered to use their constructors the correct way
     private class SieveDustParticle(worldIn: World?, posXIn: Double, posYIn: Double, posZIn: Double, red: Float,
                                     green: Float, blue: Float) : ParticleFallingDust(worldIn,
-                                    posXIn, posYIn, posZIn, red, green, blue)
+            posXIn, posYIn, posZIn, red, green, blue)
+
     private class OculatorParticle(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float,
                                    red: Float, green: Float, blue: Float) : ParticleRedstone(worldIn, xCoordIn, yCoordIn,
-                                   zCoordIn, scale, red, green, blue)
+            zCoordIn, scale, red, green, blue)
 }
 
