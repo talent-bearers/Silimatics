@@ -1,11 +1,9 @@
 package wiresegal.silimatics.common.core
 
-import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.fml.common.registry.GameRegistry
 import wiresegal.silimatics.common.block.BlockGlass
 import wiresegal.silimatics.common.block.BlockSand
 import wiresegal.silimatics.common.block.BlockSifter
-import wiresegal.silimatics.common.lib.LibNames
 
 object ModBlocks {
     var sifter: BlockSifter

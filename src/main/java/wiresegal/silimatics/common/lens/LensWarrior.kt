@@ -3,13 +3,10 @@ package wiresegal.silimatics.common.lens
 import com.google.common.collect.Multimap
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.attributes.AttributeModifier
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
-import net.minecraft.world.World
 import wiresegal.silimatics.api.lens.ILens
-
-import java.util.UUID
+import java.util.*
 
 class LensWarrior : ILens {
     override fun shouldMarkAsOculator(stack: ItemStack): Boolean {

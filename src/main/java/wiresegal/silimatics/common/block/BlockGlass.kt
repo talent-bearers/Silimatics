@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.block
 
-import com.sun.org.apache.xpath.internal.operations.Bool
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
@@ -13,11 +12,11 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
-import net.minecraft.item.ItemBlock
 import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.DamageSource
+import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
-import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 
 /**
@@ -140,5 +138,15 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
             }
         }
 
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun shouldSideBeRendered(blockState: IBlockState, blockAccess: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean {
+        val iblockstate = blockAccess.getBlockState(pos.offset(side))
+        val block = iblockstate.block
+
+        return if (blockState !== iblockstate) true
+        else if (block === this) false
+        else super.shouldSideBeRendered(blockState, blockAccess, pos, side)
     }
 }

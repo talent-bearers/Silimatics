@@ -5,10 +5,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import wiresegal.silimatics.common.core.ItemNBTHelper;
-import wiresegal.silimatics.common.item.ItemLens;
 
 import javax.annotation.Nonnull;
 import java.util.List;

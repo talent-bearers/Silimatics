@@ -67,7 +67,8 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
     }
 
     override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
-        (stack.getLensStack().item as ILens).addTooltip(stack, playerIn, tooltip, advanced)
+        val lensStack = stack.getLensStack()
+        (lensStack.item as ILens).addTooltip(lensStack, playerIn, tooltip, advanced)
     }
 
     override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: MutableList<ItemStack>) {

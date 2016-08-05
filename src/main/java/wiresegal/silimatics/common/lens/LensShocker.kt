@@ -1,35 +1,18 @@
 package wiresegal.silimatics.common.lens
 
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.init.SoundEvents
-import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.client.event.RenderWorldLastEvent
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.relauncher.Side
-import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
-import wiresegal.silimatics.common.core.ModItems
-import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.silimatics.common.item.ItemLens
-import wiresegal.silimatics.common.item.ItemLensFrames
-import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 class LensShocker : ILens {
 
@@ -76,5 +59,10 @@ class LensShocker : ILens {
             }
             ItemNBTHelper.setInt(stack, TAG_WARMUP, 0)
         }
+    }
+
+    override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.shocker.desc1")
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.shocker.desc2")
     }
 }

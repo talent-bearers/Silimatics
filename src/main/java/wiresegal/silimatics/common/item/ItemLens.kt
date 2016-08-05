@@ -5,12 +5,8 @@ import com.google.common.collect.Multimap
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.SoundEvents
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ActionResult
-import net.minecraft.util.EnumHand
-import net.minecraft.util.SoundCategory
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent
@@ -18,12 +14,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
+import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lens.*
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
 import wiresegal.zenmodelloader.common.items.base.ItemMod
-import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 
 class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(name)), ILens, IItemColorProvider {
 

@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.init.Blocks
-import net.minecraft.item.ItemBlock
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -19,7 +18,6 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.util.*
 
