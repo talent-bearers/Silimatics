@@ -20,7 +20,7 @@ class LensShocker : ILens {
         val TAG_WARMUP = "warmup"
         val TOTAL_WARMUP = 5 * 20
 
-        val LOOK_THRESHOLD = Math.cos(Math.PI/4)
+        val LOOK_THRESHOLD = Math.cos(Math.PI / 4)
     }
 
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {

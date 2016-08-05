@@ -72,7 +72,7 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
     }
 
     override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: MutableList<ItemStack>) {
-        for(i in ItemLens.lenses.indices)
+        for (i in ItemLens.lenses.indices)
             subItems.add(ItemStack(itemIn).setLensStack(ItemStack(ModItems.lens, 1, i)))
     }
 

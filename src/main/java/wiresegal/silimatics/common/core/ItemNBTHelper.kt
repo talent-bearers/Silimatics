@@ -24,6 +24,7 @@ object ItemNBTHelper {
         getNBT(stack).removeTag(tag + "Most")
         getNBT(stack).removeTag(tag + "Least")
     }
+
     fun verifyExistence(stack: ItemStack, tag: String) = getNBT(stack).hasKey(tag)
     fun verifyUUIDExistence(stack: ItemStack, tag: String) = verifyExistence(stack, tag + "Most") && verifyExistence(stack, tag + "Least")
 
@@ -72,7 +73,7 @@ object ItemNBTHelper {
             if (verifyExistence(stack, tag)) getNBT(stack).getString(tag) else defaultExpected
 
     fun getList(stack: ItemStack, tag: String, nbtClass: Class<NBTBase>, nullifyOnFail: Boolean) =
-        getList(stack, tag, nbtClass.newInstance().id.toInt(), nullifyOnFail)
+            getList(stack, tag, nbtClass.newInstance().id.toInt(), nullifyOnFail)
 
     fun getList(stack: ItemStack, tag: String, objType: Int, nullifyOnFail: Boolean) =
             if (verifyExistence(stack, tag)) getNBT(stack).getTagList(tag, objType) else if (nullifyOnFail) null else NBTTagList()

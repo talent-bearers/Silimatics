@@ -1,0 +1,16 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "smedry:blocks/glass",
+    "glass": "smedry:blocks/glass"
+  },
+  "elements": [
+    {   "from": [ 7, 0, 7 ],
+      "to": [ 9, 16, 9 ],
+      "faces": {
+        "down":  { "uv": [  7, 7,  9,  9 ], "texture": "#glass", "tintindex": 0 },
+        "up":    { "uv": [  7, 7,  9,  9 ], "texture": "#glass", "tintindex": 0 }
+      }
+    }
+  ]
+}

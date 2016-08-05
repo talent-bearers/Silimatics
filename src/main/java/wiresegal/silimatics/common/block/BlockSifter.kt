@@ -17,11 +17,11 @@ import wiresegal.zenmodelloader.common.block.base.BlockMod
 /**
  * Created by Elad on 8/4/2016.
  */
-class BlockSifter : BlockMod(LibNames.SIFTER, Material.WOOD) {
+class BlockSifter(name: String) : BlockMod(name, Material.WOOD) {
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand, heldItem: ItemStack?, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        if(heldItem != null && heldItem.item == Item.getItemFromBlock(Blocks.SAND) && !worldIn.isRemote) {
+        if (heldItem != null && heldItem.item == Item.getItemFromBlock(Blocks.SAND) && !worldIn.isRemote) {
             heldItem.stackSize--
-            if(heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
+            if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
 
             var sand = EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), null)
         }

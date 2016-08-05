@@ -96,7 +96,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
             if (worldObj.isBlockPowered(pos)) return
             val state = worldObj.getBlockState(pos)
             if (state.getValue(SAND_TYPE) == EnumSandType.BLOOD) {
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(pos.up()))
+                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
                 if (!worldObj.isRemote) for (entity in entities) {
                     entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 5, 3))
                     entity.addPotionEffect(PotionEffect(MobEffects.STRENGTH, 5))
@@ -105,12 +105,12 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
             } else if (state.getValue(SAND_TYPE) == EnumSandType.STORM || state.getValue(SAND_TYPE) == EnumSandType.VOID) {
                 val range = 4.0
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java,
-                        AxisAlignedBB(pos).expand(range, range, range)) {
+                        state.getBoundingBox(worldObj, pos).offset(pos).expand(range, range, range)) {
                     (it is EntityLivingBase && it.isNonBoss) || (it is IProjectile)
                 }
                 pushEntities(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, range, if (state.getValue(SAND_TYPE) == EnumSandType.STORM) 0.05 else -0.05, entities)
             } else if (state.getValue(SAND_TYPE) == EnumSandType.PAIN) {
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(pos).expand(1/16.0, 1/16.0, 1/16.0))
+                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 1 / 16.0, 1 / 16.0))
                 for (entity in entities)
                     entity.attackEntityFrom(DamageSource.cactus, 1f)
 
