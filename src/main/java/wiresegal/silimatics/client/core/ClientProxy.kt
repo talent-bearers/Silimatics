@@ -6,8 +6,11 @@ import net.minecraft.client.particle.ParticleRedstone
 import net.minecraft.client.renderer.block.statemap.StateMap
 import net.minecraft.world.World
 import net.minecraftforge.client.model.ModelLoader
+import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import wiresegal.silimatics.client.render.TileEntitySpecialRendererLensGrinder
 import wiresegal.silimatics.common.block.BlockGlass
+import wiresegal.silimatics.common.block.BlockLensGrinder
 import wiresegal.silimatics.common.core.CommonProxy
 import wiresegal.silimatics.common.core.ModBlocks
 
@@ -18,6 +21,7 @@ class ClientProxy : CommonProxy() {
                 StateMap.Builder()
                         .withName(BlockGlass.SAND_TYPE)
                         .withSuffix("GlassPane").build())
+        ClientRegistry.bindTileEntitySpecialRenderer(BlockLensGrinder.TileLensGrinder::class.java, TileEntitySpecialRendererLensGrinder())
     }
 
     override fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {

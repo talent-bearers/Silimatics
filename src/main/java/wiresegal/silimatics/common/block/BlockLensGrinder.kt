@@ -1,17 +1,18 @@
 package wiresegal.silimatics.common.block
 
-import com.google.common.collect.Lists
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems
@@ -42,18 +43,28 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
         return false
     }
 
-    class TileLensGrinder : TileMod() {
-        val inventory = Lists.newArrayList<ItemStack>()
+    override fun shouldSideBeRendered(blockState: IBlockState?, blockAccess: IBlockAccess?, pos: BlockPos?, side: EnumFacing?): Boolean {
+        return true
+    }
 
+    class TileLensGrinder : TileMod() {
+        var inventory: ItemStack? = null
+        var i: Int = 10
         fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-            if(inventory.size >= 1) {
+            if(inventory != null) {
+                if(i != 0) {
+                    i--
+                    return true
+                }
                 if(!worldIn.isRemote) {
-                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + 1.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory[0].metadata));
+                    val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y - 0.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, (inventory as ItemStack).metadata));
                     entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
                     entityitem.motionY = 0.2
                     entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
                     worldIn.spawnEntityInWorld(entityitem)
-                    inventory.clear()
+                    inventory = null
+                    i = 10
+                    markDirty()
                 }
                 return true
             }
@@ -62,9 +73,24 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                     heldItem.stackSize--
                     if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
                 }
-                inventory.add(heldItem)
+                val stack = heldItem.copy()
+                stack.stackSize = 1
+                inventory = stack
+                markDirty()
             }
             return true;
+        }
+
+        override fun writeCustomNBT(cmp: NBTTagCompound) {
+            val compound = NBTTagCompound()
+            inventory?.writeToNBT(compound)
+            cmp.setTag("stack", compound);
+            cmp.setInteger("i", i)
+        }
+
+        override fun readCustomNBT(cmp: NBTTagCompound) {
+            inventory = ItemStack.loadItemStackFromNBT(cmp.getCompoundTag("stack"))
+            i = cmp.getInteger("i")
         }
 
     }

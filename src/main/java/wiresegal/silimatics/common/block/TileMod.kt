@@ -1,12 +1,14 @@
 package wiresegal.silimatics.common.block
 
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SPacketUpdateTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraft.world.WorldServer
 
 /**
  * @author WireSegal
@@ -33,7 +35,7 @@ abstract class TileMod : TileEntity() {
         return writeToNBT(super.getUpdateTag())
     }
 
-    override fun getUpdatePacket(): SPacketUpdateTileEntity? {
+    override fun getUpdatePacket(): SPacketUpdateTileEntity {
         return SPacketUpdateTileEntity(pos, -999, updateTag)
     }
 
@@ -45,8 +47,29 @@ abstract class TileMod : TileEntity() {
         // NO-OP
     }
 
+    override fun markDirty() {
+        super.markDirty()
+        if(!worldObj.isRemote)
+            dispatchTileToNearbyPlayers()
+    }
+
     override fun onDataPacket(net: NetworkManager, packet: SPacketUpdateTileEntity) {
         super.onDataPacket(net, packet)
         readCustomNBT(packet.nbtCompound)
+    }
+
+    open fun dispatchTileToNearbyPlayers() {
+        if(worldObj is WorldServer) {
+            val ws: WorldServer = worldObj as WorldServer
+            val packet: SPacketUpdateTileEntity = updatePacket
+
+            for(player in ws.playerEntities) {
+                val playerMP = player as EntityPlayerMP
+                if (playerMP.getDistanceSq(getPos()) < 64 * 64
+                        && ws.playerChunkMap.isPlayerWatchingChunk(playerMP, pos.x shr 4, pos.z shr 4)) {
+                    playerMP.connection.sendPacket(packet);
+                }
+            }
+        }
     }
 }
