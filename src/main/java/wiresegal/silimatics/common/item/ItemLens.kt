@@ -75,7 +75,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
                 val headStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)
                 if (headStack != null && headStack.item is ItemLensFrames) {
                     val lensStack = headStack.getLensStack()
-                    if (lensStack != null && lensStack.item is ILens && (lensStack.item as ILens).shouldMarkAsOculator(lensStack))
+                    if ((lensStack.item as ILens).shouldMarkAsOculator(lensStack))
                         player.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(OCULATOR, true)
                 }
             }

@@ -11,8 +11,6 @@ import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.ActionResult
-import net.minecraft.util.EnumHand
 import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
@@ -21,7 +19,6 @@ import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibMisc
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 import wiresegal.zenmodelloader.common.ZenModelLoader
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
 
@@ -34,13 +31,21 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
     companion object {
         val TAG_LENS = "lens"
 
-        fun ItemStack.getLensStack(): ItemStack? {
-            val compound = ItemNBTHelper.getCompound(this, TAG_LENS, true) ?: return null
+        fun ItemStack.getLensStack(): ItemStack {
+            val compound = ItemNBTHelper.getCompound(this, TAG_LENS, true)
+
+            if (compound == null) {
+                this.setLensStack(null)
+                return ItemStack(ModItems.lens)
+            }
+
             val stack = ItemStack.loadItemStackFromNBT(compound)
+
             if (stack.item !is ILens) {
                 this.setLensStack(null)
                 return ItemStack(ModItems.lens)
             }
+
             return stack
         }
 
@@ -56,14 +61,13 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
 
     override fun getItemStackDisplayName(stack: ItemStack): String {
         val name = super.getItemStackDisplayName(stack)
-        val lensStack = stack.getLensStack() ?: return name
+        val lensStack = stack.getLensStack()
         val lensName = ZenModelLoader.PROXY.translate(lensStack.unlocalizedName + ".plural.name")
         return "$name ${TextFormatting.WHITE}(${TextFormatting.GREEN}$lensName${TextFormatting.WHITE})"
     }
 
     override fun addInformation(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
-        if (stack.getLensStack() != null && stack.getLensStack()?.item is ItemLens)
-            (stack.getLensStack()?.item as ILens).addTooltip(stack, playerIn, tooltip, advanced)
+        (stack.getLensStack().item as ILens).addTooltip(stack, playerIn, tooltip, advanced)
     }
 
     override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: MutableList<ItemStack>) {
@@ -73,9 +77,9 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
 
     override fun getArmorTexture(stack: ItemStack, entity: Entity?, slot: EntityEquipmentSlot?, type: String?): String {
         val lensStack = stack.getLensStack()
-        val lensItem = lensStack?.item
+        val lensItem = lensStack.item
         var second = ""
-        if (lensStack != null && lensItem != null && lensItem == ModItems.lens) {
+        if (lensItem == ModItems.lens) {
             if (lensStack.itemDamage == EnumSandType.DULL.ordinal) second = "Glass"
             else if (lensStack.itemDamage == EnumSandType.RASHID.ordinal) second = "Rashid"
         }
@@ -83,14 +87,14 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
     }
 
     override fun onArmorTick(world: World, player: EntityPlayer, itemStack: ItemStack) {
-        val lens = itemStack.getLensStack() ?: return
+        val lens = itemStack.getLensStack()
         (lens.item as ILens).onUsingTick(world, player, lens)
         itemStack.setLensStack(lens)
     }
 
     override fun getAttributeModifiers(slot: EntityEquipmentSlot, stack: ItemStack): Multimap<String, AttributeModifier> {
         val multimap = super.getAttributeModifiers(slot, stack)
-        val lensStack = stack.getLensStack() ?: return multimap
+        val lensStack = stack.getLensStack()
         val item = (lensStack.item as ILens)
         item.addAttributes(slot, lensStack, multimap)
         return multimap
@@ -101,7 +105,7 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
         return IItemColor { itemStack, i ->
             if (i == 1) {
                 val lensStack = itemStack.getLensStack()
-                if (lensStack == null) 0xFFFFFF else Minecraft.getMinecraft().itemColors.getColorFromItemstack(lensStack, i)
+                Minecraft.getMinecraft().itemColors.getColorFromItemstack(lensStack, i)
             } else 0xFFFFFF
         }
     }
@@ -109,10 +113,7 @@ class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants
     @SideOnly(Side.CLIENT)
     override fun getColor(stack: ItemStack): Int {
         val lensStack = stack.getLensStack()
-        return if (lensStack == null)
-            0xFEFEFE
-        else
-            Minecraft.getMinecraft().itemColors.getColorFromItemstack(lensStack, 1)
+        return Minecraft.getMinecraft().itemColors.getColorFromItemstack(lensStack, 1)
     }
 
     override fun hasColor(stack: ItemStack?): Boolean {
