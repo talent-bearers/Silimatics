@@ -8,4 +8,5 @@ object LibNames {
     val SAND_ITEM = "dustSand"
     val GLASS = "glass"
     val GLASS_PANE = "glassPane"
+    val GRINDER = "grinder"
 }

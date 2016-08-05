@@ -13,6 +13,7 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import wiresegal.silimatics.common.Silimatics
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.lib.LibMisc
@@ -26,16 +27,10 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD) {
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand, heldItem: ItemStack?, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (heldItem != null && heldItem.item == Item.getItemFromBlock(Blocks.SAND) && !worldIn.isRemote) {
-            heldItem.stackSize--
-            if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
-            //ok this doesn't work
-            /*val stacks: List<ItemStack> = worldIn.lootTableManager.getLootTableFromLocation(lootTable).generateLootForPools(worldIn.rand, LootContext.Builder(worldIn as WorldServer).build())
-            print(stacks.isEmpty())
-            for(stack in stacks) {
-                val sand = EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble() + 1.5, pos.z.toDouble(), stack)
-                worldIn.spawnEntityInWorld(sand)
-                println(stack)
-            }*/
+            if(playerIn?.capabilities?.isCreativeMode?.not() ?: true) {
+                heldItem.stackSize--
+                if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
+            }
             val stacks = Lists.newArrayList<ItemStack>()
             for(i in 1..4) {
                 val randomInt = ThreadLocalRandom.current().nextInt(1001)
@@ -44,9 +39,16 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD) {
                 else if (randomInt < 901) stacks.add(ItemStack(ModItems.sand, 1, 1))
                 else stacks.add(ItemStack(ModItems.sand, 1, ThreadLocalRandom.current().nextInt(3, 11)))
             }
-            for(stack in stacks) worldIn.spawnEntityInWorld(EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack))
+            for(stack in stacks) {
+                //worldIn.spawnEntityInWorld(EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack))
+                val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + 1.5, pos.z + 0.5, stack);
+                entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
+                entityitem.motionY = 0.2
+                entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
+                worldIn.spawnEntityInWorld(entityitem)
+            }
 
-
+            Silimatics.proxy!!.makeParticleDust(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 0.0, -1.0, 0.0, 12)
 
         }
         return true

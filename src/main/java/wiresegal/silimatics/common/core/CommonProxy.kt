@@ -20,4 +20,8 @@ open class CommonProxy {
     fun postInit(event: FMLPostInitializationEvent) {
 
     }
+
+    open fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {
+        //NO-OP
+    }
 }
