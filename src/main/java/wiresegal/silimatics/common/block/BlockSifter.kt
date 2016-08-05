@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.block
 
-import com.google.common.collect.Lists
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
@@ -18,7 +17,6 @@ import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.lib.LibMisc
-import java.util.concurrent.ThreadLocalRandom
 
 /**
  * Created by Elad on 8/4/2016.
@@ -40,6 +38,10 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD) {
     }
 
     val lootTable: ResourceLocation? = ResourceLocation(LibMisc.MOD_ID, "loottables/sifter")
+
+    operator fun invoke() : ItemStack {
+        return ItemStack(this)
+    }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand, heldItem: ItemStack?, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (heldItem != null && heldItem.item == Item.getItemFromBlock(Blocks.SAND) && !worldIn.isRemote) {
