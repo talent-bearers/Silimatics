@@ -1,0 +1,134 @@
+{
+  "pools": [
+    {
+      "rolls": {
+        "min": 4,
+        "max": 4
+      },
+      "entries": [
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 750,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 0
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 1
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 150,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 2
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 3
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 4
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 5
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 6
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 7
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 8
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 9
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "silimatics:dustSand",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_data",
+              "data": 10
+            }
+          ]
+        }
+
+      ]
+    }
+  ]
+}
