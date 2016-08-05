@@ -7,7 +7,9 @@ import net.minecraft.client.renderer.block.statemap.StateMap
 import net.minecraft.world.World
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.fml.client.registry.ClientRegistry
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import wiresegal.silimatics.client.render.OculatorRenderLayer
 import wiresegal.silimatics.client.render.TileEntitySpecialRendererLensGrinder
 import wiresegal.silimatics.common.block.BlockGlass
 import wiresegal.silimatics.common.block.BlockLensGrinder
@@ -22,6 +24,17 @@ class ClientProxy : CommonProxy() {
                         .withName(BlockGlass.SAND_TYPE)
                         .withSuffix("GlassPane").build())
         ClientRegistry.bindTileEntitySpecialRenderer(BlockLensGrinder.TileLensGrinder::class.java, TileEntitySpecialRendererLensGrinder())
+    }
+
+    override fun init(event: FMLInitializationEvent) {
+        super.init(event)
+        val skinMap = Minecraft.getMinecraft().renderManager.skinMap
+
+        var render = skinMap["default"]
+        render?.addLayer(OculatorRenderLayer(render))
+
+        render = skinMap["slim"]
+        render?.addLayer(OculatorRenderLayer(render))
     }
 
     override fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {

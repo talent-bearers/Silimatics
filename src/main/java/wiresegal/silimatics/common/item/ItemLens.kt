@@ -17,6 +17,8 @@ import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lens.*
 import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.silimatics.networking.MessageSmedrize
+import wiresegal.silimatics.networking.NetworkHelper
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
 import wiresegal.zenmodelloader.common.items.base.ItemMod
@@ -60,7 +62,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
     }
 
     companion object {
-
+        val OCULATOR_TAG = LibMisc.MODID + ":oculator"
         object EventHandler {
             val OCULATOR = LibMisc.MODID + ":oculator"
 
@@ -74,6 +76,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
                     if ((lensStack.item as ILens).shouldMarkAsOculator(lensStack))
                         player.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(OCULATOR, true)
                 }
+                NetworkHelper.tellEveryone(MessageSmedrize(player.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getBoolean(OCULATOR)))
             }
         }
 
