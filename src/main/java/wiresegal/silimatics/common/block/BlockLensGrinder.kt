@@ -45,9 +45,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
     class TileLensGrinder : TileMod() {
         val inventory = Lists.newArrayList<ItemStack>()
 
-
         fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-            println(inventory.size)
             if(inventory.size >= 1) {
                 if(!worldIn.isRemote) {
                     val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + 1.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory[0].metadata));

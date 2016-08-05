@@ -28,20 +28,4 @@ public interface ILens {
     default void addAttributes(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack, @Nonnull Multimap<String, AttributeModifier> modifiers) {
         //NO-OP
     }
-    
-    default Vec3d addPlayerLook(@Nonnull EntityPlayer player, BlockPos pos) {
-        if (player.getLookVec().xCoord < 0.5 && player.getLookVec().xCoord > -0.5 && player.getLookVec().zCoord < -0.5) {//north, -z
-            return new Vec3d(pos.getX(), pos.getY(), pos.getZ() - 1.5);
-
-        } else if (player.getLookVec().zCoord < 0.5 && player.getLookVec().zCoord > -0.5 && player.getLookVec().zCoord > 0.5) {//east, +x
-            return new Vec3d(pos.getX() + 1.5, pos.getY(), pos.getZ());
-
-        } else if (player.getLookVec().xCoord < 0.5 && player.getLookVec().xCoord > -0.5 && player.getLookVec().zCoord > 0.5) {//south +z
-            return new Vec3d(pos.getX(), pos.getY(), pos.getZ() + 1.5);
-
-        } else {
-            return new Vec3d(pos.getX() - 1.5, pos.getY(), pos.getZ());
-
-        }
-    }
 }

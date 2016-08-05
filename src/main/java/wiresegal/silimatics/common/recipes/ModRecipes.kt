@@ -7,6 +7,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
+import wiresegal.silimatics.common.item.ItemLensFrames.Companion.setLensStack
 
 /**
  * @author WireSegal
@@ -24,6 +25,11 @@ object ModRecipes {
                     "GG",
                     "GG",
                     'G', ItemStack(ModBlocks.glass, 1, sand.ordinal)))
+            GameRegistry.addRecipe(ShapedOreRecipe(ItemStack(ModItems.frame).setLensStack(ItemStack(ModItems.lens, 1, sand.ordinal)),
+                    "LIL",
+                    "I I",
+                    'L', ItemStack(ModItems.lens, 1, sand.ordinal),
+                    'I', "ingotIron"))
 
             GameRegistry.addSmelting(ItemStack(ModBlocks.sand, 1, sand.ordinal), ItemStack(ModBlocks.glass, 1, sand.ordinal), 0.1F)
         }
