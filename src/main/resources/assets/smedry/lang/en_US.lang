@@ -54,8 +54,9 @@ item.smedry:lensRashid.plural.name=Translator's Lenses [WIP]
 item.smedry:lensBright.name=Oculator's Lens [WIP]
 item.smedry:lensBright.plural.name=Oculator's Lenses [WIP]
 
-item.smedry:lensHeat.name=Firebringer's Lens [WIP]
+item.smedry:lensHeat.name=Firebringer's Lens
 item.smedry:lensHeat.plural.name=Firebringer's Lenses
+smedry.lens.firebringer.desc=When focusing, it shoots a stream of concentrated fire.
 
 item.smedry:lensStorm.name=Windstormer's Lens
 item.smedry:lensStorm.plural.name=Windstormer's Lenses
@@ -67,11 +68,15 @@ item.smedry:lensVoid.plural.name=Voidstormer's Lenses
 smedry.lens.voidstormer.desc1=When focusing, it pulls anything near your gaze towards you.
 smedry.lens.voidstormer.desc2=Using one will pull you forwards slightly.
 
-item.smedry:lensTrail.name=Tracker's Lens [WIP]
-item.smedry:lensTrail.plural.name=Tracker's Lenses [WIP]
+item.smedry:lensTrail.name=Tracker's Lens
+item.smedry:lensTrail.plural.name=Tracker's Lenses
+smedry.lens.tracker.desc1=Through it you can see the last half minute of anything living's
+smedry.lens.tracker.desc2=location. Different creatures have different color trails.
 
 item.smedry:lensBlood.name=Warrior's Lens
 item.smedry:lensBlood.plural.name=Warrior's Lenses
+smedry.lens.warrior.desc1=Usable by even non-Oculators, it provides
+smedry.lens.warrior.desc2=a passive boost to various stats.
 
 item.smedry:lensPain.name=Torturer's Lens
 item.smedry:lensPain.plural.name=Torturer's Lenses
