@@ -9,4 +9,5 @@ object LibNames {
     val GLASS = "glass"
     val GLASS_PANE = "glassPane"
     val GRINDER = "grinder"
+    val DEBUGGER = "debugger"
 }

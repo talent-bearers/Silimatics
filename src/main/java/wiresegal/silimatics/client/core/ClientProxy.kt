@@ -2,6 +2,7 @@ package wiresegal.silimatics.client.core
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.ParticleFallingDust
+import net.minecraft.client.particle.ParticleRedstone
 import net.minecraft.client.renderer.block.statemap.StateMap
 import net.minecraft.world.World
 import net.minecraftforge.client.model.ModelLoader
@@ -32,8 +33,28 @@ class ClientProxy : CommonProxy() {
             Minecraft.getMinecraft().effectRenderer.addEffect(dust);
         }
     }
+
+    override fun makeParticleOculator(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float, red: Float, green: Float, blue: Float) {
+        for (x0 in 1..4) {
+            val dust = OculatorParticle(Minecraft.getMinecraft().theWorld,
+                    xCoordIn + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
+                    yCoordIn + 0.69,
+                    zCoordIn + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
+                    scale,
+                    red,
+                    green,
+                    blue);
+
+            Minecraft.getMinecraft().effectRenderer.addEffect(dust);
+        }
+    }
+
+    //particles under this line are literally vanilla particles but i can't be bothered to use their constructors the correct way
     private class SieveDustParticle(worldIn: World?, posXIn: Double, posYIn: Double, posZIn: Double, red: Float,
                                     green: Float, blue: Float) : ParticleFallingDust(worldIn,
-                                    posXIn, posYIn, posZIn, red, green, blue) {    }
+                                    posXIn, posYIn, posZIn, red, green, blue)
+    private class OculatorParticle(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float,
+                                   red: Float, green: Float, blue: Float) : ParticleRedstone(worldIn, xCoordIn, yCoordIn,
+                                   zCoordIn, scale, red, green, blue)
 }
 

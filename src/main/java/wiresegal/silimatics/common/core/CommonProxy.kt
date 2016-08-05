@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.core
 
+import net.minecraft.world.World
 import net.minecraft.world.storage.loot.LootTableList
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
@@ -22,6 +23,10 @@ open class CommonProxy {
     }
 
     open fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {
+        //NO-OP
+    }
+
+    open fun makeParticleOculator(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float, red: Float, green: Float, blue: Float) {
         //NO-OP
     }
 }

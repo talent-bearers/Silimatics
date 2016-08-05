@@ -34,8 +34,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
 
         fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
             println(inventory.size)
-            if(inventory.size >= 2) {
-                if(inventory[0].metadata != inventory[1].metadata) return false
+            if(inventory.size >= 1) {
                 if(!worldIn.isRemote) {
                     val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + 1.5, pos.z + 0.5, ItemStack(ModItems.lens, 1, inventory[0].metadata));
                     entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
@@ -46,23 +45,14 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                 }
                 return true
             }
-            if (heldItem != null && heldItem.item == Item.getItemFromBlock(ModBlocks.glassPane) && !worldIn.isRemote) {
+            else if (heldItem != null && heldItem.item == Item.getItemFromBlock(ModBlocks.glassPane) && !worldIn.isRemote) {
                 if (playerIn?.capabilities?.isCreativeMode?.not() ?: true) {
                     heldItem.stackSize--
                     if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
                 }
-                if(inventory.size == 0) inventory.add(heldItem)
-                else if(inventory.size >= 1 && inventory[0].metadata == heldItem.metadata)
-                    inventory.add(heldItem)
+                inventory.add(heldItem)
             }
-            try {
-                for (item in 1..inventory.size) println(inventory[item])
-            } catch(e: RuntimeException) {}
             return true;
-        }
-        fun ItemStack.setStackSize(size: Int): ItemStack {
-            this.stackSize = size
-            return this
         }
 
     }

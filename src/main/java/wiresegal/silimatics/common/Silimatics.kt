@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common
 
+import net.minecraft.launchwrapper.Launch
 import net.minecraftforge.fml.common.FMLLog
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
@@ -35,5 +36,7 @@ class Silimatics {
 
         @SidedProxy(clientSide = LibMisc.CLIENT_PROXY, serverSide = LibMisc.COMMON_PROXY)
         var proxy: CommonProxy? = null
+
+        var isDevEnv: Boolean =  Launch.blackboard.get("fml.deobfuscatedEnvironment") as Boolean
     }
 }
