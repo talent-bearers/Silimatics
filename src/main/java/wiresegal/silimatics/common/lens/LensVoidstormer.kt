@@ -10,48 +10,26 @@ import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 class LensVoidstormer : ILens {
-    private val range = 8
-    //north: 0, -1
-    //east: 1, 0
-    //south: 0, 1
-    //west: -1, 0
+
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
-        player.motionX += player.lookVec.xCoord / 8
-        player.motionY += player.lookVec.normalize().yCoord / 8
-        player.motionZ += player.lookVec.zCoord / 8
-        val x = player.posX
-        val y = player.posY
-        val z = player.posZ
-        if (player.lookVec.xCoord < 0.5 && player.lookVec.xCoord > -0.5 && player.lookVec.zCoord < -0.5) {//north, -z
-            for(entityLivingBase in world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(x - range, y - range, z, x + range, y + range, z - range), { (it !is EntityPlayer) })) {
-                entityLivingBase.motionX += -player.lookVec.xCoord / 8
-                entityLivingBase.motionY += -player.lookVec.yCoord / 8
-                entityLivingBase.motionZ += -player.lookVec.zCoord / 8
+        if (player.isSneaking) {
+            val lookVec = player.lookVec
+            player.motionX += lookVec.xCoord / 16
+            player.motionY += lookVec.yCoord / 20
+            player.motionZ += lookVec.zCoord / 16
+            val posVec = player.positionVector
+            val range = 16.0
+            val entities = world.getEntitiesWithinAABBExcludingEntity(player, player.entityBoundingBox.expand(range, range, range))
+            for (entity in entities) if (entity is EntityLivingBase && entity.positionVector.subtract(posVec).lengthSquared() < range * range) {
+                val dirVec = entity.positionVector.subtract(posVec).normalize()
+                val dot = dirVec.dotProduct(lookVec)
+                if (dot > LensWindstormer.LOOK_THRESHOLD) {
+                    entity.motionX -= lookVec.xCoord / 16
+                    entity.motionY -= lookVec.yCoord / 16
+                    entity.motionZ -= lookVec.zCoord / 16
+                }
             }
-
-        } else if (player.lookVec.zCoord < 0.5 && player.lookVec.zCoord > -0.5 && player.lookVec.zCoord > 0.5) {//east, +x
-            for(entityLivingBase in world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(x, y - range, z - range, x + range, y + range, z + range), { (it !is EntityPlayer) })) {
-                entityLivingBase.motionX += -player.lookVec.xCoord / 8
-                entityLivingBase.motionY += -player.lookVec.yCoord / 8
-                entityLivingBase.motionZ += -player.lookVec.zCoord / 8
-            }
-
-        } else if (player.lookVec.xCoord < 0.5 && player.lookVec.xCoord > -0.5 && player.lookVec.zCoord > 0.5) {//south +z
-            for(entityLivingBase in world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(x - range, y - range, z, x + range, y + range, z + range), { (it !is EntityPlayer) })) {
-                entityLivingBase.motionX += -player.lookVec.xCoord / 8
-                entityLivingBase.motionY += -player.lookVec.yCoord / 8
-                entityLivingBase.motionZ += -player.lookVec.zCoord / 8
-            }
-
-        } else {
-            for(entityLivingBase in world.getEntitiesWithinAABB(EntityLivingBase::class.java, AxisAlignedBB(x, y - range, z - range, x - range, y + range, z + range), { (it !is EntityPlayer) })) { //west -x
-                entityLivingBase.motionX += -player.lookVec.xCoord / 8
-                entityLivingBase.motionY += -player.lookVec.yCoord / 8
-                entityLivingBase.motionZ += -player.lookVec.zCoord / 8
-            }
-
         }
-
     }
 
     override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {

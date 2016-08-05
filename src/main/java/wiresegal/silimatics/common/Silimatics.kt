@@ -16,27 +16,27 @@ class Silimatics {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         FMLLog.info("Shattering Glass, boy! We're late for The Modding Trials!")
-        proxy!!.preInit(event)
+        proxy.preInit(event)
     }
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        proxy!!.init(event)
+        proxy.init(event)
     }
 
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
-        proxy!!.postInit(event)
+        proxy.postInit(event)
     }
 
     companion object {
 
         @Mod.Instance(LibMisc.MODID)
-        var instance: Silimatics? = null
+        lateinit var instance: Silimatics
 
         @SidedProxy(clientSide = LibMisc.CLIENT_PROXY, serverSide = LibMisc.COMMON_PROXY)
-        var proxy: CommonProxy? = null
+        lateinit var proxy: CommonProxy
 
-        var isDevEnv: Boolean =  Launch.blackboard.get("fml.deobfuscatedEnvironment") as Boolean
+        var isDevEnv: Boolean = Launch.blackboard.get("fml.deobfuscatedEnvironment") as Boolean
     }
 }

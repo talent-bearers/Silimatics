@@ -28,9 +28,9 @@ class ClientProxy : CommonProxy() {
                     z + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
                     1f,
                     1f,
-                    153/255f);
+                    153/255f)
 
-            Minecraft.getMinecraft().effectRenderer.addEffect(dust);
+            Minecraft.getMinecraft().effectRenderer.addEffect(dust)
         }
     }
 
@@ -43,9 +43,9 @@ class ClientProxy : CommonProxy() {
                     scale,
                     red,
                     green,
-                    blue);
+                    blue)
 
-            Minecraft.getMinecraft().effectRenderer.addEffect(dust);
+            Minecraft.getMinecraft().effectRenderer.addEffect(dust)
         }
     }
 
