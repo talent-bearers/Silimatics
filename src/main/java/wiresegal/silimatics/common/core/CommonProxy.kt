@@ -1,8 +1,8 @@
 package wiresegal.silimatics.common.core
 
 import net.minecraft.world.World
-import net.minecraft.world.storage.loot.LootTableList
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLInterModComms
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.recipes.ModRecipes
@@ -11,7 +11,7 @@ open class CommonProxy {
     open fun preInit(event: FMLPreInitializationEvent) {
         ModItems
         ModBlocks
-        LootTableList.register(ModBlocks.sifter.lootTable)
+        FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.common.compat.waila.WailaCompat.onWailaCall");
     }
 
     fun init(event: FMLInitializationEvent) {
