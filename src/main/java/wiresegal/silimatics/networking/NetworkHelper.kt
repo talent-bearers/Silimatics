@@ -9,12 +9,12 @@ import wiresegal.silimatics.common.lib.LibMisc
 
 object NetworkHelper {
     val INSTANCE = SimpleNetworkWrapper(LibMisc.MODID)
+    private var i = 0
 
     init {
-        INSTANCE.registerMessage(MessageSmedrize::class.java, MessageSmedrize::class.java, 0, Side.CLIENT)
+        INSTANCE.registerMessage(MessageSmedrize::class.java, MessageSmedrize::class.java, i++, Side.CLIENT)
     }
 
-    //lol
     fun tellEveryone(message: IMessage) {
         INSTANCE.sendToAll(message)
     }
