@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -19,7 +20,9 @@ import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
+import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.common.ZenModelLoader
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
 
@@ -90,8 +93,16 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
 
     override fun onArmorTick(world: World, player: EntityPlayer, itemStack: ItemStack) {
         val lens = itemStack.getLensStack()
-        (lens.item as ILens).onUsingTick(world, player, lens)
+        if (player.getActivePotionEffect(MobEffects.BLINDNESS) != null || ModPotions.disoriented.hasEffect(player))
+            (lens.item as ILens).onDeadTick(world, player, lens)
+        else
+            (lens.item as ILens).onUsingTick(world, player, lens)
         itemStack.setLensStack(lens)
+    }
+
+    override fun onUpdate(stack: ItemStack, worldIn: World, entityIn: Entity, itemSlot: Int, isSelected: Boolean) {
+        val lens = stack.getLensStack()
+        (lens.item as ILens).onCleanupTick(worldIn, entityIn, lens)
     }
 
     override fun getAttributeModifiers(slot: EntityEquipmentSlot, stack: ItemStack): Multimap<String, AttributeModifier> {

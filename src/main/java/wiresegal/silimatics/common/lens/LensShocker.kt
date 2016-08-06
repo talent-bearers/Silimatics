@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
@@ -59,6 +60,10 @@ class LensShocker : ILens {
             }
             ItemNBTHelper.setInt(stack, TAG_WARMUP, 0)
         }
+    }
+
+    override fun onCleanupTick(world: World, player: Entity, stack: ItemStack) {
+        ItemNBTHelper.setInt(stack, TAG_WARMUP, 0)
     }
 
     override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {

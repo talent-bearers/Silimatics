@@ -1,6 +1,7 @@
 package wiresegal.silimatics.api.lens;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,6 +13,14 @@ import java.util.List;
 
 public interface ILens {
     default void onUsingTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack stack) {
+        //NO-OP
+    }
+
+    default void onDeadTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack stack) {
+        onCleanupTick(world, player, stack);
+    }
+
+    default void onCleanupTick(@Nonnull World world, @Nonnull Entity entity, @Nonnull ItemStack stack) {
         //NO-OP
     }
 

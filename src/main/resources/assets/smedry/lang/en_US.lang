@@ -53,9 +53,8 @@ item.smedry:lensRashid.plural.name=Translator's Lenses [WIP]
 
 item.smedry:lensBright.name=Oculator's Lens [WIP]
 item.smedry:lensBright.plural.name=Oculator's Lenses [WIP]
-smedry.lens.oculator.desc1=Allows you to see other oculators by their lens type
-smedry.lens.oculator.desc2=and if focusing, allows you to block other oculator's
-smedry.lens.oculator.desc3=lens' active effects.
+smedry.lens.oculator.desc1=Through it you can see the glow of an Oculator's aura.
+smedry.lens.oculator.desc2=When focusing, you can disable a target's Oculatory powers.
 
 item.smedry:lensHeat.name=Firebringer's Lens
 item.smedry:lensHeat.plural.name=Firebringer's Lenses
@@ -109,6 +108,8 @@ item.smedry:debugger.name=Debugger's Lens
 smedry.lens.debugger.desc=Note: Not actually a lens
 
 itemGroup.smedry=Silimatics
+
+smedry.potion.disoriented=Disorientation
 
 jei.smedry.recipe.sifting=Sand Sifting
 jei.smedry.recipe.grinding=Lens Grinding

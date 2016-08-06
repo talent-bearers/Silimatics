@@ -24,7 +24,6 @@ class MessageSmedrize(var player: UUID? = null, var smedry: Boolean = false) : M
 
                         persist.setBoolean(ItemLens.OCULATOR_TAG, message.smedry)
                         player.entityData.setTag(EntityPlayer.PERSISTED_NBT_TAG, persist)
-                        LensOculator.OCULATORS.add(player.uniqueID)
                         break
                     }
                 }

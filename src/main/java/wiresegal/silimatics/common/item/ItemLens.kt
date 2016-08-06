@@ -3,6 +3,7 @@ package wiresegal.silimatics.common.item
 import com.google.common.collect.Lists
 import com.google.common.collect.Multimap
 import net.minecraft.client.renderer.color.IItemColor
+import net.minecraft.entity.Entity
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.EntityEquipmentSlot
@@ -48,6 +49,14 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
 
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
         getLensFromStack(stack).onUsingTick(world, player, stack)
+    }
+
+    override fun onDeadTick(world: World, player: EntityPlayer, stack: ItemStack) {
+        getLensFromStack(stack).onDeadTick(world, player, stack)
+    }
+
+    override fun onCleanupTick(world: World, entity: Entity, stack: ItemStack) {
+        getLensFromStack(stack).onCleanupTick(world, entity, stack)
     }
 
     override fun shouldMarkAsOculator(stack: ItemStack): Boolean {

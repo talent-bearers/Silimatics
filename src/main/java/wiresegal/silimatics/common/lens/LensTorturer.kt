@@ -123,6 +123,12 @@ class LensTorturer : ILens {
         }
     }
 
+    override fun onCleanupTick(world: World, player: Entity, stack: ItemStack) {
+        ItemNBTHelper.setInt(stack, TAG_COOLDOWN, 0)
+        ItemNBTHelper.setInt(stack, TAG_HITS, 0)
+        ItemNBTHelper.removeUUID(stack, TAG_UUID)
+    }
+
     override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
         TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.torturer.desc1")
         TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.torturer.desc2")
