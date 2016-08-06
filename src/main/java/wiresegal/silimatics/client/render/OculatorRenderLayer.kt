@@ -19,7 +19,7 @@ import wiresegal.silimatics.common.lib.LibMisc
 
 class OculatorRenderLayer(val render: RenderPlayer) : LayerRenderer<AbstractClientPlayer> {
 
-    val TEXTURE = ResourceLocation("${LibMisc.MODID}", "blocks/empty")
+    val TEXTURE = ResourceLocation("${LibMisc.MODID}", "textures/blocks/empty.png")
 
     fun EntityPlayer.isWearingOculatorLens(): Boolean {
         val headStack = this.getItemStackFromSlot(EntityEquipmentSlot.HEAD) ?: return false
