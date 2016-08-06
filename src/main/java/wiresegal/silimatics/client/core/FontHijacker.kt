@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TextFormatting
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.silimatics.common.item.ItemLens
 import wiresegal.silimatics.common.item.ItemLensFrames
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 

@@ -3,24 +3,16 @@ package wiresegal.silimatics.common.lens
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemStack
-import net.minecraft.network.play.server.SPacketParticles
 import net.minecraft.potion.PotionEffect
-import net.minecraft.util.DamageSource
-import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraft.world.WorldServer
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
-import wiresegal.silimatics.common.item.ItemLens
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.client.core.TooltipHelper
-import java.util.*
 
 class LensOculator : ILens {
 

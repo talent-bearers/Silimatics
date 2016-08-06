@@ -19,9 +19,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
-import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
-import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.common.ZenModelLoader

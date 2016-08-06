@@ -1,7 +1,6 @@
 package wiresegal.silimatics.client.compat.jei.grinding
 
 import mezz.jei.api.recipe.BlankRecipeWrapper
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems

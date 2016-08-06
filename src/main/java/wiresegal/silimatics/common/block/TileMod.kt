@@ -67,7 +67,7 @@ abstract class TileMod : TileEntity() {
                 val playerMP = player as EntityPlayerMP
                 if (playerMP.getDistanceSq(getPos()) < 64 * 64
                         && ws.playerChunkMap.isPlayerWatchingChunk(playerMP, pos.x shr 4, pos.z shr 4)) {
-                    playerMP.connection.sendPacket(packet);
+                    playerMP.connection.sendPacket(packet)
                 }
             }
         }

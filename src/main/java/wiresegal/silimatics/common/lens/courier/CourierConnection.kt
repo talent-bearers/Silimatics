@@ -31,7 +31,7 @@ class CourierConnection(var socket: Socket) : Thread() {
             input = DataInputStream(BufferedInputStream(socket.inputStream))
             output = DataOutputStream(BufferedOutputStream(socket.outputStream))
 
-            synchronized (LensCourier.manager) {
+            synchronized(LensCourier.manager) {
                 var retryCount = 0
 
                 while (username == null && retryCount <= 100) {
@@ -55,7 +55,8 @@ class CourierConnection(var socket: Socket) : Thread() {
 
                         retryCount++
                         Thread.sleep(50)
-                    } catch (e: Exception) { }
+                    } catch (e: Exception) {
+                    }
 
                 }
 

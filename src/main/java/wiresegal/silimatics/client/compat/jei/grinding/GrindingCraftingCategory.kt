@@ -6,11 +6,9 @@ import mezz.jei.api.recipe.IRecipeCategory
 import mezz.jei.api.recipe.IRecipeWrapper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.I18n
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import wiresegal.silimatics.client.compat.jei.JEICompat
-import wiresegal.silimatics.client.compat.jei.sifting.SiftingCraftingRecipeJEI
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.lib.LibMisc
 

@@ -9,9 +9,10 @@ import net.minecraft.item.ItemStack
 import wiresegal.silimatics.client.compat.jei.grinding.GrindingCraftingCategory
 import wiresegal.silimatics.client.compat.jei.grinding.GrindingCraftingRecipeHandler
 import wiresegal.silimatics.client.compat.jei.grinding.GrindingCraftingRecipeJEI
-import wiresegal.silimatics.client.compat.jei.sifting.*
+import wiresegal.silimatics.client.compat.jei.sifting.SiftingCraftingCategory
+import wiresegal.silimatics.client.compat.jei.sifting.SiftingCraftingRecipeHandler
+import wiresegal.silimatics.client.compat.jei.sifting.SiftingCraftingRecipeJEI
 import wiresegal.silimatics.common.core.ModBlocks
-import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 
 /**

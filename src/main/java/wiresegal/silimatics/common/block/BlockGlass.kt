@@ -117,15 +117,14 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 for (entity in entities)
                     entity.attackEntityFrom(DamageSource.cactus, 1f)
 
-            } else if(state.getValue(SAND_TYPE) == EnumSandType.TRAIL) {
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 0.0,  1 / 16.0))
+            } else if (state.getValue(SAND_TYPE) == EnumSandType.TRAIL) {
+                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 0.0, 1 / 16.0))
                 for (entity in entities)
-                    if(entity is EntityPlayer) {
-                        if(entity.isSneaking) entity.motionY = 0.0
-                        else if(entity.rotationPitch < 0) entity.motionY = 0.5
+                    if (entity is EntityPlayer) {
+                        if (entity.isSneaking) entity.motionY = 0.0
+                        else if (entity.rotationPitch < 0) entity.motionY = 0.5
                         else entity.motionY = -0.5
-                    }
-                    else entity.motionY = 0.5
+                    } else entity.motionY = 0.5
             }
         }
 

@@ -4,12 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
-import net.minecraft.entity.item.EntityItem
-import net.minecraft.item.ItemStack
-import org.lwjgl.opengl.GL11
 import wiresegal.silimatics.common.block.BlockLensGrinder
-import wiresegal.silimatics.common.core.ModItems
-import java.util.*
 
 class RenderLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGrinder>() {
     override fun renderTileEntityAt(te: BlockLensGrinder.TileLensGrinder?, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int) {

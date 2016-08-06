@@ -1,4 +1,4 @@
-package wiresegal.silimatics.networking
+package wiresegal.silimatics.common.networking
 
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.fml.common.network.NetworkRegistry

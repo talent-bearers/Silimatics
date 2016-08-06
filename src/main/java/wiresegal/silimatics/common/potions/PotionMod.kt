@@ -26,13 +26,13 @@ open class PotionMod(name: String, badEffect: Boolean, color: Int, iconIndex: In
 
     @SideOnly(Side.CLIENT)
     override fun renderInventoryEffect(x: Int, y: Int, effect: PotionEffect, mc: Minecraft) {
-        Minecraft.getMinecraft().renderEngine.bindTexture(resource);
+        Minecraft.getMinecraft().renderEngine.bindTexture(resource)
         mc.currentScreen!!.drawTexturedModalRect(x + 6, y + 7, 0 + iconX * 18, 198 + iconY * 18, 18, 18)
     }
 
     @SideOnly(Side.CLIENT)
     override fun renderHUDEffect(x: Int, y: Int, effect: PotionEffect?, mc: Minecraft, alpha: Float) {
-        Minecraft.getMinecraft().renderEngine.bindTexture(resource);
+        Minecraft.getMinecraft().renderEngine.bindTexture(resource)
         mc.ingameGUI.drawTexturedModalRect(x + 3, y + 3, 0 + iconX * 18, 198 + iconY * 18, 18, 18)
     }
 
@@ -45,7 +45,7 @@ open class PotionMod(name: String, badEffect: Boolean, color: Int, iconIndex: In
     }
 
     companion object {
-        val resource = ResourceLocation(LibMisc.MODID, "textures/gui/potions.png");
+        val resource = ResourceLocation(LibMisc.MODID, "textures/gui/potions.png")
 
         fun hasEffect(entity: EntityLivingBase, potion: Potion): Boolean {
             return entity.getActivePotionEffect(potion) != null

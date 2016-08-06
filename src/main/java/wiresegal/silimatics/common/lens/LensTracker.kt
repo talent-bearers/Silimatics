@@ -4,7 +4,6 @@ import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
-import net.minecraft.network.play.server.SPacketParticles
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World

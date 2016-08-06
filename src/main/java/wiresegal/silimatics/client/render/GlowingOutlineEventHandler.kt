@@ -8,8 +8,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import wiresegal.silimatics.common.item.ItemLens
 import wiresegal.silimatics.common.item.ItemLensFrames
-import wiresegal.silimatics.common.lens.LensOculator
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
+import wiresegal.silimatics.common.lens.LensOculator
 
 /**
  * @author WireSegal

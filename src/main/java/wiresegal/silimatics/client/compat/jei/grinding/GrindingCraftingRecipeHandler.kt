@@ -2,7 +2,6 @@ package wiresegal.silimatics.client.compat.jei.grinding
 
 import mezz.jei.api.recipe.IRecipeHandler
 import mezz.jei.api.recipe.IRecipeWrapper
-import wiresegal.silimatics.client.compat.jei.sifting.SiftingCraftingRecipeJEI
 import wiresegal.silimatics.common.lib.LibMisc
 
 object GrindingCraftingRecipeHandler : IRecipeHandler<GrindingCraftingRecipeJEI> {

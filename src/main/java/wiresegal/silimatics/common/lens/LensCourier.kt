@@ -12,6 +12,7 @@ class LensCourier : ILens {
     companion object {
         val manager: CourierManager = CourierManager()
     }
+
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
         //todo
     }

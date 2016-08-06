@@ -11,7 +11,10 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.*
+import net.minecraft.util.BlockRenderLayer
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.EnumHand
+import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -19,14 +22,11 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldServer
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
-import wiresegal.silimatics.common.Silimatics
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.EnumSandType.Companion.capitalizeFirst
-import wiresegal.silimatics.common.item.EnumSandType.Companion.lowercaseFirst
 import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.lib.LibMisc
 
 /**
  * Created by Elad on 8/4/2016.

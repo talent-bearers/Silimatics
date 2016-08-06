@@ -1,4 +1,4 @@
-package wiresegal.silimatics.networking
+package wiresegal.silimatics.common.networking
 
 import io.netty.buffer.ByteBuf
 import net.minecraft.client.Minecraft
@@ -7,7 +7,6 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
 import wiresegal.silimatics.common.item.ItemLens
-import wiresegal.silimatics.common.lens.LensOculator
 import java.util.*
 
 class MessageSmedrize(var player: UUID? = null, var smedry: Boolean = false) : MessageBase<MessageSmedrize>() {
@@ -28,7 +27,7 @@ class MessageSmedrize(var player: UUID? = null, var smedry: Boolean = false) : M
                     }
                 }
             } catch(e: Exception) {
-               // e.printStackTrace() //there's this weird NPE that happens for the first time you access a world per time you launch MC
+                // e.printStackTrace() //there's this weird NPE that happens for the first time you access a world per time you launch MC
                 //http://hastebin.com/oqekakavov.avrasm
             }
         }
