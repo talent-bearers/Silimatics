@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.common.ZenModelLoader
@@ -72,7 +73,7 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
     }
 
     override fun getSubItems(itemIn: Item, tab: CreativeTabs?, subItems: MutableList<ItemStack>) {
-        for (i in ItemLens.lenses.indices)
+        for (i in EnumSandType.values().indices)
             subItems.add(ItemStack(itemIn).setLensStack(ItemStack(ModItems.lens, 1, i)))
     }
 

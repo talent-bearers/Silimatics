@@ -11,17 +11,16 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.BlockRenderLayer
-import net.minecraft.util.EnumFacing
-import net.minecraft.util.EnumHand
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.*
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraft.world.WorldServer
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.Silimatics
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.EnumSandType.Companion.capitalizeFirst
@@ -61,6 +60,7 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD, *getVariants(nam
         setHardness(2.0F)
         setResistance(5.0F)
         soundType = SoundType.WOOD
+        ModCreativeTab.set(this)
     }
 
     @SideOnly(Side.CLIENT)
@@ -127,7 +127,8 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD, *getVariants(nam
                 worldIn.spawnEntityInWorld(entityitem)
             }
 
-            Silimatics.proxy.makeParticleDust(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 0.0, -1.0, 0.0, 12)
+            if (worldIn is WorldServer)
+                worldIn.spawnParticle(EnumParticleTypes.FALLING_DUST, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, 12, 0.25, 0.0, 0.25, 0.0, 12)
 
         }
         return true

@@ -6,6 +6,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemArmor
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.Loader
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.zenmodelloader.common.core.IVariantHolder
 import wiresegal.zenmodelloader.common.core.VariantHelper
 
@@ -24,6 +25,7 @@ open class ItemModArmor(name: String, armorMaterial: ArmorMaterial, entityEquipm
         modId = Loader.instance().activeModContainer().modId
         bareName = name
         this.variants = VariantHelper.setupItem(this, name, variants)
+        ModCreativeTab.set(this)
     }
 
     override fun setUnlocalizedName(name: String): Item {

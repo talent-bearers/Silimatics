@@ -108,5 +108,7 @@ tile.smedry:sifterDarkOak.name=Dark Oak Sand Sifter
 item.smedry:debugger.name=Debugger's Lens
 smedry.lens.debugger.desc=Note: Not actually a lens
 
+itemGroup.smedry=Silimatics
+
 jei.smedry.recipe.sifting=Sand Sifting
 jei.smedry.recipe.grinding=Lens Grinding

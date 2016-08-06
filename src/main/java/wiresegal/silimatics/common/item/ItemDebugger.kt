@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
@@ -15,6 +16,11 @@ import wiresegal.zenmodelloader.common.items.base.ItemMod
 import java.awt.Color
 
 class ItemDebugger(name: String) : ItemMod(name), IItemColorProvider {
+
+    init {
+        ModCreativeTab.set(this)
+    }
+
     val OCULATOR = LibMisc.MODID + ":oculator"
     override fun onLeftClickEntity(stack: ItemStack, player: EntityPlayer, entity: Entity): Boolean {
         entity.entityData?.setTag(EntityPlayer.PERSISTED_NBT_TAG, NBTTagCompound())

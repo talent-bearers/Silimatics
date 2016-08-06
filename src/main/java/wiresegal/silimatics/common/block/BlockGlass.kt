@@ -24,6 +24,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
@@ -41,6 +42,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
     init {
         setHardness(0.3F)
         soundType = SoundType.GLASS
+        ModCreativeTab.set(this)
     }
 
     override fun createBlockState(): BlockStateContainer {

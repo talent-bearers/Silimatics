@@ -13,6 +13,7 @@ open class CommonProxy {
         ModItems
         ModBlocks
         NetworkHelper
+        ModCreativeTab
         FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.common.compat.waila.WailaCompat.onWailaCall")
     }
 
@@ -22,13 +23,5 @@ open class CommonProxy {
 
     open fun postInit(event: FMLPostInitializationEvent) {
 
-    }
-
-    open fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {
-        //NO-OP
-    }
-
-    open fun makeParticleOculator(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float, red: Float, green: Float, blue: Float) {
-        //NO-OP
     }
 }

@@ -19,6 +19,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModBlocks
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 
@@ -31,6 +32,8 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
         setHardness(1.5F)
         setResistance(10.0F)
         soundType = SoundType.STONE
+
+        ModCreativeTab.set(this)
     }
 
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {

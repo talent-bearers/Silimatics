@@ -34,43 +34,5 @@ class ClientProxy : CommonProxy() {
 
         Minecraft.getMinecraft().fontRendererObj = FontHijacker(Minecraft.getMinecraft().fontRendererObj)
     }
-
-    override fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {
-        for (x0 in 1..4) {
-            val dust = SieveDustParticle(Minecraft.getMinecraft().theWorld,
-                    x + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
-                    y + 0.69,
-                    z + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
-                    1f,
-                    1f,
-                    153 / 255f)
-
-            Minecraft.getMinecraft().effectRenderer.addEffect(dust)
-        }
-    }
-
-    override fun makeParticleOculator(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float, red: Float, green: Float, blue: Float) {
-        for (x0 in 1..4) {
-            val dust = OculatorParticle(Minecraft.getMinecraft().theWorld,
-                    xCoordIn + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
-                    yCoordIn + 0.69,
-                    zCoordIn + 0.8 * Minecraft.getMinecraft().theWorld.rand.nextFloat() + 0.15,
-                    scale,
-                    red,
-                    green,
-                    blue)
-
-            Minecraft.getMinecraft().effectRenderer.addEffect(dust)
-        }
-    }
-
-    //particles under this line are literally vanilla particles but i can't be bothered to use their constructors the correct way
-    private class SieveDustParticle(worldIn: World?, posXIn: Double, posYIn: Double, posZIn: Double, red: Float,
-                                    green: Float, blue: Float) : ParticleFallingDust(worldIn,
-            posXIn, posYIn, posZIn, red, green, blue)
-
-    private class OculatorParticle(worldIn: World?, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, scale: Float,
-                                   red: Float, green: Float, blue: Float) : ParticleRedstone(worldIn, xCoordIn, yCoordIn,
-            zCoordIn, scale, red, green, blue)
 }
 

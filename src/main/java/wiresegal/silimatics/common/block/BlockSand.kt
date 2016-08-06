@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
@@ -34,6 +35,7 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
     init {
         setHardness(0.5F)
         soundType = SoundType.SAND
+        ModCreativeTab.set(this)
     }
 
     override fun isToolEffective(type: String, state: IBlockState): Boolean {

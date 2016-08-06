@@ -5,6 +5,7 @@ import net.minecraft.block.BlockPane
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemBlock
 import net.minecraftforge.fml.common.Loader
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.zenmodelloader.common.block.base.ItemModBlock
 import wiresegal.zenmodelloader.common.core.IModBlock
 import wiresegal.zenmodelloader.common.core.VariantHelper
@@ -25,6 +26,7 @@ open class BlockModPane(name: String, material: Material, canDrop: Boolean, vara
         modId = Loader.instance().activeModContainer().modId
         this.variants = VariantHelper.beginSetupBlock(name, variants)
         VariantHelper.finishSetupBlock(this, name, itemForm)
+        ModCreativeTab.set(this)
     }
 
     override fun setUnlocalizedName(name: String): Block {

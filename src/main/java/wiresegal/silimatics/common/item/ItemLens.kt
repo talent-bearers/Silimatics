@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
+import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lens.*
 import wiresegal.silimatics.common.lib.LibMisc
@@ -27,6 +28,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
 
     init {
         MinecraftForge.EVENT_BUS.register(EventHandler)
+        ModCreativeTab.set(this)
     }
 
     @SideOnly(Side.CLIENT)
