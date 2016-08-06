@@ -94,7 +94,15 @@ item.smedry:lensView.plural.name=Courier's Lenses [WIP]
 item.smedry:lensFrames.name=Lens Frames
 
 tile.smedry:grinder.name=Lens Grinder
-tile.smedry:sifter.name=Sand Sifter
+tile.smedry:sifterOak.name=Oak Sand Sifter
+tile.smedry:sifterSpruce.name=Spruce Sand Sifter
+tile.smedry:sifterBirch.name=Birch Sand Sifter
+tile.smedry:sifterJungle.name=Jungle Sand Sifter
+tile.smedry:sifterAcacia.name=Acacia Sand Sifter
+tile.smedry:sifterDarkOak.name=Dark Oak Sand Sifter
+
+item.smedry:debugger.name=Debugger's Lens
+smedry.lens.debugger.desc=Note: Not actually a lens
 
 jei.smedry.recipe.sifting=Sand Sifting
 jei.smedry.recipe.grinding=Lens Grinding

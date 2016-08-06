@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "smedry:sifterBase",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "type": {
+      "oak": { "textures": { "wood": "blocks/planks_oak" } },
+      "spruce": { "textures": { "wood": "blocks/planks_spruce" } },
+      "birch": { "textures": { "wood": "blocks/planks_birch" } },
+      "jungle": { "textures": { "wood": "blocks/planks_jungle" } },
+      "acacia": { "textures": { "wood": "blocks/planks_acacia" } },
+      "dark_oak": { "textures": { "wood": "blocks/planks_big_oak" } }
+    }
+  }
+}

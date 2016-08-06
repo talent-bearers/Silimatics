@@ -4,6 +4,7 @@ import mezz.jei.api.gui.IDrawable
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.recipe.IRecipeCategory
 import mezz.jei.api.recipe.IRecipeWrapper
+import net.minecraft.block.BlockPlanks
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.I18n
 import net.minecraft.init.Blocks
@@ -45,9 +46,15 @@ object SiftingCraftingCategory : IRecipeCategory {
 
         if (recipeWrapper is SiftingCraftingRecipeJEI) {
             recipeLayout.itemStacks.set(SAND_SLOT, ItemStack(Blocks.SAND))
-            recipeLayout.itemStacks.set(SIFTER_SLOT, ItemStack(ModBlocks.sifter))
+            recipeLayout.itemStacks.set(SIFTER_SLOT, sifterStacks)
             recipeLayout.itemStacks.set(OUTPUT_SLOT, recipeWrapper.outputs[0] as ItemStack)
         }
+    }
+
+    val sifterStacks by lazy {
+        Array(BlockPlanks.EnumType.values().size) {
+            ItemStack(ModBlocks.sifter, 1, it)
+        }.toList()
     }
 
     private val SAND_SLOT = 0

@@ -1,0 +1,6 @@
+{
+  "parent": "smedry:block/sifterBase",
+  "textures": {
+    "wood": "blocks/planks_big_oak"
+  }
+}

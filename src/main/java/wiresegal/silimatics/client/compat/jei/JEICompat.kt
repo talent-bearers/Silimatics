@@ -4,6 +4,7 @@ import mezz.jei.api.BlankModPlugin
 import mezz.jei.api.IJeiHelpers
 import mezz.jei.api.IModRegistry
 import mezz.jei.api.JEIPlugin
+import net.minecraft.block.BlockPlanks
 import net.minecraft.item.ItemStack
 import wiresegal.silimatics.client.compat.jei.grinding.GrindingCraftingCategory
 import wiresegal.silimatics.client.compat.jei.grinding.GrindingCraftingRecipeHandler
@@ -32,7 +33,8 @@ class JEICompat : BlankModPlugin() {
         registry.addRecipes(Array(EnumSandType.values().size) { SiftingCraftingRecipeJEI(EnumSandType.values()[it]) }.toList())
         registry.addRecipes(Array(EnumSandType.values().size) { GrindingCraftingRecipeJEI(EnumSandType.values()[it]) }.toList())
 
-        registry.addRecipeCategoryCraftingItem(ItemStack(ModBlocks.sifter), SiftingCraftingCategory.uid)
+        for (i in BlockPlanks.EnumType.values())
+            registry.addRecipeCategoryCraftingItem(ItemStack(ModBlocks.sifter, 1, i.metadata), SiftingCraftingCategory.uid)
         registry.addRecipeCategoryCraftingItem(ItemStack(ModBlocks.lensGrinder), GrindingCraftingCategory.uid)
     }
 }

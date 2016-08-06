@@ -26,7 +26,7 @@ import wiresegal.zenmodelloader.common.core.IItemColorProvider
  * @author WireSegal
  * Created at 8:34 AM on 8/4/16.
  */
-class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants: String) : ItemModArmor(name, armorMaterial, EntityEquipmentSlot.HEAD, *variants), IItemColorProvider {
+open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg variants: String) : ItemModArmor(name, armorMaterial, EntityEquipmentSlot.HEAD, *variants), IItemColorProvider {
 
     companion object {
         val TAG_LENS = "lens"

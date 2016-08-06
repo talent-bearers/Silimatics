@@ -1,9 +1,11 @@
 package wiresegal.silimatics.common.block
 
+import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.InventoryHelper
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -26,7 +28,16 @@ import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
 
     init {
-        setHardness(0.3F)
+        setHardness(1.5F)
+        setResistance(10.0F)
+        soundType = SoundType.STONE
+    }
+
+    override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
+        val tile = (worldIn.getTileEntity(pos) as TileLensGrinder)
+        if (tile.inventory != null)
+            InventoryHelper.spawnItemStack(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), tile.inventory)
+        super.breakBlock(worldIn, pos, state)
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
