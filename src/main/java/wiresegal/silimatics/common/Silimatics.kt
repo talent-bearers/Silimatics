@@ -16,7 +16,7 @@ class Silimatics {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         FMLLog.info("[Leavenworth] Shattering Glass, boy! We're late for The Modding Trials!")
-        FMLLog.info("[Alcatraz] So we're right on schedule, with your Talent.")
+        FMLLog.info("[Alcatraz] So we're right on schedule, what with your Talent.")
         FMLLog.info("[Leavenworth] Limping Lowrys, you're right! Now lad, make sure not to Break the mod! We wouldn't want any bugs, now would we?")
         FMLLog.info("[Alcatraz] So long as they're not Librarian bugs or Alivened, I think we'll be fine.")
 

@@ -35,6 +35,8 @@ class ClientProxy : CommonProxy() {
 
         render = skinMap["slim"]
         render?.addLayer(OculatorRenderLayer(render))
+
+        Minecraft.getMinecraft().fontRendererObj = FontHijacker(Minecraft.getMinecraft().fontRendererObj)
     }
 
     override fun makeParticleDust(x: Double, y: Double, z: Double, xs: Double, ys: Double, zs: Double, id: Int) {
