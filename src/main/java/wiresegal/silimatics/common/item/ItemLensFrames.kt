@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
@@ -102,7 +103,8 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
 
     override fun onUpdate(stack: ItemStack, worldIn: World, entityIn: Entity, itemSlot: Int, isSelected: Boolean) {
         val lens = stack.getLensStack()
-        (lens.item as ILens).onCleanupTick(worldIn, entityIn, lens)
+        if (entityIn is EntityLivingBase && entityIn.getItemStackFromSlot(EntityEquipmentSlot.HEAD) !== stack)
+            (lens.item as ILens).onCleanupTick(worldIn, entityIn, lens)
     }
 
     override fun getAttributeModifiers(slot: EntityEquipmentSlot, stack: ItemStack): Multimap<String, AttributeModifier> {

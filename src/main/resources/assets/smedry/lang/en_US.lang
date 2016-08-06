@@ -48,11 +48,13 @@ tile.smedry:glassPaneView.name=Communicator's Glass Pane [WIP]
 item.smedry:lensDull.name=Glass Lens
 item.smedry:lensDull.plural.name=Glass Lenses
 
-item.smedry:lensRashid.name=Translator's Lens [WIP]
-item.smedry:lensRashid.plural.name=Translator's Lenses [WIP]
+item.smedry:lensRashid.name=Translator's Lens
+item.smedry:lensRashid.plural.name=Translator's Lenses
+smedry.lens.translator.desc1=Through it you can see the truth behind the Forgotten Language.
+smedry.lens.translator.desc2=And anything you speak to others is codified into that language.
 
-item.smedry:lensBright.name=Oculator's Lens [WIP]
-item.smedry:lensBright.plural.name=Oculator's Lenses [WIP]
+item.smedry:lensBright.name=Oculator's Lens
+item.smedry:lensBright.plural.name=Oculator's Lenses
 smedry.lens.oculator.desc1=Through it you can see the glow of an Oculator's aura.
 smedry.lens.oculator.desc2=When focusing, you can disable a target's Oculatory powers.
 

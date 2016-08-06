@@ -5,8 +5,10 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.item.ItemStack
 import org.lwjgl.opengl.GL11
 import wiresegal.silimatics.common.block.BlockLensGrinder
+import wiresegal.silimatics.common.core.ModItems
 import java.util.*
 
 class RenderLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGrinder>() {
@@ -16,8 +18,8 @@ class RenderLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGri
             GlStateManager.pushMatrix()
             GlStateManager.translate(x, y, z)
             GlStateManager.scale(0.5, 0.5, 0.5)
-            GlStateManager.translate(1.0, 0.5 + (0.15 * te.i), 1.0)
-            GlStateManager.rotate(90F * te.i / 10F, 0F, 1F, 0F)
+            GlStateManager.translate(1.0, 0.5 + (0.15 * te.clicksLeft), 1.0)
+            GlStateManager.rotate(90F * te.clicksLeft / 10F, 0F, 1F, 0F)
             GlStateManager.rotate(90F, 1F, 0F, 0F)
             Minecraft.getMinecraft().renderItem.renderItem(te.inventory, ItemCameraTransforms.TransformType.FIXED)
             GlStateManager.popMatrix()

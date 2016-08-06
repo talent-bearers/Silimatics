@@ -67,12 +67,12 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
 
         var inventory: ItemStack? = null
 
-        var i: Int = 10
+        var clicksLeft: Int = 10
 
         fun onBlockActivated(worldIn: World, pos: BlockPos, playerIn: EntityPlayer?, heldItem: ItemStack?): Boolean {
             if (inventory != null) {
-                if (i != 0) {
-                    i--
+                if (clicksLeft != 0) {
+                    clicksLeft--
                     return true
                 }
 
@@ -84,7 +84,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                     entityitem.motionZ = 0.0
                     worldIn.spawnEntityInWorld(entityitem)
                     inventory = null
-                    i = 10
+                    clicksLeft = 10
                     markDirty()
                 }
                 return true
@@ -104,13 +104,13 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
         override fun writeCustomNBT(cmp: NBTTagCompound) {
             val compound = NBTTagCompound()
             inventory?.writeToNBT(compound)
-            cmp.setTag("stack", compound);
-            cmp.setInteger("i", i)
+            cmp.setTag("stack", compound)
+            cmp.setInteger("i", clicksLeft)
         }
 
         override fun readCustomNBT(cmp: NBTTagCompound) {
             inventory = ItemStack.loadItemStackFromNBT(cmp.getCompoundTag("stack"))
-            i = cmp.getInteger("i")
+            clicksLeft = cmp.getInteger("i")
         }
 
     }

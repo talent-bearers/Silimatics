@@ -15,6 +15,8 @@ import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.ItemLensFrames
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
+import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 class LensRashid : ILens {
     init {
@@ -40,5 +42,10 @@ class LensRashid : ILens {
                 } else component.style.obfuscated = true
             }
         }
+    }
+
+    override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.translator.desc1")
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.translator.desc2")
     }
 }
