@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.SPacketParticles
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import net.minecraft.world.WorldServer
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -27,19 +28,14 @@ class LensTracker : ILens {
     val players = mutableListOf<UUID>()
 
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
-        if (!world.isRemote && player is EntityPlayerMP) {
+        if (!world.isRemote && world is WorldServer && player is EntityPlayerMP) {
             for ((uuid, eidos) in positionChangelog) {
                 val color = uuid.hashCode()
-                val r = ((color and 0xFF0000) shr 16) / 255f - 1
-                val g = ((color and 0x00FF00) shr 8) / 255f
-                val b = (color and 0x0000FF) / 255f
-                for (pos in eidos) {
-                    val packet = SPacketParticles(EnumParticleTypes.REDSTONE, true, pos.xCoord.toFloat(), pos.yCoord.toFloat(), pos.zCoord.toFloat(), r, g, b, 1.toFloat(), 0)
-                    val blockpos = player.position
-                    val d0 = blockpos.distanceSq(pos.xCoord, pos.yCoord, pos.zCoord)
-                    if (d0 <= 512 * 512)
-                        player.connection.sendPacket(packet)
-                }
+                val r = ((color and 0xFF0000) shr 16) / 255.0 - 1
+                val g = ((color and 0x00FF00) shr 8) / 255.0
+                val b = (color and 0x0000FF) / 255.0
+                for (pos in eidos)
+                    world.spawnParticle(player, EnumParticleTypes.REDSTONE, true, pos.xCoord, pos.yCoord, pos.zCoord, 0, r, g, b, 1.0)
             }
         }
     }
