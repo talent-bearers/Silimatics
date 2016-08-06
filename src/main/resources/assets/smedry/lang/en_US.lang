@@ -53,6 +53,9 @@ item.smedry:lensRashid.plural.name=Translator's Lenses [WIP]
 
 item.smedry:lensBright.name=Oculator's Lens [WIP]
 item.smedry:lensBright.plural.name=Oculator's Lenses [WIP]
+smedry.lens.oculator.desc1=Allows you to see other oculators by their lens type
+smedry.lens.oculator.desc2=and if focusing, allows you to block other oculator's
+smedry.lens.oculator.desc3=lens' active effects.
 
 item.smedry:lensHeat.name=Firebringer's Lens
 item.smedry:lensHeat.plural.name=Firebringer's Lenses
@@ -90,6 +93,7 @@ smedry.lens.shocker.desc2=anyone looking at you is knocked out by the lens.
 
 item.smedry:lensView.name=Courier's Lens [WIP]
 item.smedry:lensView.plural.name=Courier's Lenses [WIP]
+smedry.lens.lensView.desc=Allows you to talk (vocally) to other oculators in near range.
 
 item.smedry:lensFrames.name=Lens Frames
 

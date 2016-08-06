@@ -10,6 +10,7 @@ import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 class LensWindstormer : ILens {
 
+
     companion object {
         val LOOK_THRESHOLD = Math.sin(Math.PI * 3 / 4)
     }

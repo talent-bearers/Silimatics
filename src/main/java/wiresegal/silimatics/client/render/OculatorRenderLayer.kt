@@ -7,18 +7,31 @@ import net.minecraft.client.renderer.entity.RenderPlayer
 import net.minecraft.client.renderer.entity.layers.LayerRenderer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EnumPlayerModelParts
+import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.EnumAction
 import net.minecraft.util.EnumHandSide
 import net.minecraft.util.ResourceLocation
 import wiresegal.silimatics.common.item.ItemLens
+import wiresegal.silimatics.common.item.ItemLensFrames
+import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
+import wiresegal.silimatics.common.lens.LensCourier
 import wiresegal.silimatics.common.lib.LibMisc
 
 class OculatorRenderLayer(val render: RenderPlayer) : LayerRenderer<AbstractClientPlayer> {
 
     val TEXTURE = ResourceLocation("${LibMisc.MODID}", "blocks/empty")
 
+    fun EntityPlayer.isWearingOculatorLens(): Boolean {
+        val headStack = this.getItemStackFromSlot(EntityEquipmentSlot.HEAD) ?: return false
+        if (headStack.item is ItemLensFrames) {
+            val lensStack = headStack.getLensStack()
+            return ItemLens.getLensFromStack(lensStack) is LensCourier
+        }
+        return false
+    }
     override fun doRenderLayer(entitylivingbaseIn: AbstractClientPlayer, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
         if(!entitylivingbaseIn.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getBoolean(ItemLens.Companion.EventHandler.OCULATOR)) return
+        if(!entitylivingbaseIn.isWearingOculatorLens()) return
         render.bindTexture(TEXTURE)
         setModelVisibilities(entitylivingbaseIn)
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN)
