@@ -20,7 +20,7 @@ open class CommonProxy {
         ModRecipes
     }
 
-    fun postInit(event: FMLPostInitializationEvent) {
+    open fun postInit(event: FMLPostInitializationEvent) {
 
     }
 

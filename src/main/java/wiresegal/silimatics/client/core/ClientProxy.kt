@@ -19,10 +19,6 @@ import wiresegal.silimatics.common.core.ModBlocks
 class ClientProxy : CommonProxy() {
     override fun preInit(event: FMLPreInitializationEvent) {
         super.preInit(event)
-        ModelLoader.setCustomStateMapper(ModBlocks.glassPane,
-                StateMap.Builder()
-                        .withName(BlockGlass.SAND_TYPE)
-                        .withSuffix("GlassPane").build())
         ClientRegistry.bindTileEntitySpecialRenderer(BlockLensGrinder.TileLensGrinder::class.java, RenderLensGrinder())
     }
 

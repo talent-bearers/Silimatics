@@ -5,6 +5,8 @@ import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.renderer.block.statemap.IStateMapper
+import net.minecraft.client.renderer.block.statemap.StateMap
 import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.tileentity.TileEntity
@@ -81,5 +83,12 @@ class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *E
 
     override fun canPaneConnectTo(world: IBlockAccess, pos: BlockPos, dir: EnumFacing): Boolean {
         return super.canPaneConnectTo(world, pos, dir) || world.getBlockState(pos.offset(dir))?.block == ModBlocks.glass
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun getStateMapper(): IStateMapper {
+        return StateMap.Builder()
+                .withName(BlockGlass.SAND_TYPE)
+                .withSuffix("GlassPane").build()
     }
 }
