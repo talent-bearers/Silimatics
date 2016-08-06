@@ -3,19 +3,22 @@ package wiresegal.silimatics.networking
 import io.netty.buffer.ByteBuf
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext
 import wiresegal.silimatics.common.item.ItemLens
 
-class MessageSmedrize(internal var smedry: Boolean) : MessageBase<MessageSmedrize>() {
-    constructor() : this(false)
+class MessageSmedrize(var smedry: Boolean = false) : MessageBase<MessageSmedrize>() {
 
-    override fun handleClientSide(message: MessageSmedrize, player: EntityPlayer?) {
-        if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().thePlayer != null)
-            Minecraft.getMinecraft().thePlayer.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(ItemLens.OCULATOR_TAG, message.smedry)
-    }
-
-
-    override fun handleServerSide(message: MessageSmedrize, player: EntityPlayer) {
-        //NO-OP
+    override fun onMessage(message: MessageSmedrize, ctx: MessageContext): IMessage? {
+        val player = Minecraft.getMinecraft().thePlayer
+        var persist = player.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG)
+        if (persist == null) {
+            persist = NBTTagCompound()
+            player.entityData.setTag(EntityPlayer.PERSISTED_NBT_TAG, persist)
+        }
+        persist.setBoolean(ItemLens.OCULATOR_TAG, message.smedry)
+        return null
     }
 
     override fun fromBytes(buf: ByteBuf) {
