@@ -15,6 +15,7 @@ open class CommonProxy {
         NetworkHelper
         ModCreativeTab
         ModPotions
+        ModSoundEvents
         FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
     }
 
