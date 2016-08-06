@@ -17,6 +17,7 @@ class RenderLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGri
             GlStateManager.translate(x, y, z)
             GlStateManager.scale(0.5, 0.5, 0.5)
             GlStateManager.translate(1.0, 0.5 + (0.15 * te.i), 1.0)
+            GlStateManager.rotate(90F * te.i / 10F, 0F, 1F, 0F)
             GlStateManager.rotate(90F, 1F, 0F, 0F)
             Minecraft.getMinecraft().renderItem.renderItem(te.inventory, ItemCameraTransforms.TransformType.FIXED)
             GlStateManager.popMatrix()

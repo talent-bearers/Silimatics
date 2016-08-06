@@ -95,7 +95,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
                 inventory = stack
                 markDirty()
             }
-            return true;
+            return true
         }
 
         override fun writeCustomNBT(cmp: NBTTagCompound) {
