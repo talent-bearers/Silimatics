@@ -4,9 +4,10 @@ import net.minecraft.launchwrapper.Launch
 import net.minecraftforge.fml.common.FMLLog
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
-import net.minecraftforge.fml.common.event.*
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.core.CommonProxy
-import wiresegal.silimatics.common.lens.LensCourier
 import wiresegal.silimatics.common.lib.LibMisc
 
 @Mod(modid = LibMisc.MODID, name = LibMisc.NAME, version = LibMisc.VERSION)
@@ -32,7 +33,8 @@ class Silimatics {
         proxy.postInit(event)
     }
 
-    @Mod.EventHandler
+    //one day...
+    /*@Mod.EventHandler
     fun serverStarting(event: FMLServerStartingEvent) {
         LensCourier.manager.start()
     }
@@ -40,7 +42,7 @@ class Silimatics {
     @Mod.EventHandler
     fun serverStopping(event: FMLServerStoppingEvent) {
         LensCourier.manager.stop()
-    }
+    }*/
 
     companion object {
 

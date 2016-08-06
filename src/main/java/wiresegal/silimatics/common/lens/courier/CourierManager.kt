@@ -75,6 +75,7 @@ class CourierManager {
 
         override fun run() {
             while (running) {
+                println("running")
                 try {
                     val s = serverSocket!!.accept()
                     val connection = CourierConnection(s)
@@ -90,6 +91,7 @@ class CourierManager {
                 }
 
             }
+            println("n'running")
         }
     }
 
