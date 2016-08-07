@@ -13,6 +13,11 @@ import wiresegal.silimatics.common.lib.LibMisc
 @Mod(modid = LibMisc.MODID, name = LibMisc.NAME, version = LibMisc.VERSION)
 class Silimatics {
 
+    companion object {
+        @SidedProxy(clientSide = LibMisc.CLIENT_PROXY, serverSide = LibMisc.COMMON_PROXY)
+        lateinit var proxy: CommonProxy
+    }
+
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         FMLLog.info("[Leavenworth] Shattering Glass, boy! We're late for The Modding Trials!")
@@ -43,15 +48,4 @@ class Silimatics {
     fun serverStopping(event: FMLServerStoppingEvent) {
         LensCourier.manager.stop()
     }*/
-
-    companion object {
-
-        @Mod.Instance(LibMisc.MODID)
-        lateinit var instance: Silimatics
-
-        @SidedProxy(clientSide = LibMisc.CLIENT_PROXY, serverSide = LibMisc.COMMON_PROXY)
-        lateinit var proxy: CommonProxy
-
-        var isDevEnv: Boolean = Launch.blackboard.get("fml.deobfuscatedEnvironment") as Boolean
-    }
 }
