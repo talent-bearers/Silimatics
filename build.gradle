@@ -55,12 +55,6 @@ repositories {
     }
 }
 repositories {
-    maven { // TOP
-        name 'tterrag maven'
-        url "http://maven.tterrag.com/"
-    }
-}
-repositories {
     maven {
         url "http://mobiusstrip.eu/maven"
     }
@@ -78,7 +72,6 @@ configurations {
 dependencies {
     deobfCompile "mezz.jei:jei_${config.jei_version}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:${config.guideapi_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.theoneprobe_version}"
     compile "mcp.mobius.waila:Waila:${config.waila_version}"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     required "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

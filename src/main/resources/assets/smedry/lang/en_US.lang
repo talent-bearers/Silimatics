@@ -92,8 +92,8 @@ item.smedry:lensSun.plural.name=Shocker's Lenses
 smedry.lens.shocker.desc1=When focusing, it builds up power. When released,
 smedry.lens.shocker.desc2=anyone looking at you is knocked out by the lens.
 
-item.smedry:lensView.name=Courier's Lens [WIP]
-item.smedry:lensView.plural.name=Courier's Lenses [WIP]
+item.smedry:lensView.name=Courier's Lens [NYI]
+item.smedry:lensView.plural.name=Courier's Lenses [NYI]
 smedry.lens.lensView.desc=Allows you to talk (vocally) to other oculators in near range.
 
 item.smedry:lensFrames.name=Lens Frames

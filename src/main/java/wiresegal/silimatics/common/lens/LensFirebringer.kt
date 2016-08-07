@@ -15,7 +15,7 @@ class LensFirebringer : ILens {
             val fireball = EntitySmallFireball(world, player.posX + player.lookVec.xCoord, player.posY + player.eyeHeight + player.lookVec.yCoord, player.posZ + player.lookVec.zCoord, player.lookVec.xCoord / 8, player.lookVec.yCoord / 8, player.lookVec.zCoord / 8)
             SilimaticMethodHandles.setTicksAlive(fireball, 599)
             world.spawnEntityInWorld(fireball)
-        }
+        } else if(world.isRemote) ;
     }
 
     override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {

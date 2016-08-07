@@ -123,8 +123,8 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 for (entity in entities) {
                     if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots) {
                         if (entity is EntityPlayer && entity.isSneaking) entity.motionY = 0.0
-                        else if (entity.rotationPitch > 80) entity.motionY = -0.2
-                        else entity.motionY = 0.1
+                        else if (entity.rotationPitch > 80) entity.motionY = -0.4
+                        else entity.motionY = 0.2
                         entity.fallDistance = 0F
                     }
                 }
