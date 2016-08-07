@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.core.CommonProxy
 import wiresegal.silimatics.common.lib.LibMisc
 
-@Mod(modid = LibMisc.MODID, name = LibMisc.NAME, version = LibMisc.VERSION)
+@Mod(modid = LibMisc.MODID, name = LibMisc.NAME, version = LibMisc.VERSION, dependencies = LibMisc.DEPS)
 class Silimatics {
 
     companion object {
