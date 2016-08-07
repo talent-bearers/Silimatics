@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
+import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.potion.PotionEffect
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
@@ -25,6 +26,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModCreativeTab
+import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
@@ -116,15 +118,17 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 1 / 16.0, 1 / 16.0))
                 for (entity in entities)
                     entity.attackEntityFrom(DamageSource.cactus, 1f)
-
             } else if (state.getValue(SAND_TYPE) == EnumSandType.TRAIL) {
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 0.0, 1 / 16.0))
-                for (entity in entities)
-                    if (entity is EntityPlayer) {
-                        if (entity.isSneaking) entity.motionY = 0.0
-                        else if (entity.rotationPitch < 0) entity.motionY = 0.5
-                        else entity.motionY = -0.5
-                    } else entity.motionY = 0.5
+                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 1 / 32.0, 1 / 16.0).offset(0.0, -1 / 32.0, 0.0))
+                for (entity in entities) {
+                    if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots) {
+                        if (entity is EntityPlayer && entity.isSneaking) entity.motionY = 0.0
+                        else if (entity.rotationPitch > 80) entity.motionY = -0.2
+                        else entity.motionY = 0.1
+                        entity.fallDistance = 0F
+                    }
+                }
+
             }
         }
 

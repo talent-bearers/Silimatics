@@ -34,6 +34,10 @@ open class LensWindstormer : ILens {
             player.motionX -= lookVec.xCoord / mainDiv.xCoord
             player.motionY -= lookVec.yCoord / mainDiv.yCoord
             player.motionZ -= lookVec.zCoord / mainDiv.zCoord
+
+            if ((-lookVec.yCoord / mainDiv.yCoord) > 0 && player.fallDistance > 0)
+                player.fallDistance = 0.0f
+
             val posVec = player.positionVector
             val range = 16.0
             val entities = world.getEntitiesWithinAABBExcludingEntity(player, player.entityBoundingBox.expand(range, range, range))
@@ -44,6 +48,9 @@ open class LensWindstormer : ILens {
                     entity.motionX += lookVec.xCoord / secDiv.xCoord
                     entity.motionY += lookVec.yCoord / secDiv.yCoord
                     entity.motionZ += lookVec.zCoord / secDiv.zCoord
+
+                    if (lookVec.yCoord / mainDiv.yCoord > 0 && entity.fallDistance > 0)
+                        entity.fallDistance = 0.0f
                 }
             }
         } else

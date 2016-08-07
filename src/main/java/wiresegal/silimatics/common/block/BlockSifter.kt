@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.block
 
+import net.minecraft.block.Block
 import net.minecraft.block.BlockPlanks
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
@@ -20,18 +22,23 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraft.world.WorldServer
+import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraftforge.items.CapabilityItemHandler
+import net.minecraftforge.items.IItemHandler
+import net.minecraftforge.items.ItemHandlerHelper
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.EnumSandType.Companion.capitalizeFirst
 import wiresegal.zenmodelloader.common.block.base.BlockMod
+import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 
 /**
  * Created by Elad on 8/4/2016.
  */
-class BlockSifter(name: String) : BlockMod(name, Material.WOOD, *getVariants(name)) {
+class BlockSifter(name: String) : BlockModContainer(name, Material.WOOD, *getVariants(name)) {
 
     companion object {
 
@@ -54,6 +61,52 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD, *getVariants(nam
         val PROP_TYPE = PropertyEnum.create("type", BlockPlanks.EnumType::class.java)
 
         val AABB = AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 11 / 16.0, 1.0)
+
+        fun dropSand(worldIn: World, pos: BlockPos) {
+            val stacks = arrayListOf<ItemStack>()
+
+            for (i in 0..2) {
+                var rand = worldIn.rand.nextDouble()
+
+                for (choice in choices)
+                    if (rand < choice.first) {
+                        stacks.add(choice.second.copy())
+                        rand = 1.0
+                        break
+                    } else
+                        rand -= choice.first
+                if (rand < 1.0)
+                    stacks.add(remainder[worldIn.rand.nextInt(remainder.size)].copy())
+            }
+
+            val blockBelow = !worldIn.isAirBlock(pos.down())
+
+            if (blockBelow) {
+                val tileBelow = worldIn.getTileEntity(pos.down())
+                if (tileBelow != null && tileBelow.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)) {
+                    val handler = tileBelow.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP)
+
+                    for (i in stacks.toList()) {
+                        val newStack = ItemHandlerHelper.insertItem(handler, i, true)
+                        if (newStack == null || newStack.stackSize == 0) {
+                            ItemHandlerHelper.insertItem(handler, i.copy(), false)
+                            stacks.remove(i)
+                        }
+                    }
+                }
+            }
+
+            for (stack in stacks) {
+                val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + if (blockBelow) 0.75 else -0.625, pos.z + 0.5, stack)
+                entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
+                entityitem.motionY = 0.2
+                entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
+                worldIn.spawnEntityInWorld(entityitem)
+            }
+
+            if (worldIn is WorldServer)
+                worldIn.spawnParticle(EnumParticleTypes.FALLING_DUST, pos.x + 0.5, pos.y + 0.625, pos.z + 0.5, 12, 0.18, 0.0, 0.18, 0.0, 12)
+        }
     }
 
     init {
@@ -102,36 +155,50 @@ class BlockSifter(name: String) : BlockMod(name, Material.WOOD, *getVariants(nam
                 heldItem.stackSize--
                 if (heldItem.stackSize <= 0) playerIn?.inventory?.deleteStack(heldItem)
             }
-
-            val stacks = arrayListOf<ItemStack>()
-
-            for (i in 0..2) {
-                var rand = worldIn.rand.nextDouble()
-
-                for (choice in choices)
-                    if (rand < choice.first) {
-                        stacks.add(choice.second.copy())
-                        rand = 1.0
-                        break
-                    } else
-                        rand -= choice.first
-                if (rand < 1.0)
-                    stacks.add(remainder[worldIn.rand.nextInt(remainder.size)].copy())
-            }
-
-            for (stack in stacks) {
-                val entityitem = EntityItem(worldIn, pos.x + 0.5, pos.y + 0.75, pos.z + 0.5, stack)
-                entityitem.motionX = worldIn.rand.nextGaussian() * 0.05
-                entityitem.motionY = 0.2
-                entityitem.motionZ = worldIn.rand.nextGaussian() * 0.05
-                worldIn.spawnEntityInWorld(entityitem)
-            }
-
-            if (worldIn is WorldServer)
-                worldIn.spawnParticle(EnumParticleTypes.FALLING_DUST, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, 12, 0.25, 0.0, 0.25, 0.0, 12)
-
+            dropSand(worldIn, pos)
         }
         return true
+    }
+
+    override fun createNewTileEntity(worldIn: World, meta: Int) = TileBlockSifter()
+
+    class TileBlockSifter : TileMod() {
+
+        val inventoryFake = object : IItemHandler {
+            override fun getStackInSlot(slot: Int): ItemStack? {
+                return null
+            }
+
+            override fun insertItem(slot: Int, stack: ItemStack?, simulate: Boolean): ItemStack? {
+                if (stack == null || stack.item != Item.getItemFromBlock(Blocks.SAND)) return stack
+                val ret = stack.copy()
+                ret.stackSize--
+                val worldObj = world
+                if (!simulate && !worldObj.isRemote) dropSand(world, pos)
+                return if (ret.stackSize == 0) null else ret
+            }
+
+            override fun getSlots(): Int {
+                return 1
+            }
+
+            override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack? {
+                return null
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T {
+            if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.DOWN)
+                return inventoryFake as T
+            return super.getCapability(capability, facing)
+        }
+
+        override fun hasCapability(capability: Capability<*>?, facing: EnumFacing?): Boolean {
+            if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.DOWN)
+                return true
+            return super.hasCapability(capability, facing)
+        }
     }
 }
 

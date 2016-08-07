@@ -27,7 +27,7 @@ tile.smedry:glassBright.name=Empowerer's Glass
 tile.smedry:glassHeat.name=Detonator's Glass [WIP]
 tile.smedry:glassStorm.name=Pressurizer's Glass
 tile.smedry:glassVoid.name=Inhaler's Glass
-tile.smedry:glassTrail.name=Grappler's Glass [WIP]
+tile.smedry:glassTrail.name=Grappler's Glass
 tile.smedry:glassBlood.name=Gladiator's Glass
 tile.smedry:glassPain.name=Shardstepper's Glass
 tile.smedry:glassSun.name=Eyeburner's Glass [WIP]
@@ -39,7 +39,7 @@ tile.smedry:glassPaneBright.name=Empowerer's Glass Pane
 tile.smedry:glassPaneHeat.name=Detonator's Glass Pane [WIP]
 tile.smedry:glassPaneStorm.name=Pressurizer's Glass Pane
 tile.smedry:glassPaneVoid.name=Inhaler's Glass Pane
-tile.smedry:glassPaneTrail.name=Grappler's Glass Pane [WIP]
+tile.smedry:glassPaneTrail.name=Grappler's Glass Pane
 tile.smedry:glassPaneBlood.name=Gladiator's Glass Pane
 tile.smedry:glassPanePain.name=Shardstepper's Glass Pane
 tile.smedry:glassPaneSun.name=Eyeburner's Glass Pane [WIP]
@@ -105,6 +105,8 @@ tile.smedry:sifterBirch.name=Birch Sand Sifter
 tile.smedry:sifterJungle.name=Jungle Sand Sifter
 tile.smedry:sifterAcacia.name=Acacia Sand Sifter
 tile.smedry:sifterDarkOak.name=Dark Oak Sand Sifter
+
+item.smedry:grappler.name=Grappler's Glass Boots
 
 item.smedry:debugger.name=Debugger's Lens
 smedry.lens.debugger.desc=Note: Not actually a lens

@@ -19,6 +19,7 @@ object ModBlocks {
         lensGrinder = BlockLensGrinder(LibNames.GRINDER)
 
         GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
-        GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "lensgrinder")
+        GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")
+        GameRegistry.registerTileEntity(BlockSifter.TileBlockSifter::class.java, "smedrysifter")
     }
 }

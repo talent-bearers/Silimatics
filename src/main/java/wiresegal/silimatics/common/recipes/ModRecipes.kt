@@ -49,6 +49,11 @@ object ModRecipes {
                 "SIS",
                 'S', "stone",
                 'I', ItemStack(Items.IRON_SWORD))
+
+        addRecipe(ItemStack(ModItems.boots),
+                "G G",
+                "G G",
+                'G', ItemStack(ModBlocks.glass, 1, EnumSandType.TRAIL.ordinal))
     }
 
     fun addRecipe(output: ItemStack, vararg inputs: Any) {

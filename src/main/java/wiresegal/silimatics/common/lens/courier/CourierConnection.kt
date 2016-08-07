@@ -128,8 +128,9 @@ class CourierConnection(var socket: Socket) : Thread() {
 
     fun canListen(itemStack: ItemStack?): Boolean {
         if (itemStack != null) {
-            val stack = itemStack.getLensStack()
-            return stack.item == ModItems.lens && stack.metadata == EnumSandType.VIEW.ordinal
+            return false //todo
+//            val stack = itemStack.getLensStack()
+//            return stack.item == ModItems.lens && stack.metadata == EnumSandType.VIEW.ordinal
         }
         return false
     }
