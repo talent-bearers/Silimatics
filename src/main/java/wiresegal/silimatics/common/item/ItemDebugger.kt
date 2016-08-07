@@ -17,6 +17,10 @@ import java.awt.Color
 
 class ItemDebugger(name: String) : ItemMod(name), IItemColorProvider {
 
+    companion object {
+        val shouldRegisterInDevEnv = false
+    }
+
     init {
         ModCreativeTab.set(this)
     }
