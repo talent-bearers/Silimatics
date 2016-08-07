@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
+import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
@@ -109,9 +110,9 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 }
             } else if (state.getValue(SAND_TYPE) == EnumSandType.STORM || state.getValue(SAND_TYPE) == EnumSandType.VOID) {
                 val range = 4.0
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java,
+                val entities = worldObj.getEntitiesWithinAABB(Entity::class.java,
                         state.getBoundingBox(worldObj, pos).offset(pos).expand(range, range, range)) {
-                    (it is EntityLivingBase && it.isNonBoss) || (it is IProjectile)
+                    (it is EntityLivingBase && it.isNonBoss) || (it is IProjectile) || (it is EntityItem)
                 }
                 pushEntities(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, range, if (state.getValue(SAND_TYPE) == EnumSandType.STORM) 0.05 else -0.05, entities)
             } else if (state.getValue(SAND_TYPE) == EnumSandType.PAIN) {
@@ -119,11 +120,11 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 for (entity in entities)
                     entity.attackEntityFrom(DamageSource.cactus, 1f)
             } else if (state.getValue(SAND_TYPE) == EnumSandType.TRAIL) {
-                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(1 / 16.0, 1 / 32.0, 1 / 16.0).offset(0.0, -1 / 32.0, 0.0))
+                val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.125, 1 / 32.0, 0.125).offset(0.0, -1 / 32.0, 0.0))
                 for (entity in entities) {
                     if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots) {
                         if (entity is EntityPlayer && entity.isSneaking) entity.motionY = 0.0
-                        else if (entity.rotationPitch > 80) entity.motionY = -0.4
+                        else if (entity.rotationPitch > 80) entity.motionY = -0.2
                         else entity.motionY = 0.2
                         entity.fallDistance = 0F
                     }

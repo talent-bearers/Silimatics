@@ -3,6 +3,7 @@ package wiresegal.silimatics.client.core
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.resources.IResourceManager
+import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TextFormatting
@@ -10,6 +11,7 @@ import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.ItemLensFrames
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
+import wiresegal.silimatics.common.potions.ModPotions
 
 /**
  * @author WireSegal
@@ -88,6 +90,8 @@ class FontHijacker(val sup: FontRenderer) : FontRenderer(Minecraft.getMinecraft(
 
     private fun shouldReplace(): Boolean {
         val player = Minecraft.getMinecraft().thePlayer ?: return false
+        if (player.getActivePotionEffect(MobEffects.BLINDNESS) != null || ModPotions.disoriented.hasEffect(player))
+            return false
         val headStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)
         if (headStack != null && headStack.item is ItemLensFrames) {
             val lensStack = headStack.getLensStack()

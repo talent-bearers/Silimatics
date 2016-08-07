@@ -1,6 +1,7 @@
 package wiresegal.silimatics.common.lens
 
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
@@ -15,6 +16,7 @@ import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.ItemLensFrames
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 class LensRashid : ILens {
@@ -25,6 +27,8 @@ class LensRashid : ILens {
     @SubscribeEvent
     fun onServerChat(e: ServerChatEvent) {
         val player = e.player
+        if (player.getActivePotionEffect(MobEffects.BLINDNESS) != null || ModPotions.disoriented.hasEffect(player))
+            return
         val component = e.component
         val headStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)
         if (headStack != null && headStack.item is ItemLensFrames) {
