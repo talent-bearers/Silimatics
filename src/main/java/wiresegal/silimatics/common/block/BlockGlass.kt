@@ -122,7 +122,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
             } else if (state.getValue(SAND_TYPE) == EnumSandType.TRAIL) {
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.125, 1 / 32.0, 0.125).offset(0.0, -1 / 32.0, 0.0))
                 for (entity in entities) {
-                    if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots) {
+                    if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots && (entity !is EntityPlayer || !entity.capabilities.isFlying)) {
                         if (entity is EntityPlayer && entity.isSneaking) entity.motionY = 0.0
                         else if (entity.rotationPitch > 80) entity.motionY = -0.2
                         else entity.motionY = 0.2
