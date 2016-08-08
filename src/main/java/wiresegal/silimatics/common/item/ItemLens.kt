@@ -88,7 +88,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
                     if ((lensStack.item as ILens).shouldMarkAsOculator(lensStack)) {
                         player.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).setBoolean(OCULATOR, true)
                         if (!player.worldObj.isRemote)
-                            NetworkHelper.tellEveryone(MessageSmedrize(player.uniqueID, true))
+                            NetworkHelper.sendToAll(MessageSmedrize(player.uniqueID, true))
 
                     }
                 }

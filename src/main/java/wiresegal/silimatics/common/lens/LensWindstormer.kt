@@ -3,6 +3,7 @@ package wiresegal.silimatics.common.lens
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.Vec3d
@@ -11,6 +12,8 @@ import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.core.ModSoundEvents
 import wiresegal.silimatics.common.lib.LibMisc
+import wiresegal.silimatics.common.networking.MessageSyncMotion
+import wiresegal.silimatics.common.networking.NetworkHelper
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 open class LensWindstormer : ILens {
@@ -51,6 +54,9 @@ open class LensWindstormer : ILens {
 
                     if (lookVec.yCoord / mainDiv.yCoord > 0 && entity.fallDistance > 0)
                         entity.fallDistance = 0.0f
+
+                    if (entity is EntityPlayerMP)
+                        NetworkHelper.sendTo(MessageSyncMotion(Vec3d(entity.motionX, entity.motionY, entity.motionY), entity.fallDistance), entity)
                 }
             }
         } else
