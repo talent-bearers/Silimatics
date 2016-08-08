@@ -68,7 +68,7 @@ class LensTracker : ILens {
                 players.add(i.uniqueID)
                 val poslog = positionChangelog.getOrPut(i.uniqueID) { mutableListOf() }
                 poslog.add(i.positionVector)
-                if (poslog.size > 60) for (ignored in 1..poslog.size - 30)
+                if (poslog.size > 30) for (ignored in 1..poslog.size - 30)
                     poslog.removeAt(0)
 
             }
