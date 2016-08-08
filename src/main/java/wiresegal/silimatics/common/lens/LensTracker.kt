@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
+import java.awt.Color
 import java.util.*
 
 class LensTracker : ILens {
@@ -33,8 +34,26 @@ class LensTracker : ILens {
                 val r = ((color and 0xFF0000) shr 16) / 255.0 - 1
                 val g = ((color and 0x00FF00) shr 8) / 255.0
                 val b = (color and 0x0000FF) / 255.0
-                for (pos in eidos)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, true, pos.xCoord, pos.yCoord, pos.zCoord, r, g, b)
+                for (posI in eidos.indices) {
+                    if (posI == eidos.size - 1) continue
+                    val pos = eidos[posI]
+                    val nextPos = eidos[posI + 1]
+
+                    val lenVec = nextPos.subtract(pos)
+                    val len = lenVec.lengthVector()
+
+                    val ray = lenVec.normalize()
+                    val step = 2.5
+                    val steps = (len * step).toInt()
+
+                    for (i in 0..steps - 1) {
+                        val x = pos.xCoord + ray.xCoord * i / step
+                        val y = pos.yCoord + ray.yCoord * i / step
+                        val z = pos.zCoord + ray.zCoord * i / step
+                        world.spawnParticle(EnumParticleTypes.REDSTONE, true, x, y, z, r, g, b)
+                    }
+                    world.spawnParticle(EnumParticleTypes.REDSTONE, true, nextPos.xCoord, nextPos.yCoord + 0.1, nextPos.zCoord, r, g, b)
+                }
             }
         }
     }
@@ -44,12 +63,12 @@ class LensTracker : ILens {
         val world = Minecraft.getMinecraft().theWorld ?: return
 
         val players = mutableListOf<UUID>()
-        if (e.phase == TickEvent.Phase.START && world.totalWorldTime % 20 == 0L) {
+        if (e.phase == TickEvent.Phase.START && world.totalWorldTime % 10 == 0L) {
             for (i in world.playerEntities) {
                 players.add(i.uniqueID)
                 val poslog = positionChangelog.getOrPut(i.uniqueID) { mutableListOf() }
                 poslog.add(i.positionVector)
-                if (poslog.size > 30) for (ignored in 1..poslog.size - 30)
+                if (poslog.size > 60) for (ignored in 1..poslog.size - 30)
                     poslog.removeAt(0)
 
             }
