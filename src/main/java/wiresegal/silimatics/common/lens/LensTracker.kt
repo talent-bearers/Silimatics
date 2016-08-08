@@ -47,7 +47,11 @@ class LensTracker : ILens {
         if (e.phase == TickEvent.Phase.START && world.totalWorldTime % 20 == 0L) {
             for (i in world.playerEntities) {
                 players.add(i.uniqueID)
-                positionChangelog.getOrPut(i.uniqueID) { mutableListOf() }.add(i.positionVector)
+                val poslog = positionChangelog.getOrPut(i.uniqueID) { mutableListOf() }
+                poslog.add(i.positionVector)
+                if (poslog.size > 30) for (ignored in 1..poslog.size - 30)
+                    poslog.removeAt(0)
+
             }
 
             for (i in positionChangelog.keys.toTypedArray())
