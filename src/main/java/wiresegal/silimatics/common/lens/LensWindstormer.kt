@@ -48,16 +48,15 @@ open class LensWindstormer : ILens {
                 val dirVec = entity.positionVector.subtract(posVec).normalize()
                 val dot = dirVec.dotProduct(lookVec)
                 if (dot > LOOK_THRESHOLD) {
-                    val mul = if (entity is EntityPlayer) -1 else 1 // No idea why this is needed, but oh well
-                    entity.motionX += lookVec.xCoord / secDiv.xCoord * mul
-                    entity.motionY += lookVec.yCoord / secDiv.yCoord * mul
-                    entity.motionZ += lookVec.zCoord / secDiv.zCoord * mul
+                    entity.motionX += lookVec.xCoord / secDiv.xCoord
+                    entity.motionY += lookVec.yCoord / secDiv.yCoord
+                    entity.motionZ += lookVec.zCoord / secDiv.zCoord
 
                     if (lookVec.yCoord / mainDiv.yCoord > 0 && entity.fallDistance > 0)
                         entity.fallDistance = 0.0f
 
                     if (entity is EntityPlayerMP)
-                        NetworkHelper.sendTo(MessageSyncMotion(Vec3d(entity.motionX, entity.motionY, entity.motionY), entity.fallDistance), entity)
+                        NetworkHelper.sendTo(MessageSyncMotion(Vec3d(entity.motionX, entity.motionY, entity.motionZ), entity.fallDistance), entity)
                 }
             }
         } else
