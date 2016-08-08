@@ -14,7 +14,7 @@ class MessageSmedrize(var player: UUID? = null, var smedry: Boolean = false) : M
 
     override fun onMessage(message: MessageSmedrize, ctx: MessageContext): IMessage? {
         if (ctx.side.isClient) {
-            val entity = FMLCommonHandler.instance().minecraftServerInstance.getEntityFromUuid(player) ?: return null
+            val entity = FMLCommonHandler.instance()?.minecraftServerInstance?.getEntityFromUuid(message.player) ?: return null
             var persist = entity.entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG)
             if (persist == null)
                 persist = NBTTagCompound()
