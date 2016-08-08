@@ -23,7 +23,7 @@ class LensTorturer : ILens {
         val TAG_UUID = "uuid"
 
         val MAX_HITS = 5
-        val COOLDOWN = 25
+        val COOLDOWN = 20
     }
 
     fun raycast(e: Entity, len: Double, stopOnLiquid: Boolean = false): RayTraceResult? {

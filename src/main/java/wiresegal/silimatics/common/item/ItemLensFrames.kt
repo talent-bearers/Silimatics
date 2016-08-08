@@ -44,7 +44,7 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
 
             val stack = ItemStack.loadItemStackFromNBT(compound)
 
-            if (stack.item !is ILens) {
+            if (stack?.item !is ILens) {
                 this.setLensStack(null)
                 return ItemStack(ModItems.lens)
             }
