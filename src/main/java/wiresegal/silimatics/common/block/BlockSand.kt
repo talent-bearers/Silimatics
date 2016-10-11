@@ -1,6 +1,7 @@
 package wiresegal.silimatics.common.block
 
 import net.minecraft.block.Block
+import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
@@ -10,10 +11,15 @@ import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.init.Blocks
+import net.minecraft.init.MobEffects
+import net.minecraft.potion.PotionEffect
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumParticleTypes
+import net.minecraft.util.ITickable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModCreativeTab
@@ -26,7 +32,13 @@ import java.util.*
  * @author WireSegal
  * Created at 9:30 AM on 8/4/16.
  */
-class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider {
+class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider, ITileEntityProvider {
+    override fun createNewTileEntity(worldIn: World?, meta: Int): TileEntity?  =
+            if(meta == EnumSandType.HEART.ordinal) TileEntityHeartSand() else null
+
+    override fun hasTileEntity(state: IBlockState): Boolean
+        = state.getValue(SAND_TYPE) == EnumSandType.HEART
+
 
     companion object {
         val SAND_TYPE = PropertyEnum.create("sand", EnumSandType::class.java)
@@ -36,6 +48,7 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
         setHardness(0.5F)
         soundType = SoundType.SAND
         ModCreativeTab.set(this)
+        GameRegistry.registerTileEntity(TileEntityHeartSand::class.java, "tileHeart")
     }
 
     override fun isToolEffective(type: String, state: IBlockState): Boolean {
@@ -100,9 +113,7 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
         }
     }
 
-    override fun tickRate(worldIn: World): Int {
-        return 2
-    }
+    override fun tickRate(worldIn: World): Int = 2
 
     fun canFallThrough(state: IBlockState): Boolean {
         val block = state.block
@@ -123,4 +134,18 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
             }
         }
     }
+    class TileEntityHeartSand : TileEntity(), ITickable {
+        override fun update() {
+            if(worldObj.totalWorldTime % 100 == 0L)
+                worldObj.playerEntities.filter {
+                    it.position.y == pos.y + 1 && it.position.x == pos.x && it.position.z == pos.z
+                }.forEach {
+                    it.addPotionEffect(PotionEffect(MobEffects.ABSORPTION, 100, 4))
+                }
+        }
+
+    }
+
 }
+
+

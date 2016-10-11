@@ -20,30 +20,34 @@ tile.smedry:sandSun.name=Sunsand
 item.smedry:dustSandSun.name=Pile of Sunsand
 tile.smedry:sandView.name=Vistasand
 item.smedry:dustSandView.name=Pile of Vistasand
+tile.smedry:sandHeart.name=Heartsand
+item.smedry:dustSandHeart.name=Pile of Heartsand
 
 tile.smedry:glassDull.name=Dullglass
 tile.smedry:glassRashid.name=Glass of Rashid
 tile.smedry:glassBright.name=Empowerer's Glass
-tile.smedry:glassHeat.name=Detonator's Glass [WIP]
+tile.smedry:glassHeat.name=Detonator's Glass
 tile.smedry:glassStorm.name=Pressurizer's Glass
 tile.smedry:glassVoid.name=Inhaler's Glass
 tile.smedry:glassTrail.name=Grappler's Glass
 tile.smedry:glassBlood.name=Gladiator's Glass
 tile.smedry:glassPain.name=Shardstepper's Glass
-tile.smedry:glassSun.name=Eyeburner's Glass [WIP]
+tile.smedry:glassSun.name=Eyeburner's Glass
 tile.smedry:glassView.name=Communicator's Glass [WIP]
+tile.smedry:glassHeart.name=Heart Glass
 
 tile.smedry:glassPaneDull.name=Dullglass Pane
 tile.smedry:glassPaneRashid.name=Pane of Rashid
 tile.smedry:glassPaneBright.name=Empowerer's Glass Pane
-tile.smedry:glassPaneHeat.name=Detonator's Glass Pane [WIP]
+tile.smedry:glassPaneHeat.name=Detonator's Glass Pane
 tile.smedry:glassPaneStorm.name=Pressurizer's Glass Pane
 tile.smedry:glassPaneVoid.name=Inhaler's Glass Pane
 tile.smedry:glassPaneTrail.name=Grappler's Glass Pane
 tile.smedry:glassPaneBlood.name=Gladiator's Glass Pane
 tile.smedry:glassPanePain.name=Shardstepper's Glass Pane
-tile.smedry:glassPaneSun.name=Eyeburner's Glass Pane [WIP]
+tile.smedry:glassPaneSun.name=Eyeburner's Glass Pane
 tile.smedry:glassPaneView.name=Communicator's Glass Pane [WIP]
+tile.smedry:glassPaneHeart.name=Heart Glass Pane
 
 item.smedry:lensDull.name=Glass Lens
 item.smedry:lensDull.plural.name=Glass Lenses
@@ -95,6 +99,12 @@ smedry.lens.shocker.desc2=anyone looking at you is knocked out by the lens.
 item.smedry:lensView.name=Courier's Lens [NYI]
 item.smedry:lensView.plural.name=Courier's Lenses [NYI]
 smedry.lens.lensView.desc=Allows you to talk (vocally) to other oculators in near range.
+
+item.smedry:lensHeart.name=Bestower's Lens
+item.smedry:lensHeart.plural.name=Bestower's Lenses
+smedry.lens.lensHeart.desc1=Allows you to give others your strength.
+smedry.lens.lensHeart.desc2=When focusing while looking at another player,
+smedry.lens.lensHeart.desc3=the player will get some of your strength.
 
 item.smedry:lensFrames.name=Lens Frames
 

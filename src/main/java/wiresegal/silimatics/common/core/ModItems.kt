@@ -14,7 +14,7 @@ object ModItems {
 
     init {
         lens = ItemLens(LibNames.LENS)
-        frame = ItemLensFrames(LibNames.LENS_FRAMES, ItemArmor.ArmorMaterial.CHAIN)
+        frame = ItemLensFrames(LibNames.LENS_FRAMES, ItemArmor.ArmorMaterial.LEATHER)
         sand = ItemSand(LibNames.SAND_ITEM)
         boots = ItemGrapplerBoots(LibNames.GRAPPLER)
         if (ZenModelLoader.DEV_ENVIRONMENT && ItemDebugger.shouldRegisterInDevEnv) debugger = ItemDebugger(LibNames.DEBUGGER)

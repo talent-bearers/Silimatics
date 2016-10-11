@@ -11,6 +11,7 @@
     "sand=blood": { "model": "smedry:baseGlass" },
     "sand=pain": { "model": "smedry:baseGlass" },
     "sand=sun": { "model": "smedry:baseGlass" },
-    "sand=view": { "model": "smedry:baseGlass" }
+    "sand=view": { "model": "smedry:baseGlass" },
+    "sand=heart": { "model": "smedry:baseGlass" }
   }
 }
