@@ -118,10 +118,10 @@ tile.smedry:sifterDarkOak.name=Dark Oak Sand Sifter
 
 item.smedry:grappler.name=Grappler's Glass Boots
 
-tile.smedry:detector.name=Brightsand Detector
+tile.smedry:detector.name=Silimatic Capacitor
 
-item.smedry:debugger.name=Debugger's Lens
-smedry.lens.debugger.desc=Note: Not actually a lens
+item.smedry:debugger.name=Royal Debugger
+smedry.lens.debugger.desc=NOT a lens.
 
 itemGroup.smedry=Silimatics
 
