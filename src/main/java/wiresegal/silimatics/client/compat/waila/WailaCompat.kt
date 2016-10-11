@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import wiresegal.silimatics.common.block.BlockGlass
 import wiresegal.silimatics.common.block.BlockGlassPane
+import wiresegal.silimatics.common.block.BlockSand
 import wiresegal.silimatics.common.core.ModBlocks
 
 object WailaCompat {
@@ -20,7 +21,30 @@ object WailaCompat {
         println("smedry | Waila compat")
         registrar.registerStackProvider(PaneStackProvider(), BlockGlassPane::class.java)
         registrar.registerStackProvider(GlassStackProvider(), BlockGlass::class.java)
+        registrar.registerStackProvider(SandStackProvider(), BlockSand::class.java)
 
+    }
+}
+
+class SandStackProvider : IWailaDataProvider {
+    override fun getWailaStack(accessor: IWailaDataAccessor, config: IWailaConfigHandler?): ItemStack? {
+        return ItemStack(ModBlocks.sand, 1, accessor.metadata)
+    }
+
+    override fun getWailaTail(itemStack: ItemStack?, currenttip: MutableList<String>?, accessor: IWailaDataAccessor?, config: IWailaConfigHandler?): MutableList<String>? {
+        return null
+    }
+
+    override fun getNBTData(player: EntityPlayerMP?, te: TileEntity?, tag: NBTTagCompound?, world: World?, pos: BlockPos?): NBTTagCompound? {
+        return null
+    }
+
+    override fun getWailaHead(itemStack: ItemStack?, currenttip: MutableList<String>?, accessor: IWailaDataAccessor?, config: IWailaConfigHandler?): MutableList<String>? {
+        return null
+    }
+
+    override fun getWailaBody(itemStack: ItemStack?, currenttip: MutableList<String>?, accessor: IWailaDataAccessor?, config: IWailaConfigHandler?): MutableList<String>? {
+        return null
     }
 }
 
