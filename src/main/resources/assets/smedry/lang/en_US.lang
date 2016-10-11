@@ -78,8 +78,8 @@ smedry.lens.voidstormer.desc2=Using one will pull you forwards slightly.
 
 item.smedry:lensTrail.name=Tracker's Lens
 item.smedry:lensTrail.plural.name=Tracker's Lenses
-smedry.lens.tracker.desc1=Through it you can see the last half minute of anything living's
-smedry.lens.tracker.desc2=location. Different creatures have different color trails.
+smedry.lens.tracker.desc1=Through it you can see the trail of any player's
+smedry.lens.tracker.desc2=location. Different players have different color trails.
 
 item.smedry:lensBlood.name=Warrior's Lens
 item.smedry:lensBlood.plural.name=Warrior's Lenses
