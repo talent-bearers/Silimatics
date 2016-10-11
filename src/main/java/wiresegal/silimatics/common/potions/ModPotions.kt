@@ -6,10 +6,11 @@ package wiresegal.silimatics.common.potions
  */
 object ModPotions {
     val disoriented: PotionMod
-
+    val rooted: PotionMod
     private var i = 0
 
     init {
         disoriented = PotionMod("disoriented", true, 0x404040, i++)
+        rooted = PotionRooted(i++)
     }
 }

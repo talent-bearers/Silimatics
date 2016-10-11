@@ -2,7 +2,7 @@ package wiresegal.silimatics.common.lib
 
 object LibMisc {
     const val MODID = "smedry"
-    const val VERSION = "1.0"
+    const val VERSION = "1.1.1"
     const val NAME = "Silimatics"
     const val DEPS = "required-before:zml"
 
