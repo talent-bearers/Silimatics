@@ -5,11 +5,12 @@ import wiresegal.silimatics.common.block.*
 import wiresegal.silimatics.common.lib.LibNames
 
 object ModBlocks {
-    var sifter: BlockSifter
-    var sand: BlockSand
-    var glass: BlockGlass
-    var glassPane: BlockGlassPane
-    var lensGrinder: BlockLensGrinder
+    val sifter: BlockSifter
+    val sand: BlockSand
+    val glass: BlockGlass
+    val glassPane: BlockGlassPane
+    val lensGrinder: BlockLensGrinder
+    val detector: BlockBrightsandDetector
 
     init {
         sifter = BlockSifter(LibNames.SIFTER)
@@ -17,6 +18,7 @@ object ModBlocks {
         glass = BlockGlass(LibNames.GLASS)
         glassPane = BlockGlassPane(LibNames.GLASS_PANE)
         lensGrinder = BlockLensGrinder(LibNames.GRINDER)
+        detector = BlockBrightsandDetector()
 
         GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
         GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")

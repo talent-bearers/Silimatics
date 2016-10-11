@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=true": { "model": "smedry:detectorOn" },
+    "powered=false": { "model": "smedry:detector" }
+  }
+}

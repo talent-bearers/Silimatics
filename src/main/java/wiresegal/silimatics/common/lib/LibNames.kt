@@ -11,4 +11,5 @@ object LibNames {
     val GRINDER = "grinder"
     val DEBUGGER = "debugger"
     val GRAPPLER = "grappler"
+    val DETECTOR = "detector"
 }

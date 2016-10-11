@@ -54,6 +54,24 @@ object ModRecipes {
                 "G G",
                 "G G",
                 'G', ItemStack(ModBlocks.glass, 1, EnumSandType.TRAIL.ordinal))
+        addRecipe(ItemStack(ModBlocks.detector),
+        "SSS",
+        "GAR",
+        "SSS",
+        'G', ItemStack(ModBlocks.glass, 1, EnumSandType.BRIGHT.ordinal),
+        'S', ItemStack(Blocks.STONE),
+        'A', ItemStack(ModBlocks.sand, 1, EnumSandType.BRIGHT.ordinal),
+        'R', ItemStack(Items.REDSTONE)
+        )
+        addRecipe(ItemStack(ModBlocks.detector),
+                "SSS",
+                "RAG",
+                "SSS",
+                'G', ItemStack(ModBlocks.glass, 1, EnumSandType.BRIGHT.ordinal),
+                'S', ItemStack(Blocks.STONE),
+                'A', ItemStack(ModBlocks.sand, 1, EnumSandType.BRIGHT.ordinal),
+                'R', ItemStack(Items.REDSTONE)
+        )
     }
 
     fun addRecipe(output: ItemStack, vararg inputs: Any) {
