@@ -13,4 +13,6 @@ object LibNames {
     val GRAPPLER = "grappler"
     val DETECTOR = "detector"
     val ROOTED = "rooted"
+    val CYMATIC_PLATE = "cymaticPlate"
+    val FORK = "fork"
 }

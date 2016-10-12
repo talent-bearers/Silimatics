@@ -11,6 +11,7 @@ object ModBlocks {
     val glassPane: BlockGlassPane
     val lensGrinder: BlockLensGrinder
     val detector: BlockBrightsandDetector
+    val cymaticPlate: BlockCymaticPlate
 
     init {
         sifter = BlockSifter(LibNames.SIFTER)
@@ -19,6 +20,7 @@ object ModBlocks {
         glassPane = BlockGlassPane(LibNames.GLASS_PANE)
         lensGrinder = BlockLensGrinder(LibNames.GRINDER)
         detector = BlockBrightsandDetector()
+        cymaticPlate = BlockCymaticPlate()
 
         GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
         GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")

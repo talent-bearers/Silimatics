@@ -25,7 +25,7 @@ item.smedry:dustSandHeart.name=Pile of Heartsand
 
 tile.smedry:glassDull.name=Dullglass
 tile.smedry:glassRashid.name=Glass of Rashid
-tile.smedry:glassBright.name=Empowerer's Glass
+tile.smedry:glassBright.name=Empowerer's Glass [WIP]
 tile.smedry:glassHeat.name=Detonator's Glass
 tile.smedry:glassStorm.name=Pressurizer's Glass
 tile.smedry:glassVoid.name=Inhaler's Glass
@@ -38,7 +38,7 @@ tile.smedry:glassHeart.name=Heart Glass
 
 tile.smedry:glassPaneDull.name=Dullglass Pane
 tile.smedry:glassPaneRashid.name=Pane of Rashid
-tile.smedry:glassPaneBright.name=Empowerer's Glass Pane
+tile.smedry:glassPaneBright.name=Empowerer's Glass Pane [WIP]
 tile.smedry:glassPaneHeat.name=Detonator's Glass Pane
 tile.smedry:glassPaneStorm.name=Pressurizer's Glass Pane
 tile.smedry:glassPaneVoid.name=Inhaler's Glass Pane

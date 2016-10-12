@@ -62,4 +62,4 @@ class PotionRooted(iconIndex: Int) : PotionMod(LibNames.ROOTED, true, 0x634D05, 
             entity.setPosition(entity.prevPosX, entity.prevPosY, entity.prevPosZ)
         }
     }
-}
+} //here wire, have your new line

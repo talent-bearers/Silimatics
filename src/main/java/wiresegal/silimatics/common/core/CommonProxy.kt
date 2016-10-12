@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.networking.NetworkHelper
 import wiresegal.silimatics.common.potions.ModPotions
+import wiresegal.silimatics.common.recipes.ModCymaticPlateRecipes
 import wiresegal.silimatics.common.recipes.ModRecipes
 
 open class CommonProxy {
@@ -16,6 +17,7 @@ open class CommonProxy {
         ModCreativeTab
         ModPotions
         ModSoundEvents
+        ModCymaticPlateRecipes
         FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
     }
 

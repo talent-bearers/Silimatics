@@ -1,24 +1,24 @@
 package wiresegal.silimatics.common.block
 
-import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.entity.item.EntityFallingBlock
+import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.ITickable
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
+import wiresegal.silimatics.common.core.ModBlocks
+import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.BrightsandPower
 import wiresegal.zenmodelloader.common.block.base.BlockMod
+import java.util.*
 
-class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.ROCK), ITileEntityProvider {
-    override fun createNewTileEntity(worldIn: World?, meta: Int): TileEntity?
-        = TileDetector()
+class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.ROCK) {
 
 
     companion object {
@@ -27,7 +27,8 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.ROCK), ITil
 
     init {
         defaultState = blockState.baseState.withProperty(POWERED, false)
-        GameRegistry.registerTileEntity(TileDetector::class.java, "brightSandDetector")
+        @Suppress("DEPRECATION")
+        setHardness(Blocks.STONE.getBlockHardness(null, null, null))
     }
 
     override fun createBlockState(): BlockStateContainer?
@@ -39,22 +40,31 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.ROCK), ITil
     override fun getStateFromMeta(meta: Int): IBlockState?
         = defaultState.withProperty(POWERED, meta == 1)
 
-    override fun hasTileEntity(state: IBlockState?): Boolean
-        = true
-
     override fun getWeakPower(blockState: IBlockState, blockAccess: IBlockAccess, pos: BlockPos, side: EnumFacing): Int
         = if (blockState.getValue(POWERED)) 15 else 0
 
     override fun canProvidePower(state: IBlockState): Boolean = true
 
-    class TileDetector : TileEntity(), ITickable {
-        override fun update() {
-            val state = worldObj.getBlockState(getPos()).getValue(POWERED)
-            val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos)
-            if(state != expectedState && !worldObj.isRemote)
-                worldObj.setBlockState(getPos(), worldObj.getBlockState(getPos()).withProperty(POWERED, expectedState), 1 or 2);
-        }
+    override fun updateTick(worldObj: World, pos: BlockPos, bs: IBlockState, rand: Random?) {
+        val state = worldObj.getBlockState(pos).getValue(POWERED)
+        val entitiesAround = worldObj.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 0, 2)))
+        var flag: Boolean = false
+        entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { flag = true }
+        val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos) || flag
+        if(state != expectedState && !worldObj.isRemote)
+            worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(POWERED, expectedState), 1 or 2);
+        worldObj.scheduleUpdate(pos, this, 0)
     }
+
+    override fun requiresUpdates(): Boolean {
+        return true
+    }
+
+    override fun onBlockAdded(worldIn: World, pos: BlockPos?, state: IBlockState?) {
+        worldIn.scheduleUpdate(pos, this, 0)
+    }
+
+
 }
 
 
