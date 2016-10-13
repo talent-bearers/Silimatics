@@ -109,7 +109,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
         override fun update() {
             val state = worldObj.getBlockState(pos)
             if (worldObj.isBlockPowered(pos) && state.getValue(SAND_TYPE) != EnumSandType.HEAT) return
-            if (!BrightsandPower.hasBrightsandPower(world, pos) && state.getValue(SAND_TYPE) != EnumSandType.HEART) return
+            if (!BrightsandPower.hasBrightsandPower(world, pos) && state.getValue(SAND_TYPE) != EnumSandType.HEART && state.getValue(SAND_TYPE) != EnumSandType.TRAIL) return
             when (state.getValue(SAND_TYPE)) {
                 EnumSandType.BLOOD -> {
                     val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
