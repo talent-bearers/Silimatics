@@ -41,7 +41,7 @@ class BlockBrokenGlass : BlockModContainer("broken" + LibNames.GLASS.capitalizeF
     }
 
     override fun getDrops(world: IBlockAccess?, pos: BlockPos?, state: IBlockState?, fortune: Int): MutableList<ItemStack>? {
-        val stack = ItemStack(ModItems.sand, 1)
+        val stack = ItemStack(ModItems.sand, 1, EnumSandType.HEART.ordinal)
         val list = mutableListOf(stack.copy(), stack.copy(), stack.copy())
         if(ThreadLocalRandom.current().nextBoolean()) list.add(stack.copy())
         return list
