@@ -15,16 +15,15 @@ import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
-class LensTorturer : ILens {
+object LensTorturer : ILens {
 
-    companion object {
-        val TAG_COOLDOWN = "cooldown"
-        val TAG_HITS = "hits"
-        val TAG_UUID = "uuid"
+    val TAG_COOLDOWN = "cooldown"
+    val TAG_HITS = "hits"
+    val TAG_UUID = "uuid"
 
-        val MAX_HITS = 5
-        val COOLDOWN = 20
-    }
+    val MAX_HITS = 5
+    val COOLDOWN = 20
+
 
     fun raycast(e: Entity, len: Double, stopOnLiquid: Boolean = false): RayTraceResult? {
         val vec = Vec3d(e.posX, e.posY, e.posZ).addVector(0.0, if (e is EntityPlayer) e.getEyeHeight().toDouble() else 0.0, 0.0)

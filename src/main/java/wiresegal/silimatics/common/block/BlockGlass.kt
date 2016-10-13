@@ -103,14 +103,14 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
         return true
     }
 
-
     class TileSmedryGlass : TileMod(), ITickable {
 
+        @Suppress("SimplifyBooleanWithConstants")
         override fun update() {
             val state = worldObj.getBlockState(pos)
             if (worldObj.isBlockPowered(pos) && state.getValue(SAND_TYPE) != EnumSandType.HEAT) return
-
-            when(state.getValue(SAND_TYPE)) {
+            if (!BrightsandPower.hasBrightsandPower(world, pos) && state.getValue(SAND_TYPE) != EnumSandType.HEART) return
+            when (state.getValue(SAND_TYPE)) {
                 EnumSandType.BLOOD -> {
                     val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
                     if (!worldObj.isRemote) for (entity in entities) {
@@ -144,26 +144,32 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     }
                 }
                 EnumSandType.HEART -> {
-                    if (BrightsandPower.hasBrightsandPower(world, pos)) {
-                        val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.0, 2.0, 0.0).offset(0.0, 1.0, 0.0))
-                        entities.filter {
-                            it.getActivePotionEffect(MobEffects.REGENERATION) == null
-                         }.forEach {
-                            it.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 80, 1))
-                        }
+                   /* val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.0, 2.0, 0.0).offset(0.0, 1.0, 0.0))
+                    entities.filter {
+                        it.getActivePotionEffect(MobEffects.REGENERATION) == null
+                    }.forEach {
+                        it.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 80, 1))
+                    }*/
+                    val entities = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(4.0, 4.0, 4.0).offset(3.0, 3.0, 3.0))
+                    entities.filter {
+                        true //todo it.isOculator()
+                        && state.block == ModBlocks.glass
+                    }.forEach {
+                        worldObj.setBlockState(pos, ModBlocks.brokenGlass.defaultState)
+                        (worldObj.getTileEntity(pos) as BlockBrokenGlass.TileEntityBrokenGlass).ticks = 0
                     }
+
                 }
                 EnumSandType.HEAT -> {
-                    if (BrightsandPower.hasBrightsandPowerAndRedstonePower(world, pos) && !worldObj.isRemote)
+                    if (!worldObj.isRemote && BrightsandPower.hasBrightsandPowerAndRedstonePower(world, pos))
                         worldObj.createExplosion(null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 8f, true)
 
                 }
 
                 EnumSandType.SUN -> {
-                    if(!BrightsandPower.hasBrightsandPower(world, pos)) return
-                    for(player in world.playerEntities) {
+                    for (player in world.playerEntities) {
                         val blockState = getBlockLookedAt(player)
-                        if(blockState != null && (blockState.block == ModBlocks.glassPane || blockState.block == ModBlocks.glass) && blockState.getValue(SAND_TYPE) == EnumSandType.SUN) player.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 100, 0))
+                        if (blockState != null && (blockState.block == ModBlocks.glassPane || blockState.block == ModBlocks.glass) && blockState.getValue(SAND_TYPE) == EnumSandType.SUN) player.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 100, 0))
                     }
                 }
 
@@ -177,6 +183,10 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
                 EnumSandType.RASHID -> {
                     //NOOP
+                }
+
+                EnumSandType.SCHOOL -> {
+                    for (pos in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos) is ITickable && worldObj.getTileEntity(pos) !is TileSmedryGlass) (worldObj.getTileEntity(pos) as ITickable).update()
                 }
 
                 null -> {
@@ -219,6 +229,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
         val iblockstate = blockAccess.getBlockState(pos.offset(side))
         val block = iblockstate.block
 
+        @Suppress("DEPRECATION")
         return if (blockState !== iblockstate) true
         else if (block === this) false
         else super.shouldSideBeRendered(blockState, blockAccess, pos, side)

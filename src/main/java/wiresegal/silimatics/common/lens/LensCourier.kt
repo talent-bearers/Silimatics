@@ -8,10 +8,9 @@ import wiresegal.silimatics.common.lens.courier.CourierManager
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
-class LensCourier : ILens {
-    companion object {
-        val manager: CourierManager = CourierManager()
-    }
+object LensCourier : ILens {
+    val manager: CourierManager = CourierManager()
+
 
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
         //todo

@@ -13,15 +13,12 @@ import net.minecraft.inventory.InventoryHelper
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.items.CapabilityItemHandler
-import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.ItemHandlerHelper
 import net.minecraftforge.items.ItemStackHandler
 import wiresegal.silimatics.common.core.ItemNBTHelper
@@ -61,9 +58,10 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
     }
 
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
+        if(worldIn.getTileEntity(pos) == null) return
         val tile = (worldIn.getTileEntity(pos) as TileLensGrinder)
         for (i in 0..tile.inventory.slots - 1) {
-            val stack = tile.inventory.getStackInSlot(i)
+            val stack = tile.inventory.getStackInSlot(i) ?: continue
             stack.tagCompound = null
             InventoryHelper.spawnItemStack(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
         }

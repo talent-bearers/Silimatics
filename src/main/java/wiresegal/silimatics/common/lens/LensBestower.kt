@@ -10,7 +10,7 @@ import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
-class LensBestower : ILens {
+object LensBestower : ILens {
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
         val entity = LensOculator.getEntityLookedAt(player)
         if (!player.isSneaking || entity == null || entity !is EntityPlayer || player.getActivePotionEffect(MobEffects.WEAKNESS) != null ||

@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLInterModComms
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import wiresegal.silimatics.common.block.BlockSand
 import wiresegal.silimatics.common.networking.NetworkHelper
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.silimatics.common.recipes.ModCymaticPlateRecipes
@@ -23,6 +24,7 @@ open class CommonProxy {
 
     open fun init(event: FMLInitializationEvent) {
         ModRecipes
+        BlockSand.DispenserBehaviourPlaceBrightsand
     }
 
     open fun postInit(event: FMLPostInitializationEvent) {

@@ -19,7 +19,7 @@ import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
-class LensRashid : ILens {
+object LensRashid : ILens {
     init {
         MinecraftForge.EVENT_BUS.register(this)
     }

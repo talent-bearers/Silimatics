@@ -22,6 +22,8 @@ tile.smedry:sandView.name=Vistasand
 item.smedry:dustSandView.name=Pile of Vistasand
 tile.smedry:sandHeart.name=Heartsand
 item.smedry:dustSandHeart.name=Pile of Heartsand
+tile.smedry:sandSchool.name=Schoolsand
+item.smedry:dustSandSchool.name=Pile of Schoolsand
 
 tile.smedry:glassDull.name=Dullglass
 tile.smedry:glassRashid.name=Glass of Rashid
@@ -34,7 +36,8 @@ tile.smedry:glassBlood.name=Gladiator's Glass
 tile.smedry:glassPain.name=Shardstepper's Glass
 tile.smedry:glassSun.name=Eyeburner's Glass
 tile.smedry:glassView.name=Communicator's Glass [WIP]
-tile.smedry:glassHeart.name=Heart Glass
+tile.smedry:glassHeart.name=Restorer's Glass
+tile.smedry:glassSchool.name=Scholar's Glass
 
 tile.smedry:glassPaneDull.name=Dullglass Pane
 tile.smedry:glassPaneRashid.name=Pane of Rashid
@@ -47,7 +50,8 @@ tile.smedry:glassPaneBlood.name=Gladiator's Glass Pane
 tile.smedry:glassPanePain.name=Shardstepper's Glass Pane
 tile.smedry:glassPaneSun.name=Eyeburner's Glass Pane
 tile.smedry:glassPaneView.name=Communicator's Glass Pane [WIP]
-tile.smedry:glassPaneHeart.name=Heart Glass Pane
+tile.smedry:glassPaneHeart.name=Restorer's Glass Pane
+tile.smedry:glassPaneSchool.name=Scholar's Glass Pane
 
 item.smedry:lensDull.name=Glass Lens
 item.smedry:lensDull.plural.name=Glass Lenses
@@ -98,13 +102,17 @@ smedry.lens.shocker.desc2=anyone looking at you is knocked out by the lens.
 
 item.smedry:lensView.name=Courier's Lens [NYI]
 item.smedry:lensView.plural.name=Courier's Lenses [NYI]
-smedry.lens.lensView.desc=Allows you to talk (vocally) to other oculators in near range.
+smedry.lens.lensView.desc=Allows you to talk (vocally) to other Oculators in near range.
 
 item.smedry:lensHeart.name=Bestower's Lens
 item.smedry:lensHeart.plural.name=Bestower's Lenses
 smedry.lens.lensHeart.desc1=Allows you to give others your strength.
 smedry.lens.lensHeart.desc2=When focusing while looking at another player,
 smedry.lens.lensHeart.desc3=the player will get some of your strength.
+
+item.smedry:lensSchool.name=Scholar's Lens
+item.smedry:lensSchool.plural.name=Scholar's Lenses
+smedry.lens.lensSchool.desc=Allows you to slow down time and motion for yourself and other nearby entities
 
 item.smedry:lensFrames.name=Lens Frames
 
@@ -132,3 +140,4 @@ smedry.potion.rooted=Rooted
 
 jei.smedry.recipe.sifting=Sand Sifting
 jei.smedry.recipe.grinding=Lens Grinding
+

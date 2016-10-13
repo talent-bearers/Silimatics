@@ -9,7 +9,7 @@ import wiresegal.silimatics.common.core.SilimaticMethodHandles
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 
-class LensFirebringer : ILens {
+object LensFirebringer : ILens {
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
         if (player.isSneaking && !world.isRemote) {
             val fireball = EntitySmallFireball(world, player.posX + player.lookVec.xCoord, player.posY + player.eyeHeight + player.lookVec.yCoord, player.posZ + player.lookVec.zCoord, player.lookVec.xCoord / 8, player.lookVec.yCoord / 8, player.lookVec.zCoord / 8)

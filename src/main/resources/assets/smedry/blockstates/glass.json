@@ -12,6 +12,7 @@
     "sand=pain": { "model": "smedry:baseGlass" },
     "sand=sun": { "model": "smedry:baseGlass" },
     "sand=view": { "model": "smedry:baseGlass" },
-    "sand=heart": { "model": "smedry:baseGlass" }
+    "sand=heart": { "model": "smedry:baseGlass" },
+    "sand=school": { "model": "smedry:baseGlass" }
   }
 }

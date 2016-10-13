@@ -14,7 +14,7 @@ import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.zenmodelloader.client.core.TooltipHelper
 import java.util.*
 
-class LensWarrior : ILens {
+object LensWarrior : ILens {
     val TAG_ACTIVE = "active"
 
     override fun shouldMarkAsOculator(stack: ItemStack): Boolean {
@@ -30,7 +30,7 @@ class LensWarrior : ILens {
     }
 
     override fun onCleanupTick(world: World, entity: Entity, stack: ItemStack) {
-        ItemNBTHelper.setBoolean(stack, TAG_ACTIVE, true)
+        ItemNBTHelper.setBoolean(stack, TAG_ACTIVE, false)
     }
 
     override fun addAttributes(slot: EntityEquipmentSlot, stack: ItemStack, modifiers: Multimap<String, AttributeModifier>) {
@@ -50,7 +50,6 @@ class LensWarrior : ILens {
         TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.warrior.desc2")
     }
 
-    companion object {
-        private val WARRIOR_MODIFIER = UUID.fromString("35f6b4f8-03d3-41c9-b31f-fb9c893ca6da")
-    }
+    private val WARRIOR_MODIFIER = UUID.fromString("35f6b4f8-03d3-41c9-b31f-fb9c893ca6da")
+
 }

@@ -52,7 +52,7 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.ROCK) {
         entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { flag = true }
         val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos) || flag
         if(state != expectedState && !worldObj.isRemote)
-            worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(POWERED, expectedState), 1 or 2);
+            worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(POWERED, expectedState), 1 or 2)
         worldObj.scheduleUpdate(pos, this, 0)
     }
 
