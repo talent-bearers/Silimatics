@@ -31,7 +31,7 @@ import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 /**
  * Created by Elad on 8/5/2016.
  */
-class BlockLensGrinder(name: String) : BlockModContainer(name, Material.IRON) {
+class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
 
     companion object {
         val PROP_ON = PropertyBool.create("on")
