@@ -40,7 +40,7 @@ object LensWarrior : ILens {
             modifiers.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior toughness modifier", 1.0, 0))
             modifiers.put(SharedMonsterAttributes.ATTACK_DAMAGE.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior attack modifier", 2.0, 0))
             modifiers.put(SharedMonsterAttributes.ATTACK_SPEED.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior attack speed modifier", -1.0, 0))
-            modifiers.put(SharedMonsterAttributes.MOVEMENT_SPEED.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior speed modifier", 0.25, 1))
+            //modifiers.put(SharedMonsterAttributes.MOVEMENT_SPEED.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior speed modifier", 0.25, 1))
             modifiers.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.attributeUnlocalizedName, AttributeModifier(WARRIOR_MODIFIER, "Warrior resistance modifier", 0.25, 0))
         }
     }
