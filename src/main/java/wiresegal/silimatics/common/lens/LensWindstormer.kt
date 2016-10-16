@@ -44,7 +44,7 @@ open class LensWindstormer : ILens {
             val posVec = player.positionVector
             val range = 16.0
             val entities = world.getEntitiesWithinAABBExcludingEntity(player, player.entityBoundingBox.expand(range, range, range))
-            for (entity in entities) if (entity is EntityLivingBase && entity.positionVector.subtract(posVec).lengthSquared() < range * range) {
+            for (entity in entities) if (entity.positionVector.subtract(posVec).lengthSquared() < range * range) {
                 val dirVec = entity.positionVector.subtract(posVec).normalize()
                 val dot = dirVec.dotProduct(lookVec)
                 if (dot > LOOK_THRESHOLD) {
