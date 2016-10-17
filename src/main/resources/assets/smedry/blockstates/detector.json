@@ -1,6 +1,25 @@
 {
-  "variants": {
-    "powered=true": { "model": "smedry:detectorOn" },
-    "powered=false": { "model": "smedry:detector" }
+  "forge_marker": 1,
+  "defaults":     {
+    "model": "smedry:detector"
+  },
+  "variants":     {
+    "inventory":    {"model": "smedry:detector"},
+    "powered": {
+      "true":  {
+        "model": "smedry:detector"
+      },
+      "false": {
+        "model":  "smedry:detector"
+      }
+    },
+    "facing":       {
+      "north": {},
+      "south": {"y": 180},
+      "east":  {"y": 90},
+      "west":  {"y": 270},
+      "up":    {},
+      "down":  {}
+    }
   }
 }

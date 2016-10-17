@@ -20,6 +20,15 @@ object BrightsandPower {
         }
         return false
     }
+    fun hasBrightsandPower(world: World, pos: BlockPos, facing: EnumFacing, orBSEntity: Boolean = true): Boolean {
+        if (world.getBlockState(pos.add(facing.directionVec)).block == ModBlocks.sand
+                && world.getBlockState(pos.add(facing.directionVec)).getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT) return true
+        if(orBSEntity) {
+            val entitiesAround = world.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.offset(facing), pos.offset(facing.opposite, 2)))
+            entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { return true }
+        }
+        return false
+    }
     fun hasBrightsandPowerAndRedstonePower(world: World, pos: BlockPos): Boolean {
         var flag: Boolean = false
         for (facing in EnumFacing.values()) if(world.getRedstonePower(pos, facing) > 0 || world.isSidePowered(pos, facing) || world.getStrongPower(pos, facing) > 0) flag = true

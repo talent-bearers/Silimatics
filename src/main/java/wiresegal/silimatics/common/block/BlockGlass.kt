@@ -150,7 +150,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     }.forEach {
                         it.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 80, 1))
                     }*/
-                    val entities = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(4.0, 4.0, 4.0).offset(3.0, 3.0, 3.0))
+                    val entities = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(2.0, 2.0, 2.0).offset(1.5, 1.5, 1.5))
                     entities.filter {
                         true //todo it.isOculator()
                         && state.block == ModBlocks.glass
