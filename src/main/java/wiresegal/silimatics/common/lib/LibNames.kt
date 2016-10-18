@@ -15,4 +15,5 @@ object LibNames {
     val ROOTED = "rooted"
     val CYMATIC_PLATE = "cymaticPlate"
     val FORK = "fork"
+    val FUSED_STONE = "fusedStone"
 }

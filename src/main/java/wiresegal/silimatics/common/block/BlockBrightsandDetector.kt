@@ -96,8 +96,8 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.GLASS) {
 
     override fun canProvidePower(state: IBlockState): Boolean = true
 
-    override fun canConnectRedstone(state: IBlockState, world: IBlockAccess?, pos: BlockPos?, side: EnumFacing): Boolean {
-        return state.getValue(BlockHorizontal.FACING) == side.opposite
+    override fun canConnectRedstone(state: IBlockState?, world: IBlockAccess?, pos: BlockPos?, side: EnumFacing?): Boolean {
+        return state?.getValue(BlockHorizontal.FACING) == side?.opposite
     }
 
     override fun updateTick(worldObj: World, pos: BlockPos, bs: IBlockState, rand: Random?) {

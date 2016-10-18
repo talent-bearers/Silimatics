@@ -13,6 +13,7 @@ object ModBlocks {
     val detector: BlockBrightsandDetector
     val cymaticPlate: BlockCymaticPlate
     val brokenGlass: BlockBrokenGlass
+    val fusedStone: BlockFusedStone
     init {
         sifter = BlockSifter(LibNames.SIFTER)
         sand = BlockSand(LibNames.SAND)
@@ -22,6 +23,7 @@ object ModBlocks {
         detector = BlockBrightsandDetector()
         cymaticPlate = BlockCymaticPlate()
         brokenGlass = BlockBrokenGlass()
+        fusedStone = BlockFusedStone()
         GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
         GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")
         GameRegistry.registerTileEntity(BlockSifter.TileBlockSifter::class.java, "smedrysifter")
