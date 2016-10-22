@@ -16,4 +16,5 @@ object LibNames {
     val CYMATIC_PLATE = "cymaticPlate"
     val FORK = "fork"
     val FUSED_STONE = "fusedStone"
+    val COMMUNICATOR_SHARD = "communicatorShard"
 }

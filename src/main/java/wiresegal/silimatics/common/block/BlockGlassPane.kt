@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.statemap.IStateMapper
 import net.minecraft.client.renderer.block.statemap.StateMap
 import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
+import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
@@ -18,6 +19,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModBlocks
+import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 
@@ -83,6 +85,10 @@ class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *E
 
     override fun canPaneConnectTo(world: IBlockAccess, pos: BlockPos, dir: EnumFacing): Boolean {
         return super.canPaneConnectTo(world, pos, dir) || world.getBlockState(pos.offset(dir))?.block == ModBlocks.glass
+    }
+
+    override fun getDrops(world: IBlockAccess, pos: BlockPos, state: IBlockState, fortune: Int): MutableList<ItemStack>? {
+        return if(state.getValue(BlockGlass.SAND_TYPE) == EnumSandType.VIEW) mutableListOf(ModItems.shard.getCommunicatorShardStack()) else super.getDrops(world, pos, state, fortune)
     }
 
     @SideOnly(Side.CLIENT)

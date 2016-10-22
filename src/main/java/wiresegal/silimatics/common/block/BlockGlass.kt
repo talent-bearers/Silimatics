@@ -185,6 +185,10 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     //NOOP
                 }
 
+                EnumSandType.VIEW -> {
+                    //NOOP
+                }
+
                 EnumSandType.SCHOOL -> {
                     for (pos in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos) is ITickable && worldObj.getTileEntity(pos) !is TileSmedryGlass) (worldObj.getTileEntity(pos) as ITickable).update()
                 }

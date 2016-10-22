@@ -98,7 +98,7 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
 
         var lenses = arrayOf(LensDull, LensRashid, LensOculator,
                 LensFirebringer, LensWindstormer(), LensVoidstormer, LensTracker,
-                LensWarrior, LensTorturer, LensShocker/*, LensCourier(),*/, LensBestower, LensScholar)
+                LensWarrior, LensTorturer, LensShocker, LensBestower, LensScholar, LensCourier)
 
         fun getLensFromStack(stack: ItemStack): ILens {
             return lenses[stack.metadata % lenses.size]

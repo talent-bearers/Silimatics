@@ -35,7 +35,7 @@ tile.smedry:glassTrail.name=Grappler's Glass
 tile.smedry:glassBlood.name=Gladiator's Glass
 tile.smedry:glassPain.name=Shardstepper's Glass
 tile.smedry:glassSun.name=Eyeburner's Glass
-tile.smedry:glassView.name=Communicator's Glass [WIP]
+tile.smedry:glassView.name=Communicator's Glass
 tile.smedry:glassHeart.name=Restorer's Glass
 tile.smedry:glassSchool.name=Scholar's Glass
 
@@ -49,7 +49,7 @@ tile.smedry:glassPaneTrail.name=Grappler's Glass Pane
 tile.smedry:glassPaneBlood.name=Gladiator's Glass Pane
 tile.smedry:glassPanePain.name=Shardstepper's Glass Pane
 tile.smedry:glassPaneSun.name=Eyeburner's Glass Pane
-tile.smedry:glassPaneView.name=Communicator's Glass Pane [WIP]
+tile.smedry:glassPaneView.name=Communicator's Glass Pane
 tile.smedry:glassPaneHeart.name=Restorer's Glass Pane
 tile.smedry:glassPaneSchool.name=Scholar's Glass Pane
 
@@ -125,11 +125,16 @@ tile.smedry:sifterAcacia.name=Acacia Sand Sifter
 tile.smedry:sifterDarkOak.name=Dark Oak Sand Sifter
 
 item.smedry:grappler.name=Grappler's Glass Boots
+item.smedry:communicatorShard.name=Communicator's Shard
 
 tile.smedry:detector.name=Silimatic Capacitor
+tile.smedry:fusedStone.name=Fused Stone
 
 item.smedry:debugger.name=Royal Debugger
 smedry.lens.debugger.desc=NOT a lens.
+
+item.smedry:fork.name=Tuning Fork [WIP]
+tile.smedry:cymaticPlate.name=Cymatic Plate [WIP]
 
 itemGroup.smedry=Silimatics
 

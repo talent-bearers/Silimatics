@@ -12,6 +12,7 @@ object ModItems {
     val sand: ItemSand
     val boots: ItemGrapplerBoots
     val fork: BlockCymaticPlate.ItemTuningFork
+    val shard: ItemCommunicatorShard
     lateinit var debugger: ItemDebugger
 
     init {
@@ -20,8 +21,10 @@ object ModItems {
         sand = ItemSand(LibNames.SAND_ITEM)
         boots = ItemGrapplerBoots(LibNames.GRAPPLER)
         fork = BlockCymaticPlate.ItemTuningFork()
+        shard = ItemCommunicatorShard()
         if (ZenModelLoader.DEV_ENVIRONMENT && ItemDebugger.shouldRegisterInDevEnv) debugger = ItemDebugger(LibNames.DEBUGGER)
     }
+
 
 
 }
