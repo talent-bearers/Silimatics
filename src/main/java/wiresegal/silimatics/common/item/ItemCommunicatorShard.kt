@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.item
 
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -16,6 +17,7 @@ import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.color
 import wiresegal.zenmodelloader.common.core.IItemColorProvider
 import wiresegal.zenmodelloader.common.items.base.ItemMod
+import java.awt.Color
 import java.util.*
 
 /**
@@ -26,7 +28,10 @@ class ItemCommunicatorShard : ItemMod(LibNames.COMMUNICATOR_SHARD), IItemColorPr
         return IItemColor { stack, i -> getColor(stack) }
     }
 
-    fun getColor(stack: ItemStack) = EnumSandType.VIEW.glassColor + ItemNBTHelper.getUUID(stack, "uuid", false)!!.hashCode() / 2
+    fun getColor(stack: ItemStack): Int {
+        return EnumSandType.VIEW.glassColor +
+                ((ItemNBTHelper.getUUID(stack, "uuid", true))?.hashCode() ?: return Color.HSBtoRGB(Minecraft.getMinecraft().theWorld.totalWorldTime * 0.005f, 1f, 1f)) / 2
+    }
 
     fun getClosestColor(color: Int): TextFormatting {
         var distance = Math.abs(TextFormatting.values()[0].color()!! - color)
