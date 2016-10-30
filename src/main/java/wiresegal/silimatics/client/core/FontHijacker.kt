@@ -17,25 +17,13 @@ import wiresegal.silimatics.common.potions.ModPotions
  * @author WireSegal
  * Created at 11:53 PM on 8/5/16.
  */
-class FontHijacker(val sup: FontRenderer) : FontRenderer(Minecraft.getMinecraft().gameSettings, ResourceLocation("textures/font/ascii.png"), Minecraft.getMinecraft().renderEngine, false) {
+class FontHijacker(val sup: FontRenderer) : FontRenderer by sup {
     override fun drawStringWithShadow(text: String?, x: Float, y: Float, color: Int): Int {
         return sup.drawStringWithShadow(text.doReplace(), x, y, color)
     }
 
-    override fun setUnicodeFlag(unicodeFlagIn: Boolean) {
-        sup.unicodeFlag = unicodeFlagIn
-    }
-
     override fun drawSplitString(str: String?, x: Int, y: Int, wrapWidth: Int, textColor: Int) {
         sup.drawSplitString(str.doReplace(), x, y, wrapWidth, textColor)
-    }
-
-    override fun getColorCode(character: Char): Int {
-        return sup.getColorCode(character)
-    }
-
-    override fun getBidiFlag(): Boolean {
-        return sup.bidiFlag
     }
 
     override fun getStringWidth(text: String?): Int {
@@ -50,18 +38,6 @@ class FontHijacker(val sup: FontRenderer) : FontRenderer(Minecraft.getMinecraft(
         return sup.drawString(text.doReplace(), x, y, color, dropShadow)
     }
 
-    override fun getUnicodeFlag(): Boolean {
-        return sup.unicodeFlag
-    }
-
-    override fun setBidiFlag(bidiFlagIn: Boolean) {
-        sup.bidiFlag = bidiFlagIn
-    }
-
-    override fun getCharWidth(character: Char): Int {
-        return sup.getCharWidth(character)
-    }
-
     override fun trimStringToWidth(text: String?, width: Int): String {
         return sup.trimStringToWidth(text.doReplace(), width)
     }
@@ -72,10 +48,6 @@ class FontHijacker(val sup: FontRenderer) : FontRenderer(Minecraft.getMinecraft(
 
     override fun splitStringWidth(str: String?, maxLength: Int): Int {
         return sup.splitStringWidth(str.doReplace(), maxLength)
-    }
-
-    override fun onResourceManagerReload(resourceManager: IResourceManager?) {
-        sup.onResourceManagerReload(resourceManager)
     }
 
     override fun listFormattedStringToWidth(str: String?, wrapWidth: Int): MutableList<String>? {
