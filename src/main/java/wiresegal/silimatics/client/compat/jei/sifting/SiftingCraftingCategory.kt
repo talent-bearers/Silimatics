@@ -3,6 +3,7 @@ package wiresegal.silimatics.client.compat.jei.sifting
 import mezz.jei.api.gui.IDrawable
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.recipe.IRecipeCategory
+import mezz.jei.api.recipe.IRecipeWrapper
 import net.minecraft.block.BlockPlanks
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.I18n
@@ -13,7 +14,7 @@ import wiresegal.silimatics.client.compat.jei.JEICompat
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.lib.LibMisc
 
-object SiftingCraftingCategory : IRecipeCategory<SiftingCraftingRecipeJEI> {
+object SiftingCraftingCategory : IRecipeCategory {
 
     private val background = JEICompat.helper.guiHelper.createDrawable(ResourceLocation(LibMisc.MODID, "textures/gui/jei/sifting.png"), 0, 0, 87, 37)
 
@@ -37,7 +38,7 @@ object SiftingCraftingCategory : IRecipeCategory<SiftingCraftingRecipeJEI> {
 
     }
 
-    override fun setRecipe(recipeLayout: IRecipeLayout, recipeWrapper: SiftingCraftingRecipeJEI) {
+    override fun setRecipe(recipeLayout: IRecipeLayout, recipeWrapper: IRecipeWrapper) {
 
         recipeLayout.itemStacks.init(SAND_SLOT, true, 6, 1)
         recipeLayout.itemStacks.init(SIFTER_SLOT, false, 6, 18)

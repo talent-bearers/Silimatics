@@ -39,6 +39,7 @@ import wiresegal.silimatics.common.lens.LensOculator
 import wiresegal.silimatics.common.util.BrightsandPower
 import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
+import java.awt.Color
 
 /**
  * @author WireSegal
@@ -48,9 +49,19 @@ import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider, IBeamHandler {
     @Optional.Method(modid = "refraction")
     override fun handleBeams(world: World, pos: BlockPos, vararg beams: Beam) {
-        for(beam in beams)
-            beam.effect = SilifractionEffect
+        for (beam in beams) {
+            val vec3d = beam.slope.normalize().scale((1/4).toDouble())
+            beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos))).setEffect(SilifractionEffect(world.getBlockState(pos), pos)).spawn()
+        }
+        for (facing in EnumFacing.values())
+            world.notifyNeighborsOfStateExcept(pos.offset(facing), this, facing.opposite)
+        world.scheduleUpdate(pos, this, 20)
+    }
 
+    fun getColor(state: IBlockState): Color {
+       /* val colour = Color(Color.HSBtoRGB(world.totalWorldTime * 0.005f, 1f, 1f) / 2)
+        return if(colour == Color.CYAN) Color.WHITE else colour*/
+        return Color(state.getValue(BlockGlass.SAND_TYPE).glassColor)
     }
 
     companion object {
@@ -154,16 +165,16 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                     }
                 }
                 EnumSandType.HEART -> {
-                   /* val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.0, 2.0, 0.0).offset(0.0, 1.0, 0.0))
-                    entities.filter {
-                        it.getActivePotionEffect(MobEffects.REGENERATION) == null
-                    }.forEach {
-                        it.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 80, 1))
-                    }*/
+                    /* val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(0.0, 2.0, 0.0).offset(0.0, 1.0, 0.0))
+                     entities.filter {
+                         it.getActivePotionEffect(MobEffects.REGENERATION) == null
+                     }.forEach {
+                         it.addPotionEffect(PotionEffect(MobEffects.REGENERATION, 80, 1))
+                     }*/
                     val entities = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(2.0, 2.0, 2.0).offset(1.5, 1.5, 1.5))
                     entities.filter {
                         true //todo it.isOculator()
-                        && state.block == ModBlocks.glass
+                                && state.block == ModBlocks.glass
                     }.forEach {
                         worldObj.setBlockState(pos, ModBlocks.brokenGlass.defaultState)
                         (worldObj.getTileEntity(pos) as BlockBrokenGlass.TileEntityBrokenGlass).ticks = 0

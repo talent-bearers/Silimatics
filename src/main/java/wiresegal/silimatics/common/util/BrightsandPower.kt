@@ -35,5 +35,20 @@ object BrightsandPower {
         flag = flag || world.isBlockPowered(pos) || world.getStrongPower(pos) > 0 || world.isBlockIndirectlyGettingPowered(pos) > 0
         return hasBrightsandPower(world, pos) && flag
     }
+    fun hasRedstonePower(world: World, pos: BlockPos): Boolean {
+        var flag: Boolean = false
+        for (facing in EnumFacing.values()) if(world.getRedstonePower(pos, facing) > 0 || world.isSidePowered(pos, facing) || world.getStrongPower(pos, facing) > 0) flag = true
+        flag = flag || world.isBlockPowered(pos) || world.getStrongPower(pos) > 0 || world.isBlockIndirectlyGettingPowered(pos) > 0
+        return flag
+    }
+
+    fun hasRedstonePowerOrNeighbors(world: World, pos: BlockPos): Boolean {
+        var flag: Boolean = false
+        for(f in EnumFacing.values()) {
+            for (facing in EnumFacing.values()) if (world.getRedstonePower(pos.offset(f), facing) > 0 || world.isSidePowered(pos.offset(f), facing) || world.getStrongPower(pos.offset(f), facing) > 0) flag = true
+            flag = flag || world.isBlockPowered(pos.offset(f)) || world.getStrongPower(pos.offset(f)) > 0 || world.isBlockIndirectlyGettingPowered(pos.offset(f)) > 0
+        }
+        return flag
+    }
 
 }
