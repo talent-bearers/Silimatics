@@ -17,4 +17,5 @@ object LibNames {
     val FORK = "fork"
     val FUSED_STONE = "fusedStone"
     val COMMUNICATOR_SHARD = "communicatorShard"
+    val PLATFORM = "platform"
 }

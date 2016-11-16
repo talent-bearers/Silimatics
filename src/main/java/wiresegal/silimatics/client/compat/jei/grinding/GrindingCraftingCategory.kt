@@ -3,7 +3,6 @@ package wiresegal.silimatics.client.compat.jei.grinding
 import mezz.jei.api.gui.IDrawable
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.recipe.IRecipeCategory
-import mezz.jei.api.recipe.IRecipeWrapper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.I18n
 import net.minecraft.item.ItemStack
@@ -12,7 +11,7 @@ import wiresegal.silimatics.client.compat.jei.JEICompat
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.lib.LibMisc
 
-object GrindingCraftingCategory : IRecipeCategory {
+object GrindingCraftingCategory : IRecipeCategory<GrindingCraftingRecipeJEI> {
 
     private val background = JEICompat.helper.guiHelper.createDrawable(ResourceLocation(LibMisc.MODID, "textures/gui/jei/grinding.png"), 0, 0, 76, 44)
 
@@ -36,7 +35,7 @@ object GrindingCraftingCategory : IRecipeCategory {
 
     }
 
-    override fun setRecipe(recipeLayout: IRecipeLayout, recipeWrapper: IRecipeWrapper) {
+    override fun setRecipe(recipeLayout: IRecipeLayout, recipeWrapper: GrindingCraftingRecipeJEI) {
 
         recipeLayout.itemStacks.init(PANE_SLOT, true, 0, 13)
         recipeLayout.itemStacks.init(GRINDER_SLOT, false, 29, 13)

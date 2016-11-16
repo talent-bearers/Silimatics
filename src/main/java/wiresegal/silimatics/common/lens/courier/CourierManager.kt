@@ -1,60 +1,73 @@
 package wiresegal.silimatics.common.lens.courier
 
+import net.minecraftforge.fml.common.FMLLog
 import java.net.ServerSocket
-import java.net.SocketException
+import java.net.Socket
 import java.util.*
 
 class CourierManager {
-    var connections: MutableSet<CourierConnection> = HashSet()
+    var connections: MutableSet<CourierPlayerConnection> = HashSet()
 
-    var serverSocket: ServerSocket? = null
+    var serverSocket: ServerSocket = ServerSocket(4512)
 
     var running: Boolean = false
 
     var foundLocal = false
 
-    var listenThread: ListenThread? = null
+    lateinit var listenThread: Thread
+    @Volatile lateinit var socket: Socket
 
     fun start() {
-        println("Starting up voice server...")
+        FMLLog.info("VoiceServer: Starting up server...")
 
         try {
             running = true
-            serverSocket = ServerSocket(VOICE_PORT)
+            //serverSocket = ServerSocket(4512)
+            println("Voice1")
+            /*socket = serverSocket.accept()
             listenThread = ListenThread()
-            (listenThread as Thread).start()
+            listenThread.start()*/
+
+            //serverSocket = ServerSocket(8523)
+
         } catch (e: Exception) {
+            e.printStackTrace()
         }
 
     }
 
     fun stop() {
         try {
-            println("Shutting down voice server...")
+            FMLLog.info("VoiceServer: Shutting down server...")
 
             try {
-                listenThread?.interrupt()
-            } catch (e: Exception) {
+                listenThread.interrupt()
+            } catch (ignored: Exception) {
             }
 
             foundLocal = false
 
             try {
-                serverSocket!!.close()
-                serverSocket = null
-            } catch (e: Exception) {
+                serverSocket.close()
+            } catch (ignored: Exception) {
             }
 
         } catch (e: Exception) {
-            System.err.println("Error while shutting down voice server.")
+            FMLLog.warning("VoiceServer: Error while shutting down server.")
             e.printStackTrace()
         }
 
         running = false
     }
 
-    fun sendToPlayers(byteCount: Short, audioData: ByteArray, connection: CourierConnection) {
+    fun sendToPlayers(byteCount: Short, audioData: ByteArray, connection: CourierPlayerConnection) {
         if (connection.player == null) {
+            return
+        }
+
+        val channel = connection.currentChannel
+
+        if (channel == 0) {
             return
         }
 
@@ -62,7 +75,6 @@ class CourierManager {
             if (iterConn.player == null || iterConn == connection || !iterConn.canListen()) {
                 continue
             }
-
             iterConn.sendToPlayer(byteCount, audioData)
         }
     }
@@ -75,28 +87,24 @@ class CourierManager {
 
         override fun run() {
             while (running) {
-                println("running")
                 try {
-                    val s = serverSocket!!.accept()
-                    val connection = CourierConnection(s)
+                    println("Voice2")
+                    val connection = CourierPlayerConnection(socket)
+                    println("Voice3")
                     connection.start()
+                    println("Voice4")
                     connections.add(connection)
-
-                    println("VoiceServer: Accepted new connection.")
-                } catch (ignored: SocketException) {
-                } catch (ignored: NullPointerException) {
+                    println("Voice5")
+                    FMLLog.info("VoiceServer: Accepted new connection.")
                 } catch (e: Exception) {
-                    System.err.println("VoiceServer: Error while accepting connection.")
+                    FMLLog.warning("VoiceServer: Error while accepting connection.")
                     e.printStackTrace()
+                } finally {
+                    FMLLog.warning("Finally")
                 }
 
             }
-            println("n'running")
+            FMLLog.warning("Out of the loop")
         }
     }
-
-    companion object {
-        val VOICE_PORT = 21452
-    }
 }
-

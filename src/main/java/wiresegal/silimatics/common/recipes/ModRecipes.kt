@@ -63,14 +63,12 @@ object ModRecipes {
             'A', ItemStack(ModBlocks.sand, 1, EnumSandType.BRIGHT.ordinal),
             'R', ItemStack(Items.REDSTONE)
         )
-        addRecipe(ItemStack(ModBlocks.detector),
-                "SSS",
-                "RAG",
-                "SSS",
-                'G', ItemStack(ModBlocks.glass, 1, EnumSandType.BRIGHT.ordinal),
-                'S', ItemStack(Blocks.GLASS),
-                'A', ItemStack(ModBlocks.sand, 1, EnumSandType.BRIGHT.ordinal),
-                'R', ItemStack(Items.REDSTONE)
+        addRecipe(ItemStack(ModBlocks.platform, 3),
+                "FFF",
+                "RRR",
+                "   ",
+                'R', ItemStack(ModBlocks.glass, 1, EnumSandType.HEART.ordinal),
+                'F', ItemStack(ModBlocks.fusedStone)
         )
     }
 

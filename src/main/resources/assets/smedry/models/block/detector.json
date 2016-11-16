@@ -1,6 +1,7 @@
 {
 "__comment": "Designed by Wiresegal with BDcraft Cubik PRO 0.96 Beta - http://bdcraft.net",
 "textures": {
+    "particle": "smedry:blocks/silicomponents/fusedInlaid",
     "fusedStone": "smedry:blocks/fusedStone",
     "fusedInlaid": "smedry:blocks/silicomponents/fusedInlaid",
     "glass": "smedry:blocks/silicomponents/empower"

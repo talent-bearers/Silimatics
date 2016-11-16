@@ -99,12 +99,11 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
     }
 
     private fun checkFallable(worldIn: World, pos: BlockPos) {
+        val entityfallingblock = EntityFallingBlock(worldIn, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, worldIn.getBlockState(pos))
         if ((worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down()))) && pos.y >= 0) {
-
-            if (!worldIn.isRemote) {
-                val entityfallingblock = EntityFallingBlock(worldIn, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, worldIn.getBlockState(pos))
+            if (!worldIn.isRemote)
                 worldIn.spawnEntityInWorld(entityfallingblock)
-            }
+
         }
     }
 

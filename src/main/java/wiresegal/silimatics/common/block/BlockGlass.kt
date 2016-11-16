@@ -1,5 +1,7 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.refraction.api.IBeamHandler
+import com.teamwizardry.refraction.common.light.Beam
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
@@ -25,8 +27,10 @@ import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.Optional
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import wiresegal.silimatics.common.compat.refraction.SilifractionEffect
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
@@ -40,7 +44,14 @@ import wiresegal.zenmodelloader.common.core.IBlockColorProvider
  * @author WireSegal
  * Created at 9:30 AM on 8/4/16.
  */
-class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider {
+@Optional.Interface(iface = "com.teamwizardry.refraction.api.IBeamHandler", modid = "refraction")
+class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider, IBeamHandler {
+    @Optional.Method(modid = "refraction")
+    override fun handleBeams(world: World, pos: BlockPos, vararg beams: Beam) {
+        for(beam in beams)
+            beam.effect = SilifractionEffect
+
+    }
 
     companion object {
         val SAND_TYPE = PropertyEnum.create("sand", EnumSandType::class.java)
@@ -108,7 +119,6 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
         @Suppress("SimplifyBooleanWithConstants")
         override fun update() {
             val state = worldObj.getBlockState(pos)
-            if (worldObj.isBlockPowered(pos) && state.getValue(SAND_TYPE) != EnumSandType.HEAT) return
             if (!BrightsandPower.hasBrightsandPower(world, pos) && state.getValue(SAND_TYPE) != EnumSandType.HEART && state.getValue(SAND_TYPE) != EnumSandType.TRAIL) return
             when (state.getValue(SAND_TYPE)) {
                 EnumSandType.BLOOD -> {

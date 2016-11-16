@@ -1,12 +1,11 @@
 package wiresegal.silimatics.common.lens.courier
 
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.FMLCommonHandler
-import wiresegal.silimatics.common.core.ModItems
+import net.minecraftforge.fml.common.FMLLog
+import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lens.LensCourier
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
@@ -15,14 +14,14 @@ import java.io.DataOutputStream
 import java.net.Socket
 import java.util.*
 
-class CourierConnection(var socket: Socket) : Thread() {
+class CourierPlayerConnection(var socket: Socket) : Thread() {
 
     var username: String? = null
 
     var open = true
 
-    var input: DataInputStream? = null
-    var output: DataOutputStream? = null
+    lateinit var input: DataInputStream
+    lateinit var output: DataOutputStream
 
     var server = FMLCommonHandler.instance().minecraftServerInstance
 
@@ -31,7 +30,7 @@ class CourierConnection(var socket: Socket) : Thread() {
             input = DataInputStream(BufferedInputStream(socket.inputStream))
             output = DataOutputStream(BufferedOutputStream(socket.outputStream))
 
-            synchronized(LensCourier.manager) {
+            synchronized (LensCourier.manager) {
                 var retryCount = 0
 
                 while (username == null && retryCount <= 100) {
@@ -55,35 +54,36 @@ class CourierConnection(var socket: Socket) : Thread() {
 
                         retryCount++
                         Thread.sleep(50)
-                    } catch (e: Exception) {
+                    } catch (ignored: Exception) {
                     }
 
                 }
 
                 if (username == null) {
-                    System.err?.println("Unable to trace voice connection's IP address.")
+                    FMLLog.warning("VoiceServer: Unable to trace connection's IP address.")
                     kill()
                     return
-                } else
-                    println("Traced IP for courier lens server in $retryCount attempts.")
-
+                } else {
+                    FMLLog.info("VoiceServer: Traced IP in $retryCount attempts.")
+                }
             }
         } catch (e: Exception) {
-            System.err?.println("Error while starting server voice connection.")
+            FMLLog.warning("VoiceServer: Error while starting server-based connection.")
             e.printStackTrace()
             open = false
         }
 
+        //Main client listen thread
         Thread {
             while (open) {
                 try {
-                    val byteCount = this@CourierConnection.input?.readShort() ?: throw NullPointerException()
+                    val byteCount = this@CourierPlayerConnection.input.readShort()
                     val audioData = ByteArray(byteCount.toInt())
-                    this@CourierConnection.input?.readFully(audioData)
+                    this@CourierPlayerConnection.input.readFully(audioData)
 
-                    if (byteCount > 0)
-                        LensCourier.manager.sendToPlayers(byteCount, audioData, this@CourierConnection)
-
+                    if (byteCount > 0) {
+                        LensCourier.manager.sendToPlayers(byteCount, audioData, this@CourierPlayerConnection)
+                    }
                 } catch (e: Exception) {
                     open = false
                 }
@@ -98,43 +98,64 @@ class CourierConnection(var socket: Socket) : Thread() {
 
     fun kill() {
         try {
-            input?.close()
-            output?.close()
+            input.close()
+            output.close()
             socket.close()
 
             LensCourier.manager.connections.remove(this)
         } catch (e: Exception) {
-            System.err?.println("Error while stopping server voice connection.")
+            FMLLog.warning("VoiceServer: Error while stopping server-based connection.")
             e.printStackTrace()
         }
 
     }
 
     fun sendToPlayer(byteCount: Short, audioData: ByteArray) {
-        if (!open)
+        if (!open) {
             kill()
+        }
+
         try {
-            output?.writeShort(byteCount.toInt())
-            output?.write(audioData)
-            output?.flush()
+            output.writeShort(byteCount.toInt())
+            output.write(audioData)
+
+            output.flush()
         } catch (e: Exception) {
-            System.err?.println("Error while sending voice data to player.")
+            FMLLog.warning("VoiceServer: Error while sending data to player.")
             e.printStackTrace()
         }
 
     }
 
-    fun canListen(): Boolean = canListen(player?.getItemStackFromSlot(EntityEquipmentSlot.HEAD))
-
-    fun canListen(itemStack: ItemStack?): Boolean {
-        if (itemStack != null) {
-            return false //todo
-//            val stack = itemStack.getLensStack()
-//            return stack.item == ModItems.lens && stack.metadata == EnumSandType.VIEW.ordinal
+    fun canListen(): Boolean {
+        for (itemStack in player?.inventory?.mainInventory!!) {
+            if (canListen(itemStack)) {
+                return true
+            }
         }
+
+        for (itemStack in player?.inventory?.offHandInventory!!) {
+            if (canListen(itemStack)) {
+                return true
+            }
+        }
+
         return false
     }
 
+    fun canListen(itemStack: ItemStack?): Boolean {
+        if (itemStack != null) {
+            println("hi")
+            if (itemStack.item is ILens && itemStack.metadata == EnumSandType.VIEW.ordinal) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    val currentChannel: Int
+        get() = 69
 
     val player: EntityPlayerMP?
         get() = server.playerList.getPlayerByUsername(username)

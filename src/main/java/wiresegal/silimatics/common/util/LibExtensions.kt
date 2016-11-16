@@ -1,6 +1,9 @@
 package wiresegal.silimatics.common.util
 
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.World
 
 /**
  * Created by Elad on 10/22/2016.
@@ -28,6 +31,12 @@ fun TextFormatting.color(): Int? = when(this) {
     TextFormatting.UNDERLINE -> null
     TextFormatting.ITALIC -> null
     TextFormatting.RESET -> null
+}
+fun World.hasRedstoneSignalSimple(pos: BlockPos): Boolean {
+    var flag: Boolean = false
+    for (facing in EnumFacing.values()) if(getRedstonePower(pos, facing) > 0 || isSidePowered(pos, facing) || getStrongPower(pos, facing) > 0) flag = true
+    flag = flag || isBlockPowered(pos) || getStrongPower(pos) > 0 || isBlockIndirectlyGettingPowered(pos) > 0
+    return flag
 }
 
 
