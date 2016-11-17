@@ -26,7 +26,7 @@ object ModBlocks {
         brokenGlass = BlockBrokenGlass()
         fusedStone = BlockFusedStone()
         platform = BlockSilimaticPlatform()
-        GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
+        //GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
         GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")
         GameRegistry.registerTileEntity(BlockSifter.TileBlockSifter::class.java, "smedrysifter")
     }

@@ -163,7 +163,7 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                     //noop; nah
                 }
                 EnumSandType.SCHOOL -> {
-                    for (pos0 in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos0) is ITickable && worldObj.getTileEntity(pos0) !is BlockGlass.TileSmedryGlass) (worldObj.getTileEntity(pos0) as ITickable).update()
+                    for (pos0 in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos0) is ITickable) (worldObj.getTileEntity(pos0) as ITickable).update()
                 }
                 EnumSandType.VIEW -> {
                     //noop; viewglass does not do stuff
