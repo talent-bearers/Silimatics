@@ -39,13 +39,14 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
         EffectTracker.registerEffect(this)
         MinecraftForge.EVENT_BUS.register(this)
     }
+
     @SubscribeEvent
     fun onBrightsandEvent(brightsandEvent: BrightsandEvent) {
-        if(brightsandEvent.isPowered) return
+        if (brightsandEvent.isPowered) return
         //beam is null here
-        if(actualBeam == null) return
+        if (actualBeam == null) return
         val trace = EntityTrace.cast(brightsandEvent.world, actualBeam?.initLoc, actualBeam?.slope, actualBeam?.range ?: 32.0, false)
-        if(trace.typeOfHit == RayTraceResult.Type.BLOCK && brightsandEvent.pos == trace.blockPos) {
+        if (trace.typeOfHit == RayTraceResult.Type.BLOCK && brightsandEvent.pos == trace.blockPos) {
             brightsandEvent.isPowered = state.getValue(BlockGlass.SAND_TYPE) == EnumSandType.BRIGHT
         }
     }
@@ -56,10 +57,10 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
 
     override fun run(worldObj: World, locations: Set<BlockPos>) {
         val type = state.getValue(BlockGlass.SAND_TYPE)
-        if(beam != null) actualBeam = beam
-        if(!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
-        for(pos in locations)
-            when(type) {
+        if (beam != null) actualBeam = beam
+        if (!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
+        for (pos in locations)
+            when (type) {
                 EnumSandType.BLOOD -> {
 
                     val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
@@ -89,13 +90,13 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                         worldObj.createExplosion(null, pos0.x.toDouble(), pos0.y.toDouble(), pos0.z.toDouble(), 8f, true)
                         worldObj.setBlockToAir(origin)
                     }*/
-                    if(!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
-                    if(beam?.trace?.typeOfHit == RayTraceResult.Type.ENTITY) {
+                    if (!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
+                    if (beam?.trace?.typeOfHit == RayTraceResult.Type.ENTITY) {
                         val entity = beam.trace.entityHit
-                        if(entity is EntityPlayer) entity.addChatComponentMessage(TextComponentString(entity.name))
+                        if (entity is EntityPlayer) entity.addChatComponentMessage(TextComponentString(entity.name))
                         worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, 8f, true)
                         worldObj.setBlockToAir(origin)
-                    } else if(beam?.trace?.typeOfHit == RayTraceResult.Type.BLOCK) {
+                    } else if (beam?.trace?.typeOfHit == RayTraceResult.Type.BLOCK) {
                         val entity = beam.trace.blockPos
                         worldObj.createExplosion(null, entity.x.toDouble(), entity.y.toDouble(), entity.z.toDouble(), 8f, true)
                         worldObj.setBlockToAir(origin)
@@ -112,9 +113,10 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                     }*/
                     entities.forEach {
                         it.posY += 50
-                        val mainDiv = if(type == EnumSandType.STORM) Vec3d(16.0, 20.0, 16.0) else Vec3d(-16.0, -20.0, -16.0)
+                        val mainDiv = if (type == EnumSandType.STORM) Vec3d(16.0, 20.0, 16.0) else Vec3d(-16.0, -20.0, -16.0)
                         val lookVec = it.lookVec
                         it.worldObj.playSound(null, it.posX, it.posY, it.posZ, ModSoundEvents.WOOSH, SoundCategory.PLAYERS, 1f, 1f)
+                        it.velocityChanged = true
                         it.motionX -= lookVec.xCoord / mainDiv.xCoord
                         it.motionY -= lookVec.yCoord / mainDiv.yCoord
                         it.motionZ -= lookVec.zCoord / mainDiv.zCoord
@@ -131,8 +133,16 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                         /*entity.setNoGravity(true)
                         entity.motionY += 5
                         entity.fallDistance = 0F*/
-                        setEntityMotion(entity, times = 0, plusY = 0.5)
                         if (entity.getItemStackFromSlot(EntityEquipmentSlot.FEET)?.item == ModItems.boots) {
+                            entity.posY += 50
+                            val mainDiv = if (type == EnumSandType.STORM) Vec3d(16.0, 20.0, 16.0) else Vec3d(-16.0, -20.0, -16.0)
+                            val lookVec = entity.lookVec
+                            entity.worldObj.playSound(null, entity.posX, entity.posY, entity.posZ, ModSoundEvents.WOOSH, SoundCategory.PLAYERS, 1f, 1f)
+                            entity.velocityChanged = true
+                            entity.motionY = 0.5
+
+                            if ((-lookVec.yCoord / mainDiv.yCoord) > 0 && entity.fallDistance > 0)
+                                entity.fallDistance = 0.0f
 
                         }
                     }
@@ -198,6 +208,7 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
         pullDir = beam.finalLoc.subtract(beam.initLoc).normalize()
 
         entity.setNoGravity(false)
+        entity.velocityChanged = true
         entity.motionX = pullDir.xCoord * (potency / 255.0) * times
         entity.motionY = (pullDir.yCoord * (potency / 255.0) * times) + plusY
         entity.motionZ = pullDir.zCoord * (potency / 255.0) * times

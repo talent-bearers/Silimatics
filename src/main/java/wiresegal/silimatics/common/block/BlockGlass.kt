@@ -51,7 +51,9 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
     override fun handleBeams(world: World, pos: BlockPos, vararg beams: Beam) {
         for (beam in beams) {
             val vec3d = beam.slope.normalize().scale((1/4).toDouble())
-            beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos))).setEffect(SilifractionEffect(world.getBlockState(pos), pos)).spawn()
+            if(world.getBlockState(pos).getValue(SAND_TYPE) == EnumSandType.DULL)
+                beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).spawn()
+            else beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos))).setEffect(SilifractionEffect(world.getBlockState(pos), pos)).spawn()
         }
         for (facing in EnumFacing.values())
             world.notifyNeighborsOfStateExcept(pos.offset(facing), this, facing.opposite)
@@ -66,6 +68,31 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
     companion object {
         val SAND_TYPE = PropertyEnum.create("sand", EnumSandType::class.java)
+        fun getBlockLookedAt(e: Entity, maxDistance: Double = 32.0, worldObj: World): IBlockState? {
+            val pos = LensOculator.raycast(e, maxDistance)
+            return if (pos != null && pos.typeOfHit == RayTraceResult.Type.BLOCK) worldObj.getBlockState(pos.blockPos) else null
+        }
+
+        fun pushEntities(x: Double, y: Double, z: Double, range: Double, velocity: Double, entities: List<Entity>) {
+            for (entity in entities) {
+                if (entity is EntityPlayer && entity.capabilities.isFlying) continue
+                val xDif = entity.posX - x
+                val yDif = entity.posY - y
+                val zDif = entity.posZ - z
+                val motionMul = if (entity is EntityPlayer && entity.isSneaking) 0.175 else 1.0
+                val vec = Vec3d(xDif, yDif, zDif).normalize()
+                val dist = xDif * xDif + yDif * yDif + zDif * zDif
+                if (dist <= range * range &&
+                        Math.abs(entity.motionX + motionMul * velocity * vec.xCoord) < motionMul * Math.abs(velocity) * 10 &&
+                        Math.abs(entity.motionY + motionMul * velocity * vec.yCoord) < motionMul * Math.abs(velocity) * 10 &&
+                        Math.abs(entity.motionZ + motionMul * velocity * vec.zCoord) < motionMul * Math.abs(velocity) * 10) {
+                    entity.motionX += motionMul * velocity * vec.xCoord
+                    entity.motionY += motionMul * velocity * vec.yCoord * 1.5
+                    entity.motionZ += motionMul * velocity * vec.zCoord
+                    if (velocity * vec.yCoord > 0) entity.fallDistance = 0f
+                }
+            }
+        }
     }
 
     init {
@@ -189,7 +216,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
                 EnumSandType.SUN -> {
                     for (player in world.playerEntities) {
-                        val blockState = getBlockLookedAt(player)
+                        val blockState = getBlockLookedAt(player, worldObj = worldObj)
                         if (blockState != null && (blockState.block == ModBlocks.glassPane || blockState.block == ModBlocks.glass) && blockState.getValue(SAND_TYPE) == EnumSandType.SUN) player.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 100, 0))
                     }
                 }
@@ -220,34 +247,10 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
 
             }
         }
-
-        fun getBlockLookedAt(e: Entity, maxDistance: Double = 32.0): IBlockState? {
-            val pos = LensOculator.raycast(e, maxDistance)
-            return if (pos != null && pos.typeOfHit == RayTraceResult.Type.BLOCK) worldObj.getBlockState(pos.blockPos) else null
-        }
-
-        fun pushEntities(x: Double, y: Double, z: Double, range: Double, velocity: Double, entities: List<Entity>) {
-            for (entity in entities) {
-                if (entity is EntityPlayer && entity.capabilities.isFlying) continue
-                val xDif = entity.posX - x
-                val yDif = entity.posY - y
-                val zDif = entity.posZ - z
-                val motionMul = if (entity is EntityPlayer && entity.isSneaking) 0.175 else 1.0
-                val vec = Vec3d(xDif, yDif, zDif).normalize()
-                val dist = xDif * xDif + yDif * yDif + zDif * zDif
-                if (dist <= range * range &&
-                        Math.abs(entity.motionX + motionMul * velocity * vec.xCoord) < motionMul * Math.abs(velocity) * 10 &&
-                        Math.abs(entity.motionY + motionMul * velocity * vec.yCoord) < motionMul * Math.abs(velocity) * 10 &&
-                        Math.abs(entity.motionZ + motionMul * velocity * vec.zCoord) < motionMul * Math.abs(velocity) * 10) {
-                    entity.motionX += motionMul * velocity * vec.xCoord
-                    entity.motionY += motionMul * velocity * vec.yCoord * 1.5
-                    entity.motionZ += motionMul * velocity * vec.zCoord
-                    if (velocity * vec.yCoord > 0) entity.fallDistance = 0f
-                }
-            }
-        }
-
     }
+
+
+
 
     @SideOnly(Side.CLIENT)
     override fun shouldSideBeRendered(blockState: IBlockState, blockAccess: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean {
