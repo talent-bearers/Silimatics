@@ -5,28 +5,27 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.common.MinecraftForge
+import wiresegal.silimatics.api.event.BrightsandEvent
 import wiresegal.silimatics.common.block.BlockSand
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.item.EnumSandType
 
 object BrightsandPower {
-    fun hasBrightsandPower(world: World, pos: BlockPos, orBSEntity: Boolean = true): Boolean {
-        for(facing in EnumFacing.values())
-            if (world.getBlockState(pos.add(facing.directionVec)).block == ModBlocks.sand
-                    && world.getBlockState(pos.add(facing.directionVec)).getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT) return true
+    fun hasBrightsandPower(world: World, pos: BlockPos, facing0: EnumFacing? = null, orBSEntity: Boolean = true): Boolean {
+        if(facing0 == null)
+            for(facing in EnumFacing.values())
+                if (world.getBlockState(pos.add(facing.directionVec)).block == ModBlocks.sand
+                        && world.getBlockState(pos.add(facing.directionVec)).getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT) return true
+        else if (world.getBlockState(pos.add(facing.directionVec)).block == ModBlocks.sand
+                        && world.getBlockState(pos.add(facing.directionVec)).getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT) return true
         if(orBSEntity) {
             val entitiesAround = world.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 0, 2)))
             entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { return true }
         }
-        return false
-    }
-    fun hasBrightsandPower(world: World, pos: BlockPos, facing: EnumFacing, orBSEntity: Boolean = true): Boolean {
-        if (world.getBlockState(pos.add(facing.directionVec)).block == ModBlocks.sand
-                && world.getBlockState(pos.add(facing.directionVec)).getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT) return true
-        if(orBSEntity) {
-            val entitiesAround = world.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.offset(facing), pos.offset(facing.opposite, 2)))
-            entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { return true }
-        }
+        val event = BrightsandEvent(pos, world)
+        MinecraftForge.EVENT_BUS.post(event)
+        if(event.isPowered) return true
         return false
     }
     fun hasBrightsandPowerAndRedstonePower(world: World, pos: BlockPos): Boolean {
