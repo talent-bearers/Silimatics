@@ -17,7 +17,6 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
-import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -93,15 +92,14 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                     if (!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
                     if (beam?.trace?.typeOfHit == RayTraceResult.Type.ENTITY) {
                         val entity = beam.trace.entityHit
-                        if (entity is EntityPlayer) entity.addChatComponentMessage(TextComponentString(entity.name))
-                        worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, 8f, true)
+                        worldObj.createExplosion(null, entity.posX, entity.posY, entity.posZ, 4f, true)
                         worldObj.setBlockToAir(origin)
                     } else if (beam?.trace?.typeOfHit == RayTraceResult.Type.BLOCK) {
                         val entity = beam.trace.blockPos
-                        worldObj.createExplosion(null, entity.x.toDouble(), entity.y.toDouble(), entity.z.toDouble(), 8f, true)
+                        worldObj.createExplosion(null, entity.x.toDouble(), entity.y.toDouble(), entity.z.toDouble(), 4f, true)
                         worldObj.setBlockToAir(origin)
                     } else {
-                        worldObj.createExplosion(null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 8f, true)
+                        worldObj.createExplosion(null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 4f, true)
                         worldObj.setBlockToAir(origin)
                     }
                 }

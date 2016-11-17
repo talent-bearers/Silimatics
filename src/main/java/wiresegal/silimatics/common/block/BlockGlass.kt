@@ -195,8 +195,9 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
                  }*/
                 val entities = worldObj.getEntitiesWithinAABB(EntityPlayer::class.java, state.getBoundingBox(worldObj, pos).offset(pos).expand(2.0, 2.0, 2.0).offset(1.5, 1.5, 1.5))
                 entities.filter {
-                    true //todo it.isOculator()
-                            && state.block == ModBlocks.glass
+                    @Suppress("SimplifyBooleanWithConstants")
+                    (true //todo it.isOculator()
+                            && state.block == ModBlocks.glass)
                 }.forEach {
                     worldObj.setBlockState(pos, ModBlocks.brokenGlass.defaultState)
                     (worldObj.getTileEntity(pos) as BlockBrokenGlass.TileEntityBrokenGlass).ticks = 0
