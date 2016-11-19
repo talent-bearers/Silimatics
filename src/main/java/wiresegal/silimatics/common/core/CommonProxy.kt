@@ -9,6 +9,7 @@ import wiresegal.silimatics.common.networking.NetworkHelper
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.silimatics.common.recipes.ModCymaticPlateRecipes
 import wiresegal.silimatics.common.recipes.ModRecipes
+import wiresegal.silimatics.common.util.SilimaticEvents
 
 open class CommonProxy {
     open fun preInit(event: FMLPreInitializationEvent) {
@@ -19,6 +20,7 @@ open class CommonProxy {
         ModPotions
         ModSoundEvents
         ModCymaticPlateRecipes
+        SilimaticEvents
         FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
     }
 

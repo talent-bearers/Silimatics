@@ -22,7 +22,6 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import wiresegal.silimatics.api.event.BrightsandEvent
 import wiresegal.silimatics.common.block.BlockGlass
-import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.core.ModSoundEvents
 import wiresegal.silimatics.common.item.EnumSandType
@@ -51,17 +50,16 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
     }
 
     override fun getCooldown(): Int {
-        return if (potency == 0) 0 else 1000 / potency
+        return 1000
     }
 
     override fun run(worldObj: World, locations: Set<BlockPos>) {
         val type = state.getValue(BlockGlass.SAND_TYPE)
         if (beam != null) actualBeam = beam
-        if (!BrightsandPower.hasBrightsandPower(worldObj, origin)) return
+        if (!BrightsandPower.hasBrightsandPower(worldObj, origin) && type != EnumSandType.BRIGHT) return
         for (pos in locations)
             when (type) {
                 EnumSandType.BLOOD -> {
-
                     val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
                     if (!worldObj.isRemote) for (entity in entities) {
                         entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 5, 3))
@@ -70,7 +68,7 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                     }
                 }
                 EnumSandType.BRIGHT -> {
-                    //noop; brightglass does not do stuff (except for beaming brightsand)
+                    //noop; brightglass does not do stuff
                 }
                 EnumSandType.DULL -> {
                     //noop; dullglass does not do stuff
@@ -152,10 +150,7 @@ class SilifractionEffect(val state: IBlockState, val origin: BlockPos, var actua
                         entity.attackEntityFrom(DamageSource.cactus, 1f)
                 }
                 EnumSandType.SUN -> {
-                    for (player in worldObj.playerEntities) {
-                        val blockState = getBlockLookedAt(player)
-                        if (blockState != null && (blockState.block == ModBlocks.glassPane || blockState.block == ModBlocks.glass) && blockState.getValue(BlockGlass.SAND_TYPE) == EnumSandType.SUN) player.addPotionEffect(PotionEffect(MobEffects.BLINDNESS, 100, 0))
-                    }
+                    //noop; nah
                 }
                 EnumSandType.HEART -> {
                     //noop; nah

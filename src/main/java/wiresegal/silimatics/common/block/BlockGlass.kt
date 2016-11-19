@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
+import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
@@ -21,6 +22,7 @@ import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.DamageSource
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ITickable
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
@@ -29,6 +31,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.common.Optional
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import wiresegal.silimatics.common.compat.refraction.BeamedBrightsandEffect
 import wiresegal.silimatics.common.compat.refraction.SilifractionEffect
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModCreativeTab
@@ -36,6 +39,8 @@ import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.lens.LensOculator
 import wiresegal.silimatics.common.util.BrightsandPower
+import wiresegal.silimatics.common.util.SilimaticEvents
+import wiresegal.silimatics.common.util.hasRedstoneSignalSimple
 import wiresegal.zenmodelloader.common.block.base.BlockMod
 import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.awt.Color
@@ -50,10 +55,14 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
     @Optional.Method(modid = "refraction")
     override fun handleBeams(world: World, pos: BlockPos, vararg beams: Beam) {
         for (beam in beams) {
+            if(beam.effect is BeamedBrightsandEffect) continue
             val vec3d = beam.slope.normalize().scale((1/4).toDouble())
-            if(world.getBlockState(pos).getValue(SAND_TYPE) == EnumSandType.DULL)
-                beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).spawn()
-            else beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos))).setEffect(SilifractionEffect(world.getBlockState(pos), pos)).spawn()
+            val state = world.getBlockState(pos)
+            when(state.getValue(SAND_TYPE)) {
+                EnumSandType.DULL -> beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).spawn()
+                EnumSandType.BRIGHT -> beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos)).brighter()).setEffect(BeamedBrightsandEffect()).spawn()
+                else -> beam.createSimilarBeam(Vec3d(pos).add(vec3d).add(Vec3d(0.5, 0.5, 0.5)), beam.slope).setColor(getColor(world.getBlockState(pos))).setEffect(SilifractionEffect(world.getBlockState(pos), pos)).spawn()
+            }
         }
         for (facing in EnumFacing.values())
             world.notifyNeighborsOfStateExcept(pos.offset(facing), this, facing.opposite)
@@ -151,7 +160,12 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
 
     override fun updateTick(worldObj: World, pos: BlockPos, bs: IBlockState, rand: Random?) {
         val state = worldObj.getBlockState(pos)
-        if (!BrightsandPower.hasBrightsandPower(worldObj, pos) && state.getValue(SAND_TYPE) != EnumSandType.HEART && state.getValue(SAND_TYPE) != EnumSandType.TRAIL) return
+        val entitiesAround = worldObj.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 0, 2)))
+        var flag: Boolean = false
+        entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { flag = true }
+        EnumFacing.values().forEach { if(SilimaticEvents.tracker.map { it.toLong() }.contains(pos.add(it.directionVec).toLong())) flag = true }
+        val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos) || flag
+        if (!expectedState && state.getValue(SAND_TYPE) != EnumSandType.HEART && state.getValue(SAND_TYPE) != EnumSandType.TRAIL) return
         when (state.getValue(SAND_TYPE)) {
             EnumSandType.BLOOD -> {
                 val entities = worldObj.getEntitiesWithinAABB(EntityLivingBase::class.java, state.getBoundingBox(worldObj, pos).offset(pos.up()))
@@ -205,7 +219,7 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
 
             }
             EnumSandType.HEAT -> {
-                if (!worldObj.isRemote && BrightsandPower.hasBrightsandPowerAndRedstonePower(worldObj, pos))
+                if (!worldObj.isRemote && worldObj.hasRedstoneSignalSimple(pos))
                     worldObj.createExplosion(null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 8f, true)
 
             }
@@ -265,5 +279,9 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
         return if (blockState !== iblockstate) true
         else if (block === this) false
         else super.shouldSideBeRendered(blockState, blockAccess, pos, side)
+    }
+
+    override fun onNeighborChange(world: IBlockAccess?, pos: BlockPos?, neighbor: BlockPos?) {
+        (world as World).scheduleUpdate(pos, this, 0)
     }
 }

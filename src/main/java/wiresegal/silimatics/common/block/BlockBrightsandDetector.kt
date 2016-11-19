@@ -105,7 +105,8 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.GLASS) {
         val entitiesAround = worldObj.getEntitiesWithinAABB(EntityFallingBlock::class.java, AxisAlignedBB(pos.add(-1, 0, -1), pos.add(2, 0, 2)))
         var flag: Boolean = false
         entitiesAround.filter { it.block?.block == ModBlocks.sand && it.block?.getValue(BlockSand.SAND_TYPE) == EnumSandType.BRIGHT }.forEach { flag = true }
-        val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos, bs.getValue(BlockHorizontal.FACING).opposite) || flag
+        val expectedState = BrightsandPower.hasBrightsandPower(worldObj, pos, facing0 = bs.getValue(BlockHorizontal.FACING).opposite) || flag
+        // expectedState = true
         if(state != expectedState && !worldObj.isRemote)
             worldObj.setBlockState(pos, worldObj.getBlockState(pos).withProperty(POWERED, expectedState), 1 or 2)
         worldObj.scheduleUpdate(pos, this, 0)
