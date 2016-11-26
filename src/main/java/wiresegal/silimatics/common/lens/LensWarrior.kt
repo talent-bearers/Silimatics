@@ -1,6 +1,7 @@
 package wiresegal.silimatics.common.lens
 
 import com.google.common.collect.Multimap
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.attributes.AttributeModifier
@@ -11,7 +12,6 @@ import net.minecraft.world.World
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.lib.LibMisc
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 import java.util.*
 
 object LensWarrior : ILens {

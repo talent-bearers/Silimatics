@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.item
 
+import com.teamwizardry.librarianlib.common.base.item.ItemModArmor
 import net.minecraft.entity.Entity
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack

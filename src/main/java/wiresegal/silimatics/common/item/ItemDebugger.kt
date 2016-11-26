@@ -1,5 +1,8 @@
 package wiresegal.silimatics.common.item
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
+import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
+import com.teamwizardry.librarianlib.common.base.item.ItemMod
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
@@ -10,9 +13,6 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.lib.LibMisc
-import wiresegal.zenmodelloader.client.core.TooltipHelper
-import wiresegal.zenmodelloader.common.core.IItemColorProvider
-import wiresegal.zenmodelloader.common.items.base.ItemMod
 import java.awt.Color
 
 class ItemDebugger(name: String) : ItemMod(name), IItemColorProvider {

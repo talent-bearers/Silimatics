@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -11,7 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.lib.LibMisc
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 import java.util.*
 
 object LensTracker : ILens {

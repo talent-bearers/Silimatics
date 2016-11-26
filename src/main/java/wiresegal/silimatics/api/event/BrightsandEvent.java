@@ -4,7 +4,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 /**
-    Fired when a block could need brightsand power
+ *  Fired when a block could need brightsand power
  */
 public class BrightsandEvent extends Event {
     private boolean isPowered;

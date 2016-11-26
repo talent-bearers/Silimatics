@@ -1,6 +1,8 @@
 package wiresegal.silimatics.common.block
 
-import net.minecraft.block.Block
+import com.teamwizardry.librarianlib.common.base.block.BlockModContainer
+import com.teamwizardry.librarianlib.common.base.block.TileMod
+import com.teamwizardry.librarianlib.common.util.autoregister.TileRegister
 import net.minecraft.block.BlockPlanks
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -32,13 +34,14 @@ import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.EnumSandType.Companion.capitalizeFirst
-import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 
 /**
  * Created by Elad on 8/4/2016.
  */
 class BlockSifter(name: String) : BlockModContainer(name, Material.WOOD, *getVariants(name)) {
+    override fun createTileEntity(world: World, state: IBlockState): TileEntity? {
+        return TileBlockSifter()
+    }
 
     companion object {
 
@@ -160,8 +163,8 @@ class BlockSifter(name: String) : BlockModContainer(name, Material.WOOD, *getVar
         return true
     }
 
-    override fun createNewTileEntity(worldIn: World, meta: Int) = TileBlockSifter()
 
+    @TileRegister("silisifter")
     class TileBlockSifter : TileMod() {
 
         val inventoryFake = object : IItemHandler {

@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
@@ -17,7 +18,6 @@ import wiresegal.silimatics.common.item.ItemLensFrames
 import wiresegal.silimatics.common.item.ItemLensFrames.Companion.getLensStack
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 object LensRashid : ILens {
     init {

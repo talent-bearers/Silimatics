@@ -1,5 +1,9 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.BlockModContainer
+import com.teamwizardry.librarianlib.common.base.block.TileMod
+import com.teamwizardry.librarianlib.common.util.autoregister.TileRegister
+import com.teamwizardry.librarianlib.common.util.saving.Save
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
@@ -12,7 +16,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.InventoryHelper
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
@@ -26,12 +30,14 @@ import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.util.SlotWrapperHandler
-import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 
 /**
  * Created by Elad on 8/5/2016.
  */
 class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
+    override fun createTileEntity(world: World, state: IBlockState): TileEntity? {
+        return TileLensGrinder()
+    }
 
     companion object {
         val PROP_ON = PropertyBool.create("on")
@@ -75,8 +81,6 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
     override val ignoredProperties: Array<IProperty<*>>?
         get() = arrayOf(PROP_ON)
 
-    override fun createNewTileEntity(worldIn: World, meta: Int) = TileLensGrinder()
-
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block) {
         val on = worldIn.isBlockPowered(pos)
         if (on && !state.getValue(PROP_ON))
@@ -104,8 +108,10 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
 
     override fun isOpaqueCube(state: IBlockState?) = false
 
+    @TileRegister("siligrinder")
     class TileLensGrinder : TileMod() {
 
+        @Save
         var inventory = object : ItemStackHandler(11) {
 
             var flipCheck = false
@@ -132,8 +138,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
                 return 1
             }
         }
-
-        var flipped = true
+        @Save var flipped = true
 
         var topInventory = SlotWrapperHandler(inventory, 0..0, 0)
         var bottomInventory = object : SlotWrapperHandler(inventory, (inventory.slots - 1)..(inventory.slots - 1), inventory.slots - 1) {
@@ -233,18 +238,6 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
             if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
                 if (facing == null || facing.axis == EnumFacing.Axis.Y) return true
             return super.hasCapability(capability, facing)
-        }
-
-        override fun writeCustomNBT(cmp: NBTTagCompound) {
-            cmp.setTag("inv", inventory.serializeNBT())
-            cmp.setBoolean("flip", flipped)
-        }
-
-        override fun readCustomNBT(cmp: NBTTagCompound) {
-            val inv = cmp.getCompoundTag("inv")
-            if (inv != null)
-                inventory.deserializeNBT(inv)
-            flipped = cmp.getBoolean("flip")
         }
 
         companion object {

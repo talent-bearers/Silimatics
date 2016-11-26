@@ -3,7 +3,7 @@ package wiresegal.silimatics.common.block
 import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import wiresegal.silimatics.common.lib.LibNames
-import wiresegal.zenmodelloader.common.block.base.BlockMod
+import com.teamwizardry.librarianlib.common.base.block.BlockMod
 
 /**
  * Created by Elad on 10/18/2016.

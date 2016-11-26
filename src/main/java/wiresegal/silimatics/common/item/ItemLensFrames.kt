@@ -1,6 +1,9 @@
 package wiresegal.silimatics.common.item
 
 import com.google.common.collect.Multimap
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
+import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
+import com.teamwizardry.librarianlib.common.base.item.ItemModArmor
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
@@ -22,8 +25,6 @@ import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
-import wiresegal.zenmodelloader.common.ZenModelLoader
-import wiresegal.zenmodelloader.common.core.IItemColorProvider
 
 /**
  * @author WireSegal
@@ -65,7 +66,7 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
     override fun getItemStackDisplayName(stack: ItemStack): String {
         val name = super.getItemStackDisplayName(stack)
         val lensStack = stack.getLensStack()
-        val lensName = ZenModelLoader.PROXY.translate(lensStack.unlocalizedName + ".plural.name")
+        val lensName = TooltipHelper.local(lensStack.unlocalizedName + ".plural.name")
         return "$name ${TextFormatting.WHITE}(${TextFormatting.GREEN}$lensName${TextFormatting.WHITE})"
     }
 

@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.BlockMod
 import net.minecraft.block.BlockHorizontal
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
@@ -22,7 +23,6 @@ import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.BrightsandPower
-import wiresegal.zenmodelloader.common.block.base.BlockMod
 import java.util.*
 
 class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.GLASS) {
@@ -63,7 +63,7 @@ class BlockBrightsandDetector : BlockMod(LibNames.DETECTOR, Material.GLASS) {
 
     override fun onBlockPlaced(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
         val placerFacing = placer.horizontalFacing
-        return this.defaultState.withProperty(BlockHorizontal.FACING, placerFacing.opposite).withProperty(POWERED, false)
+        return this.defaultState.withProperty(BlockHorizontal.FACING, placerFacing).withProperty(POWERED, false)
     }
 
     override fun isTranslucent(state: IBlockState?): Boolean {

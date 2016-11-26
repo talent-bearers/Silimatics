@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.core
 
-import net.minecraftforge.fml.common.registry.GameRegistry
 import wiresegal.silimatics.common.block.*
 import wiresegal.silimatics.common.lib.LibNames
 
@@ -26,9 +25,6 @@ object ModBlocks {
         brokenGlass = BlockBrokenGlass()
         fusedStone = BlockFusedStone()
         platform = BlockSilimaticPlatform()
-        //GameRegistry.registerTileEntity(BlockGlass.TileSmedryGlass::class.java, "smedryglass")
-        GameRegistry.registerTileEntity(BlockLensGrinder.TileLensGrinder::class.java, "smedrylensgrinder")
-        GameRegistry.registerTileEntity(BlockSifter.TileBlockSifter::class.java, "smedrysifter")
     }
 
 

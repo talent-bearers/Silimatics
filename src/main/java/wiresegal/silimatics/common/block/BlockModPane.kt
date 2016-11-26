@@ -1,14 +1,14 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.IModBlock
+import com.teamwizardry.librarianlib.common.base.block.ItemModBlock
+import com.teamwizardry.librarianlib.common.util.VariantHelper
 import net.minecraft.block.Block
 import net.minecraft.block.BlockPane
 import net.minecraft.block.material.Material
 import net.minecraft.item.ItemBlock
 import net.minecraftforge.fml.common.Loader
 import wiresegal.silimatics.common.core.ModCreativeTab
-import wiresegal.zenmodelloader.common.block.base.ItemModBlock
-import wiresegal.zenmodelloader.common.core.IModBlock
-import wiresegal.zenmodelloader.common.core.VariantHelper
 
 /**
  * @author WireSegal

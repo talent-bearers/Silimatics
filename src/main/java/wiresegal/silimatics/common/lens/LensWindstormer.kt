@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
@@ -13,7 +14,6 @@ import wiresegal.silimatics.common.core.ModSoundEvents
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.networking.MessageSyncMotion
 import wiresegal.silimatics.common.networking.NetworkHelper
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 open class LensWindstormer : ILens {
     companion object {

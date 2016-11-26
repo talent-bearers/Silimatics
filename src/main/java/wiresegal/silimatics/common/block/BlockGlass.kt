@@ -1,5 +1,7 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.BlockMod
+import com.teamwizardry.librarianlib.common.base.block.IBlockColorProvider
 import com.teamwizardry.refraction.api.IBeamHandler
 import com.teamwizardry.refraction.common.light.Beam
 import net.minecraft.block.SoundType
@@ -41,8 +43,6 @@ import wiresegal.silimatics.common.lens.LensOculator
 import wiresegal.silimatics.common.util.BrightsandPower
 import wiresegal.silimatics.common.util.SilimaticEvents
 import wiresegal.silimatics.common.util.hasRedstoneSignalSimple
-import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.awt.Color
 import java.util.*
 

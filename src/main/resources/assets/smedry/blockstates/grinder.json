@@ -1,7 +1,7 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "normal": {
-      "model": "smedry:lensGrinder"
-    }
+    "on=true": { "model": "smedry:lensGrinder" },
+    "on=false": { "model": "smedry:lensGrinder" }
   }
 }

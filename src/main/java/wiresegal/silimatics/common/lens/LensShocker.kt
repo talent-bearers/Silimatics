@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -13,7 +14,6 @@ import net.minecraft.world.World
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.lib.LibMisc
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 object LensShocker : ILens {
 

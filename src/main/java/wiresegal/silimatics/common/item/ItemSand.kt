@@ -1,11 +1,11 @@
 package wiresegal.silimatics.common.item
 
+import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
+import com.teamwizardry.librarianlib.common.base.item.ItemMod
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModCreativeTab
-import wiresegal.zenmodelloader.common.core.IItemColorProvider
-import wiresegal.zenmodelloader.common.items.base.ItemMod
 
 /**
  * @author WireSegal

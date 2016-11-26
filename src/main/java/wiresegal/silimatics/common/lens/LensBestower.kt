@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.lens
 
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemStack
@@ -8,7 +9,6 @@ import net.minecraft.world.World
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.potions.ModPotions
-import wiresegal.zenmodelloader.client.core.TooltipHelper
 
 object LensBestower : ILens {
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {

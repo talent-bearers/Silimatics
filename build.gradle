@@ -57,6 +57,10 @@ repositories {
         url "http://chickenbones.net/maven/"
     }
     maven { url "https://jitpack.io" }
+    maven {
+        url "http://maven.tterrag.com"
+    }
+    maven { url "http://dvs1.progwml6.com/files/maven" }
 }
 
 configurations {
@@ -71,6 +75,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     required "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.github.TeamWizardry:TMT-Refraction:-SNAPSHOT'
+    compile 'com.github.TeamWizardry:LibrarianLib:-SNAPSHOT'
+    compile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.6-17"
 
 }
 

@@ -2,6 +2,9 @@ package wiresegal.silimatics.common.item
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Multimap
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
+import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
+import com.teamwizardry.librarianlib.common.base.item.ItemMod
 import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ai.attributes.AttributeModifier
@@ -21,9 +24,6 @@ import wiresegal.silimatics.common.lens.*
 import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.networking.MessageSmedrize
 import wiresegal.silimatics.common.networking.NetworkHelper
-import wiresegal.zenmodelloader.client.core.TooltipHelper
-import wiresegal.zenmodelloader.common.core.IItemColorProvider
-import wiresegal.zenmodelloader.common.items.base.ItemMod
 
 class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(name)), ILens, IItemColorProvider {
 

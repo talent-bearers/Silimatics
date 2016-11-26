@@ -1,7 +1,6 @@
 package wiresegal.silimatics.common.core
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLInterModComms
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.block.BlockSand
@@ -21,7 +20,7 @@ open class CommonProxy {
         ModSoundEvents
         ModCymaticPlateRecipes
         SilimaticEvents
-        FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
+        //FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
     }
 
     open fun init(event: FMLInitializationEvent) {

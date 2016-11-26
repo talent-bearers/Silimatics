@@ -1,5 +1,7 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.BlockMod
+import com.teamwizardry.librarianlib.common.base.block.IBlockColorProvider
 import net.minecraft.block.Block
 import net.minecraft.block.BlockDispenser
 import net.minecraft.block.SoundType
@@ -24,8 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModCreativeTab
 import wiresegal.silimatics.common.item.EnumSandType
-import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.core.IBlockColorProvider
 import java.util.*
 
 /**

@@ -1,6 +1,11 @@
 package wiresegal.silimatics.common.block
 
 import com.google.common.collect.HashBiMap
+import com.teamwizardry.librarianlib.common.base.block.BlockMod
+import com.teamwizardry.librarianlib.common.base.block.TileMod
+import com.teamwizardry.librarianlib.common.base.item.ItemMod
+import com.teamwizardry.librarianlib.common.util.autoregister.TileRegister
+import com.teamwizardry.librarianlib.common.util.saving.Save
 import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
@@ -16,14 +21,11 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.common.registry.IForgeRegistry
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.Vec2f
-import wiresegal.zenmodelloader.common.block.base.BlockMod
-import wiresegal.zenmodelloader.common.items.base.ItemMod
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
@@ -37,7 +39,6 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
     }
 
     init {
-        GameRegistry.registerTileEntity(TileEntityCymaticPlate::class.java, "cymaticPlate")
         @Suppress("DEPRECATION")
         setHardness(Blocks.GLASS.getBlockHardness(null, null, null))
 
@@ -82,30 +83,20 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
             return (java.lang.Float.valueOf(df.format(num)) - Math.floor(java.lang.Float.valueOf(df.format(num)).toDouble())).toFloat()
         }
     }
+    @TileRegister("siliplate")
     class TileEntityCymaticPlate : TileMod() {
-        var hasGlass = false
+        @Save var hasGlass = false
         var lastHit: Vec2f? = null
-        var item: ItemStack? = null
+        @Save var item: ItemStack? = null
         override fun readCustomNBT(cmp: NBTTagCompound) {
-            super.readCustomNBT(cmp)
-            hasGlass = cmp.getBoolean("hasGlass")
             if(cmp.hasKey("xf") && cmp.hasKey("zf"))
                 lastHit = Vec2f(cmp.getFloat("xf"), cmp.getFloat("zf"))
-            if(cmp.hasKey("item"))
-                item = ItemStack.loadItemStackFromNBT(cmp.getCompoundTag("item"))
         }
 
-        override fun writeCustomNBT(cmp: NBTTagCompound) {
-            super.writeCustomNBT(cmp)
-            cmp.setBoolean("hasGlass", hasGlass)
+        override fun writeCustomNBT(cmp: NBTTagCompound, sync: Boolean) {
             if(lastHit != null) {
                 cmp.setFloat("xf", (lastHit as Vec2f).x)
                 cmp.setFloat("zf", (lastHit as Vec2f).y)
-            }
-            if(item != null) {
-                val tag = NBTTagCompound()
-                item?.writeToNBT(tag)
-                cmp.setTag("item", tag)
             }
         }
 

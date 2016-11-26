@@ -1,24 +1,25 @@
 package wiresegal.silimatics.common.block
 
+import com.teamwizardry.librarianlib.common.base.block.BlockModContainer
+import com.teamwizardry.librarianlib.common.base.block.TileMod
+import com.teamwizardry.librarianlib.common.util.autoregister.TileRegister
+import com.teamwizardry.librarianlib.common.util.saving.Save
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ITickable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
 import wiresegal.silimatics.common.core.ModBlocks
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
 import wiresegal.silimatics.common.item.EnumSandType.Companion.capitalizeFirst
 import wiresegal.silimatics.common.lib.LibNames
-import wiresegal.zenmodelloader.common.block.base.BlockModContainer
 import java.util.concurrent.ThreadLocalRandom
 
 /**
@@ -28,15 +29,14 @@ import java.util.concurrent.ThreadLocalRandom
 class BlockBrokenGlass : BlockModContainer("broken" + LibNames.GLASS.capitalizeFirst(), Material.GLASS) {
     init {
         setHardness(0.3F)
-        GameRegistry.registerTileEntity(TileEntityBrokenGlass::class.java, "aSongWeSingAboutBrokenGlass")
     }
-    override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity = TileEntityBrokenGlass()
+    override fun createTileEntity(worldIn: World, blockstate: IBlockState): TileEntity = TileEntityBrokenGlass()
 
     override fun createItemForm(): ItemBlock? {
         return null
     }
 
-    override fun getPickBlock(state: IBlockState?, target: RayTraceResult?, world: World?, pos: BlockPos?, player: EntityPlayer?): ItemStack? {
+    override fun getPickBlock(state: IBlockState?, target: RayTraceResult?, world: World?, pos: BlockPos?, player: EntityPlayer?): ItemStack {
         return ItemStack(ModBlocks.glass, 1, EnumSandType.HEART.ordinal)
     }
 
@@ -47,7 +47,15 @@ class BlockBrokenGlass : BlockModContainer("broken" + LibNames.GLASS.capitalizeF
         return list
     }
 
+    override fun getStackForWaila(player: EntityPlayer, world: World, blockState: IBlockState, pos: BlockPos): ItemStack {
+        return getPickBlock(null, null, null, null, null)
+    }
+
+    @TileRegister("letssingasongaboutbrokenglass")
     class TileEntityBrokenGlass : TileMod(), ITickable {
+        override val automaticallyAddFieldsToWaila: Boolean
+            get() = true
+        @Save(displayName = "Ticks left")
         var ticks: Int = -1
         override fun update() {
             if(ticks == -1) return
@@ -57,16 +65,6 @@ class BlockBrokenGlass : BlockModContainer("broken" + LibNames.GLASS.capitalizeF
             }
             else ticks++
             markDirty()
-        }
-
-        override fun writeCustomNBT(cmp: NBTTagCompound) {
-            super.writeCustomNBT(cmp)
-            cmp.setInteger("ticks", ticks)
-        }
-
-        override fun readCustomNBT(cmp: NBTTagCompound) {
-            super.readCustomNBT(cmp)
-            ticks = cmp.getInteger("ticks")
         }
 
     }
