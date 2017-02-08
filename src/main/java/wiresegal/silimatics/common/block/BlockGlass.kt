@@ -2,6 +2,7 @@ package wiresegal.silimatics.common.block
 
 import com.teamwizardry.librarianlib.common.base.block.BlockMod
 import com.teamwizardry.librarianlib.common.base.block.IBlockColorProvider
+import com.teamwizardry.librarianlib.common.util.ConfigPropertyBoolean
 import com.teamwizardry.refraction.api.IBeamHandler
 import com.teamwizardry.refraction.common.light.Beam
 import net.minecraft.block.SoundType
@@ -54,6 +55,7 @@ import java.util.*
 class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider, IBeamHandler {
     @Optional.Method(modid = "refraction")
     override fun handleBeams(world: World, pos: BlockPos, vararg beams: Beam) {
+        if(!enabled) return
         for (beam in beams) {
             if(beam.effect is BeamedBrightsandEffect) continue
             val vec3d = beam.slope.normalize().scale((1/4).toDouble())
@@ -76,6 +78,8 @@ class BlockGlass(name: String) : BlockMod(name, Material.GLASS, *EnumSandType.ge
     }
 
     companion object {
+        @ConfigPropertyBoolean(category = "Compat", comment = "Enable the Silimatics-Refraction compat features", defaultValue = true, id = "silifraction", modid = "smedry")
+        @JvmStatic var enabled = true
         val SAND_TYPE = PropertyEnum.create("sand", EnumSandType::class.java)
         fun getBlockLookedAt(e: Entity, maxDistance: Double = 32.0, worldObj: World): IBlockState? {
             val pos = LensOculator.raycast(e, maxDistance)

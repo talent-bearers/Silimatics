@@ -1,5 +1,6 @@
 package wiresegal.silimatics.common.core
 
+import com.teamwizardry.librarianlib.common.util.EasyConfigHandler
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
@@ -20,7 +21,7 @@ open class CommonProxy {
         ModSoundEvents
         ModCymaticPlateRecipes
         SilimaticEvents
-        //FMLInterModComms.sendMessage("Waila", "register", "wiresegal.silimatics.client.compat.waila.WailaCompat.onWailaCall")
+        EasyConfigHandler.init(event.suggestedConfigurationFile)
     }
 
     open fun init(event: FMLInitializationEvent) {
