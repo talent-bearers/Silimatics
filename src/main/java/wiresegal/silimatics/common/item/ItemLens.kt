@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap
 import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
 import com.teamwizardry.librarianlib.common.base.item.ItemMod
-import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.player.EntityPlayer
@@ -67,10 +66,8 @@ class ItemLens(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
         getLensFromStack(stack).addAttributes(slot, stack, modifiers)
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor? {
-        return IItemColor { stack, tintIndex -> EnumSandType.values()[stack.itemDamage % EnumSandType.values().size].glassColor }
-    }
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() = { stack, tintIndex -> EnumSandType.values()[stack.itemDamage % EnumSandType.values().size].glassColor }
 
     companion object {
         val OCULATOR_TAG = LibMisc.MODID + ":oculator"

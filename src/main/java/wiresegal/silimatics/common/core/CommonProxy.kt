@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import wiresegal.silimatics.common.block.BlockSand
+import wiresegal.silimatics.common.lib.LibMisc
 import wiresegal.silimatics.common.networking.NetworkHelper
 import wiresegal.silimatics.common.potions.ModPotions
 import wiresegal.silimatics.common.recipes.ModCymaticPlateRecipes
@@ -21,7 +22,7 @@ open class CommonProxy {
         ModSoundEvents
         ModCymaticPlateRecipes
         SilimaticEvents
-        EasyConfigHandler.init(event.suggestedConfigurationFile)
+        EasyConfigHandler.init(LibMisc.MODID)
     }
 
     open fun init(event: FMLInitializationEvent) {

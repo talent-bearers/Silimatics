@@ -221,8 +221,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
             return flag
         }
 
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T {
+        override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
             if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
                 if (facing == null)
                     return inventory as T
@@ -233,6 +232,7 @@ class BlockLensGrinder(name: String) : BlockModContainer(name, Material.ROCK) {
             }
             return super.getCapability(capability, facing)
         }
+
 
         override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean {
             if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)

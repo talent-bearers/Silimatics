@@ -3,7 +3,6 @@ package wiresegal.silimatics.common.item
 import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
 import com.teamwizardry.librarianlib.common.base.item.ItemMod
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -13,8 +12,6 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.ServerChatEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.relauncher.Side
-import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.common.core.ItemNBTHelper
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibNames
@@ -26,10 +23,9 @@ import java.util.*
  * Created by Elad on 10/22/2016.
  */
 class ItemCommunicatorShard : ItemMod(LibNames.COMMUNICATOR_SHARD), IItemColorProvider {
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor? {
-        return IItemColor { stack, i -> getColor(stack) }
-    }
+
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() = { stack, i -> getColor(stack) }
 
     fun getColor(stack: ItemStack): Int {
         return EnumSandType.VIEW.glassColor +

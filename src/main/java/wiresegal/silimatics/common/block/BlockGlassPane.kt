@@ -1,14 +1,14 @@
 package wiresegal.silimatics.common.block
 
 import com.teamwizardry.librarianlib.common.base.block.IBlockColorProvider
+import net.minecraft.block.Block
+import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.client.renderer.block.statemap.IStateMapper
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.block.statemap.StateMap
-import net.minecraft.client.renderer.color.IBlockColor
-import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.IProjectile
@@ -18,6 +18,7 @@ import net.minecraft.init.MobEffects
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.PotionEffect
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.DamageSource
 import net.minecraft.util.EnumFacing
@@ -37,17 +38,17 @@ import java.util.*
  * @author WireSegal
  * Created at 10:53 PM on 8/4/16.
  */
-class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider {
-
-    @SideOnly(Side.CLIENT)
-    override fun getBlockColor(): IBlockColor {
-        return IBlockColor { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(BlockGlass.SAND_TYPE).glassColor }
+class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *EnumSandType.getSandTypeNamesFor(name)), IBlockColorProvider, ITileEntityProvider {
+    override fun createNewTileEntity(worldIn: World?, meta: Int): TileEntity {
+        return BlockGlass.SmedryGlassTile()
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor {
-        return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].glassColor }
-    }
+
+    override val blockColorFunction: ((IBlockState, IBlockAccess?, BlockPos?, Int) -> Int)?
+        get() = { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(BlockGlass.SAND_TYPE).glassColor }
+
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() = { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].glassColor }
 
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
         super.breakBlock(worldIn, pos, state)
@@ -56,7 +57,7 @@ class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *E
 
     override fun eventReceived(state: IBlockState?, worldIn: World, pos: BlockPos?, eventID: Int, eventParam: Int): Boolean {
         val tileentity = worldIn.getTileEntity(pos)
-        return if (tileentity == null) false else tileentity.receiveClientEvent(eventID, eventParam)
+        return tileentity?.receiveClientEvent(eventID, eventParam) ?: false
     }
 
     override fun damageDropped(state: IBlockState): Int {
@@ -97,12 +98,10 @@ class BlockGlassPane(name: String) : BlockModPane(name, Material.GLASS, true, *E
         return if(state.getValue(BlockGlass.SAND_TYPE) == EnumSandType.VIEW) mutableListOf(ModItems.shard.getCommunicatorShardStack()) else super.getDrops(world, pos, state, fortune)
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getStateMapper(): IStateMapper {
-        return StateMap.Builder()
+    override val stateMapper: ((Block) -> Map<IBlockState, ModelResourceLocation>)?
+        get() = { StateMap.Builder()
                 .withName(BlockGlass.SAND_TYPE)
-                .withSuffix("GlassPane").build()
-    }
+                .withSuffix("GlassPane").build().putStateModelLocations(it) }
     override fun updateTick(worldObj: World, pos: BlockPos, bs: IBlockState, rand: Random?) {
         val state = worldObj.getBlockState(pos)
         if (!BrightsandPower.hasBrightsandPower(worldObj, pos) && state.getValue(BlockGlass.SAND_TYPE) != EnumSandType.HEART && state.getValue(BlockGlass.SAND_TYPE) != EnumSandType.TRAIL) return

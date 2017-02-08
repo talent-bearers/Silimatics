@@ -5,7 +5,6 @@ import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
 import com.teamwizardry.librarianlib.common.base.item.ItemModArmor
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -114,15 +113,13 @@ open class ItemLensFrames(name: String, armorMaterial: ArmorMaterial, vararg var
         return multimap
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor {
-        return IItemColor { itemStack, i ->
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() =  { itemStack, i ->
             if (i == 1) {
                 val lensStack = itemStack.getLensStack()
                 Minecraft.getMinecraft().itemColors.getColorFromItemstack(lensStack, i)
             } else 0xFFFFFF
         }
-    }
 
     @SideOnly(Side.CLIENT)
     override fun getColor(stack: ItemStack): Int {

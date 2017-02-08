@@ -2,9 +2,7 @@ package wiresegal.silimatics.common.item
 
 import com.teamwizardry.librarianlib.common.base.item.IItemColorProvider
 import com.teamwizardry.librarianlib.common.base.item.ItemMod
-import net.minecraft.client.renderer.color.IItemColor
-import net.minecraftforge.fml.relauncher.Side
-import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraft.item.ItemStack
 import wiresegal.silimatics.common.core.ModCreativeTab
 
 /**
@@ -17,8 +15,6 @@ class ItemSand(name: String) : ItemMod(name, *EnumSandType.getSandTypeNamesFor(n
         ModCreativeTab.set(this)
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor {
-        return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
-    }
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() = { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
 }

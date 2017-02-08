@@ -166,7 +166,6 @@ class BlockSifter(name: String) : BlockModContainer(name, Material.WOOD, *getVar
 
     @TileRegister("silisifter")
     class TileBlockSifter : TileMod() {
-
         val inventoryFake = object : IItemHandler {
             override fun getStackInSlot(slot: Int): ItemStack? {
                 return null
@@ -191,13 +190,13 @@ class BlockSifter(name: String) : BlockModContainer(name, Material.WOOD, *getVar
         }
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T {
+        override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
             if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.DOWN)
                 return inventoryFake as T
             return super.getCapability(capability, facing)
         }
 
-        override fun hasCapability(capability: Capability<*>?, facing: EnumFacing?): Boolean {
+        override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean {
             if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && facing != EnumFacing.DOWN)
                 return true
             return super.hasCapability(capability, facing)

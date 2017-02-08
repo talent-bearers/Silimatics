@@ -14,7 +14,7 @@ class RenderLensGrinder : TileEntitySpecialRenderer<BlockLensGrinder.TileLensGri
             GlStateManager.pushMatrix()
             GlStateManager.translate(x, y, z)
             GlStateManager.scale(0.5, 0.5, 0.5)
-            for (i in 0..te.inventory.slots - 1) {
+            for (i in 0 until te.inventory.slots) {
                 val stack = te.inventory.getStackInSlot(i) ?: continue
                 GlStateManager.pushMatrix()
                 GlStateManager.translate(1.0, 0.5 + 0.15 * (10 - i) + if (ItemNBTHelper.getBoolean(stack.copy(), TAG_SHOULD_FLIP, false) && i != 0) 0.075 else 0.0, 1.0)

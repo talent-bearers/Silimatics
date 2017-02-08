@@ -25,7 +25,6 @@ public interface ILens {
     }
 
     default boolean shouldMarkAsOculator(@Nonnull ItemStack stack) {
-        new Object();
         return true;
     }
 

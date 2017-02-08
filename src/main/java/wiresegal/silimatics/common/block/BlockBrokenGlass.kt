@@ -47,15 +47,10 @@ class BlockBrokenGlass : BlockModContainer("broken" + LibNames.GLASS.capitalizeF
         return list
     }
 
-    override fun getStackForWaila(player: EntityPlayer, world: World, blockState: IBlockState, pos: BlockPos): ItemStack {
-        return getPickBlock(null, null, null, null, null)
-    }
 
     @TileRegister("letssingasongaboutbrokenglass")
     class TileEntityBrokenGlass : TileMod(), ITickable {
-        override val automaticallyAddFieldsToWaila: Boolean
-            get() = true
-        @Save(displayName = "Ticks left")
+        @Save
         var ticks: Int = -1
         override fun update() {
             if(ticks == -1) return

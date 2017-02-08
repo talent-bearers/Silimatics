@@ -58,15 +58,12 @@ class BlockSand(name: String) : BlockMod(name, Material.SAND, *EnumSandType.getS
         return BlockStateContainer(this, SAND_TYPE)
     }
 
-    @SideOnly(Side.CLIENT)
-    override fun getBlockColor(): IBlockColor {
-        return IBlockColor { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(SAND_TYPE).color }
-    }
 
-    @SideOnly(Side.CLIENT)
-    override fun getItemColor(): IItemColor {
-        return IItemColor { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
-    }
+    override val blockColorFunction: ((IBlockState, IBlockAccess?, BlockPos?, Int) -> Int)?
+        get() = { iBlockState, iBlockAccess, blockPos, i -> iBlockState.getValue(SAND_TYPE).color }
+
+    override val itemColorFunction: ((ItemStack, Int) -> Int)?
+        get() = { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].color }
 
     override fun getLightValue(state: IBlockState, world: IBlockAccess?, pos: BlockPos?): Int {
         return if (state.getValue(SAND_TYPE) == EnumSandType.BRIGHT) 15 else 0
