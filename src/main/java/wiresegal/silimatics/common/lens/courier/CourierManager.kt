@@ -71,12 +71,9 @@ class CourierManager {
             return
         }
 
-        for (iterConn in connections) {
-            if (iterConn.player == null || iterConn == connection || !iterConn.canListen()) {
-                continue
-            }
-            iterConn.sendToPlayer(byteCount, audioData)
-        }
+        connections
+                .filter { it.player != null && it != connection && it.canListen() }
+                .forEach { it.sendToPlayer(byteCount, audioData) }
     }
 
     inner class ListenThread : Thread() {

@@ -39,4 +39,8 @@ fun World.hasRedstoneSignalSimple(pos: BlockPos): Boolean {
     return flag
 }
 
+fun Int.map(oldMin: Int, oldMax: Int, newMin: Int, newMax: Int): Int {
+    return ((((this - oldMin.toDouble()) / oldMax.toDouble()) * (newMax.toDouble() - newMin.toDouble())) + newMin.toDouble()).toInt()
+}
+
 

@@ -14,5 +14,6 @@
     "sand=view": { "model": "smedry:baseSand" },
     "sand=heart": { "model": "smedry:baseSand" },
     "sand=school": { "model": "smedry:baseSand" }
+    "sand=linker": { "model": "smedry:baseSand" }
   }
 }

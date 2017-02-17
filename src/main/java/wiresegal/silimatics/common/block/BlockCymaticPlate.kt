@@ -11,6 +11,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -26,8 +27,7 @@ import net.minecraftforge.fml.common.registry.IForgeRegistryEntry
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.Vec2f
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import wiresegal.silimatics.common.util.map
 import java.util.*
 
 /**
@@ -41,28 +41,28 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
     init {
         @Suppress("DEPRECATION")
         setHardness(Blocks.GLASS.getBlockHardness(null, null, null))
-
+        CymaticPlateRecipes.register(CymaticPlateRecipe(ResourceLocation("test:test"), Vec2f(1f, 2f), ItemStack(Items.DIAMOND)))
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
         if (heldItem != null && heldItem.item == Item.getItemFromBlock(Blocks.GLASS)) {
             val te = worldIn.getTileEntity(pos) as TileEntityCymaticPlate
-            if(te.hasGlass) return false
+            if(te.hasGlass || te.item != null) return false
             te.hasGlass = true
-            te.item = null
             if (heldItem.stackSize > 1) heldItem.stackSize-- else playerIn?.inventory?.deleteStack(heldItem)
+            te.markDirty()
             return true
         } else if(heldItem != null && heldItem.item == ModItems.fork) {
             val te = worldIn.getTileEntity(pos) as TileEntityCymaticPlate
             if(!te.hasGlass || te.item != null) return false
-            te.lastHit = Vec2f(round(hitX), round(hitZ))
+            te.lastHit = Vec2f(round(hitX).toFloat(), round(hitZ).toFloat())
             //println(te.lastHit)
             playerIn?.addChatComponentMessage(TextComponentString(Vec2f(hitX, hitZ).round().toString()))
-            if(CymaticPlateRecipes.getValueByVec2f(te.lastHit as Vec2f) == null) return false
-            te.item = CymaticPlateRecipes.getValueByVec2f(Vec2f(0.1f, 0.1f)/*te.lastHit as Vec2f*/)?.result
+
+            te.item = (CymaticPlateRecipes.getValueByVec2f(te.lastHit!!) ?: return false).result
             //te.item = CymaticPlateRecipes.getValue(ResourceLocation("smedry", "test"))?.result?.copy()
-            println(te.item)
             te.hasGlass = false
+            te.markDirty()
             heldItem.damageItem(1, playerIn)
             return true
         } else if(heldItem == null) {
@@ -72,15 +72,18 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
                 te.item = null
             }
 
+
+            te.markDirty()
             return false
         }
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ)
     }
     companion object {
-        fun round(num: Float): Float {
-            val df = DecimalFormat("#.#");
+        fun round(num: Float): Int {
+            /*val df = DecimalFormat("#.#");
             df.roundingMode = RoundingMode.CEILING;
-            return (java.lang.Float.valueOf(df.format(num)) - Math.floor(java.lang.Float.valueOf(df.format(num)).toDouble())).toFloat()
+            return (java.lang.Float.valueOf(df.format(num)) - Math.floor(java.lang.Float.valueOf(df.format(num)).toDouble())).toFloat()*/
+            return (0.5 + num * 10).toInt().map(0, 10, 0, 3)
         }
     }
     @TileRegister("siliplate")
@@ -152,7 +155,7 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
             = ArrayList(map.values)
 
         override fun register(value: CymaticPlateRecipe) {
-            map.put(value.regName, value.round())
+            map.put(value.regName, value)
         }
 
         override fun containsValue(value: CymaticPlateRecipe?): Boolean
@@ -186,8 +189,7 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
         }
 
         fun getValueByVec2f(vec2F: Vec2f): CymaticPlateRecipe? {
-            for(recipe in this) if(recipe.vec2F == vec2F) return recipe
-            return null
+            return this.firstOrNull { it.vec2F == vec2F }
         }
 
     }

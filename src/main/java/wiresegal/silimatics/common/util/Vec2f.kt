@@ -7,7 +7,7 @@ import wiresegal.silimatics.common.block.BlockCymaticPlate
  */
 data class Vec2f(var x: Float, var y: Float) {
     override fun equals(other: Any?): Boolean
-        = other is Vec2f && other.x == x && other.y == y
+        = other is Vec2f && ((other.x == x && other.y == y) || (other.x == y && other.y == x))
 
 
     override fun hashCode(): Int {
@@ -17,8 +17,8 @@ data class Vec2f(var x: Float, var y: Float) {
     }
 
     fun round(): Vec2f {
-        x = BlockCymaticPlate.round(x)
-        y = BlockCymaticPlate.round(y)
+        x = BlockCymaticPlate.round(x).toFloat()
+        y = BlockCymaticPlate.round(y).toFloat()
         return this
     }
 }

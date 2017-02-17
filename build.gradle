@@ -71,8 +71,8 @@ configurations {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${config.jei_version}"
-    compile "mcp.mobius.waila:Waila:${config.waila_version}"
-    compile 'com.github.TeamWizardry:LibrarianLib:-SNAPSHOT'
+    /*compile "mcp.mobius.waila:Waila:${config.waila_version}"*/
+    /*compile 'com.github.TeamWizardry:LibrarianLib:-SNAPSHOT'*/
     compile 'com.github.shadowfacts:Forgelin:-SNAPSHOT'
 
 }

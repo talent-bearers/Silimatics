@@ -99,7 +99,9 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, SAND_TYPE)
     }
-
+    override fun getDrops(world: IBlockAccess, pos: BlockPos, state: IBlockState, fortune: Int): MutableList<ItemStack>? {
+        return if(state.getValue(BlockGlass.SAND_TYPE) == EnumSandType.VIEW) mutableListOf(ModItems.shard.getCommunicatorShardStack()) else super.getDrops(world, pos, state, fortune)
+    }
 
     override val itemColorFunction: ((ItemStack, Int) -> Int)?
         get() =  { itemStack, i -> EnumSandType.values()[itemStack.itemDamage % EnumSandType.values().size].glassColor }
@@ -150,7 +152,7 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
     }
 
     override fun onNeighborChange(world: IBlockAccess?, pos: BlockPos?, neighbor: BlockPos?) {
-        (world as World).scheduleUpdate(pos, this, 0)
+        (world as? World)?.scheduleUpdate(pos, this, 0)
     }
 
     override fun createTileEntity(world: World, state: IBlockState): TileEntity? {
@@ -249,13 +251,16 @@ class BlockGlass(name: String) : BlockModContainer(name, Material.GLASS, *EnumSa
                 }
 
                 EnumSandType.SCHOOL -> {
-                    for (pos0 in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos0) is ITickable) (worldObj.getTileEntity(pos0) as ITickable).update()
+                    for (pos0 in BlockPos.getAllInBox(pos.add(-3, -3, -3), pos.add(4, 4, 4))) if (worldObj.getTileEntity(pos0) is ITickable && worldObj.getTileEntity(pos0) !is SmedryGlassTile) (worldObj.getTileEntity(pos0) as ITickable).update()
                 }
 
                 null -> {
                     //NOOP
                 }
 
+                EnumSandType.LINKER -> {
+                    /* todo transporter's glass */
+                }
             }
         }
 
