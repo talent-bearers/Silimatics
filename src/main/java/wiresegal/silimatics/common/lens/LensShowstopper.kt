@@ -2,6 +2,7 @@ package wiresegal.silimatics.common.lens
 
 import com.google.common.base.Predicate
 import com.google.common.base.Predicates
+import com.teamwizardry.librarianlib.client.util.TooltipHelper
 import com.teamwizardry.librarianlib.common.util.RaycastUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLiving
@@ -15,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.ReflectionHelper
 import wiresegal.silimatics.api.lens.ILens
+import wiresegal.silimatics.common.lib.LibMisc
 import java.util.*
 
 
@@ -26,6 +28,7 @@ import java.util.*
  */
 object LensShowstopper : ILens {
     override fun onUsingTick(world: World, player: EntityPlayer, stack: ItemStack) {
+        if(!player.isSneaking) return
         val entity = RaycastUtils.getEntityLookedAt(player) as? EntityLiving? ?: return
         val range = 20
 
@@ -33,6 +36,11 @@ object LensShowstopper : ILens {
         if (mobs.size > 1) {
             brainwashEntity(entity, mobs.map { it as IMob })
         }
+    }
+
+    override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.linker.desc1")
+        TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.linker.desc2")
     }
 
     fun brainwashEntity(entity: EntityLiving, mobs: List<IMob>): Boolean {

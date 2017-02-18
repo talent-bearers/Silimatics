@@ -13,7 +13,8 @@
     "sand=sun": { "model": "smedry:baseSand" },
     "sand=view": { "model": "smedry:baseSand" },
     "sand=heart": { "model": "smedry:baseSand" },
-    "sand=school": { "model": "smedry:baseSand" }
-    "sand=linker": { "model": "smedry:baseSand" }
+    "sand=school": { "model": "smedry:baseSand" },
+    "sand=linker": { "model": "smedry:baseSand" },
+    "sand=illusion": { "model": "smedry:baseSand" }
   }
 }

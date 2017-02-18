@@ -45,6 +45,7 @@ object LensWarrior : ILens {
         }
     }
 
+
     override fun addTooltip(stack: ItemStack, playerIn: EntityPlayer, tooltip: MutableList<String>, advanced: Boolean) {
         TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.warrior.desc1")
         TooltipHelper.addToTooltip(tooltip, "${LibMisc.MODID}.lens.warrior.desc2")

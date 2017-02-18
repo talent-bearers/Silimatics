@@ -1,6 +1,5 @@
 package wiresegal.silimatics.common.block
 
-import com.google.common.collect.HashBiMap
 import com.teamwizardry.librarianlib.common.base.block.BlockMod
 import com.teamwizardry.librarianlib.common.base.block.TileMod
 import com.teamwizardry.librarianlib.common.base.item.ItemMod
@@ -18,17 +17,13 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.IForgeRegistry
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.lib.LibNames
 import wiresegal.silimatics.common.util.Vec2f
 import wiresegal.silimatics.common.util.map
-import java.util.*
 
 /**
  * Created by Elad on 10/12/2016.
@@ -41,7 +36,7 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
     init {
         @Suppress("DEPRECATION")
         setHardness(Blocks.GLASS.getBlockHardness(null, null, null))
-        CymaticPlateRecipes.register(CymaticPlateRecipe(ResourceLocation("test:test"), Vec2f(1f, 2f), ItemStack(Items.DIAMOND)))
+
     }
 
     override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer?, hand: EnumHand?, heldItem: ItemStack?, side: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
@@ -110,18 +105,8 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
             maxStackSize = 1
         }
     }
-    data class CymaticPlateRecipe(var regName: ResourceLocation, var vec2F: Vec2f, private val resultStack: ItemStack) : IForgeRegistryEntry<CymaticPlateRecipe> {
+    data class CymaticPlateRecipe(var vec2F: Vec2f, private val resultStack: ItemStack) {
         val result: ItemStack get() = resultStack.copy()
-        override fun setRegistryName(name: ResourceLocation): CymaticPlateRecipe {
-            regName = name
-            return this
-        }
-
-        override fun getRegistryType(): Class<in CymaticPlateRecipe>
-            = javaClass
-
-
-        override fun getRegistryName(): ResourceLocation = registryName
 
         fun round(): CymaticPlateRecipe {
             vec2F = vec2F.round()
@@ -129,59 +114,29 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
         }
 
     }
-    object CymaticPlateRecipes : IForgeRegistry<CymaticPlateRecipe> {
-        val map = HashBiMap.create<ResourceLocation, CymaticPlateRecipe>()
-        override fun <T : Any?> getSlaveMap(slaveMapName: ResourceLocation?, type: Class<T>?): T {
-            throw UnsupportedOperationException()
+    object CymaticPlateRecipes {
+        val recipes = mutableListOf<CymaticPlateRecipe>()
+
+        fun register(value: CymaticPlateRecipe) {
+            recipes.add(value)
         }
 
-        override fun getKey(value: CymaticPlateRecipe): ResourceLocation?
-            = map.inverse()[value]
+        operator fun contains(key: CymaticPlateRecipe?): Boolean
+            = key != null && recipes.contains(key)
 
-
-        override fun getValue(key: ResourceLocation?): CymaticPlateRecipe?
-            = map[key]
-
-
-        override fun getRegistrySuperType(): Class<CymaticPlateRecipe>
-            = CymaticPlateRecipe::class.java
-
-
-        override fun getEntries(): MutableSet<MutableMap.MutableEntry<ResourceLocation, CymaticPlateRecipe>>
-            = map.entries
-
-
-        override fun getValues(): MutableList<CymaticPlateRecipe>
-            = ArrayList(map.values)
-
-        override fun register(value: CymaticPlateRecipe) {
-            map.put(value.regName, value)
-        }
-
-        override fun containsValue(value: CymaticPlateRecipe?): Boolean
-            = value != null && map.containsValue(value)
-
-
-        override fun getKeys(): MutableSet<ResourceLocation>?
-            = map.keys
-
-
-        override fun containsKey(key: ResourceLocation?): Boolean
-            = key != null && map.containsKey(key)
-
-        override fun iterator(): MutableIterator<CymaticPlateRecipe> {
+        operator fun iterator(): MutableIterator<CymaticPlateRecipe> {
             return object : MutableIterator<CymaticPlateRecipe> {
                 var index: Int = 0
                 override fun hasNext(): Boolean
-                    = map.size > index
+                    = recipes.size > index
 
 
                 override fun next(): CymaticPlateRecipe
-                    = map.values.elementAt(index++)
+                    = recipes[index++]
 
 
                 override fun remove() {
-                    map.values.remove(map.values.elementAt(index))
+                    recipes.remove(recipes[index])
                 }
 
 
@@ -189,7 +144,8 @@ class BlockCymaticPlate : BlockMod(LibNames.CYMATIC_PLATE, Material.GLASS), ITil
         }
 
         fun getValueByVec2f(vec2F: Vec2f): CymaticPlateRecipe? {
-            return this.firstOrNull { it.vec2F == vec2F }
+            for(recipe in this) if(recipe.vec2F == vec2F) return recipe
+            return null
         }
 
     }
