@@ -35,6 +35,13 @@ object ModRecipes {
             GameRegistry.addSmelting(ItemStack(ModBlocks.sand, 1, sand.ordinal), ItemStack(ModBlocks.glass, 1, sand.ordinal), 0.1F)
         }
 
+        addRecipe(ItemStack(ModBlocks.sifter, 1, 0),
+                "WSW",
+                "T T",
+                'W', "plankWood",
+                'S', "string",
+                'T', "stickWood")
+
         for (wood in BlockPlanks.EnumType.values())
             addRecipe(ItemStack(ModBlocks.sifter, 1, wood.metadata),
                     "WSW",
