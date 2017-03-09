@@ -13,6 +13,8 @@ import net.minecraft.util.EnumHandSide
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import wiresegal.silimatics.api.lens.ILens
 import wiresegal.silimatics.common.core.ModItems
 import wiresegal.silimatics.common.item.EnumSandType
@@ -27,6 +29,7 @@ object LensDisguiser : ILens {
         MinecraftForge.EVENT_BUS.register(this)
     }
 
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     fun onPlayerRender(render: RenderPlayerEvent.Pre) {
         val headStack = render.entityLiving.getItemStackFromSlot(EntityEquipmentSlot.HEAD)
@@ -54,6 +57,7 @@ object LensDisguiser : ILens {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     private fun RenderPlayer.setModelVisibilities(clientPlayer: AbstractClientPlayer) {
         val modelplayer = this.mainModel
 
